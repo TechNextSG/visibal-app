@@ -650,7 +650,7 @@ function showConfirm(title, sub, yesLabel, noLabel, cb) {
   _confirmCb = cb;
   document.getElementById('confirmModal').classList.add('show');
 }
-function doConfirm() { closeConfirm(); if (_confirmCb) _confirmCb(); }
+function doConfirm() { const cb = _confirmCb; closeConfirm(); if (cb) cb(); }
 function closeConfirm() { document.getElementById('confirmModal').classList.remove('show'); _confirmCb = null; }
 
 // ── NOTIFICATION PANEL ────────────────────────────────────

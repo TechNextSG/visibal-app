@@ -263,7 +263,7 @@
       </div>
       <button class="action-btn outline full-row" onclick="printWearReport()" style="margin-top:4px;">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
-        <span>Bericht drucken / PDF</span>
+        <span data-i18n="print_btn">Bericht drucken / PDF</span>
       </button>
 
       <!-- Reminder Settings -->
@@ -630,7 +630,14 @@ const VISIBAL_T = {
     ob4_title:'Datenschutz & Einwilligung', ob4_sub:'Bitte kurz durchlesen — dann kann es losgehen.',
     ob4_consent:'Ihre Daten (Tragezeit, Fotos, Chat, Schmerzmeldungen) werden verschlüsselt auf EU-Servern in Frankfurt gespeichert und ausschliesslich an Ihre behandelnde Praxis übermittelt. Nivellmedical AG erhält keine persönlichen Daten. Sie können Ihre Daten jederzeit exportieren oder löschen lassen (DSGVO Art. 15–20, Schweizer DSG). Die App stellt keine Diagnosen — alle medizinischen Entscheidungen trifft Ihre Praxis.',
     ob4_label:'Ich habe die Datenschutzerklärung gelesen und stimme der Verarbeitung meiner Gesundheitsdaten für die Begleitung meiner Aligner-Behandlung zu.',
-    ob4_btn:'App starten →'
+    ob4_btn:'App starten →',
+    print_btn:'Bericht drucken / PDF',
+    rpt_title:'VISIBAL — Tragezeit-Bericht', rpt_created:'Erstellt', rpt_patient:'Patient', rpt_practice:'Praxis',
+    rpt_today:'Heute', rpt_stage:'Stufe', rpt_phase:'Phase',
+    rpt_col_day:'Tag', rpt_col_wear:'Tragezeit', rpt_col_status:'Status',
+    rpt_goal_met:'✓ Ziel erreicht', rpt_below_goal:'⚠ Unter Ziel',
+    rpt_mon:'Montag', rpt_tue:'Dienstag', rpt_wed:'Mittwoch', rpt_thu:'Donnerstag', rpt_fri:'Freitag', rpt_sat:'Samstag',
+    rpt_footer:'VISIBAL v1.0 · nivellipso® · Swiss-Made · Erstellt'
   },
   en: {
     morning:'Good Morning', afternoon:'Good Afternoon', evening:'Good Evening',
@@ -688,7 +695,14 @@ const VISIBAL_T = {
     ob4_title:'Privacy & Consent', ob4_sub:'Please read briefly — then you\'re ready to go.',
     ob4_consent:'Your data (wear time, photos, chat, pain reports) is stored encrypted on EU servers in Frankfurt and shared exclusively with your treating practice. Nivellmedical AG receives no personal data. You may export or request deletion of your data at any time (GDPR Art. 15–20, Swiss DSG). The app makes no diagnoses — all medical decisions are made by your practice.',
     ob4_label:'I have read the privacy policy and consent to the processing of my health data for the support of my aligner treatment.',
-    ob4_btn:'Start app →'
+    ob4_btn:'Start app →',
+    print_btn:'Print report / PDF',
+    rpt_title:'VISIBAL — Wear Time Report', rpt_created:'Generated', rpt_patient:'Patient', rpt_practice:'Practice',
+    rpt_today:'Today', rpt_stage:'Stage', rpt_phase:'Phase',
+    rpt_col_day:'Day', rpt_col_wear:'Wear Time', rpt_col_status:'Status',
+    rpt_goal_met:'✓ Goal met', rpt_below_goal:'⚠ Below goal',
+    rpt_mon:'Monday', rpt_tue:'Tuesday', rpt_wed:'Wednesday', rpt_thu:'Thursday', rpt_fri:'Friday', rpt_sat:'Saturday',
+    rpt_footer:'VISIBAL v1.0 · nivellipso® · Swiss-Made · Generated'
   },
   fr: {
     morning:'Bonjour', afternoon:'Bonjour', evening:'Bonsoir',
@@ -746,7 +760,14 @@ const VISIBAL_T = {
     ob4_title:'Confidentialité & Consentement', ob4_sub:'Veuillez lire brièvement — vous êtes prêt.',
     ob4_consent:"Vos données (temps de port, photos, chat, signalements de douleurs) sont stockées de manière chiffrée sur des serveurs UE à Francfort et transmises exclusivement à votre cabinet traitant. Nivellmedical AG ne reçoit pas de données personnelles. Vous pouvez à tout moment exporter ou faire supprimer vos données (RGPD Art. 15–20, LPD suisse). L'application ne pose pas de diagnostic — toutes les décisions médicales sont prises par votre cabinet.",
     ob4_label:'J\'ai lu la déclaration de confidentialité et consens au traitement de mes données de santé pour le suivi de mon traitement par gouttières.',
-    ob4_btn:'Démarrer l\'app →'
+    ob4_btn:'Démarrer l\'app →',
+    print_btn:'Imprimer rapport / PDF',
+    rpt_title:'VISIBAL — Rapport de port', rpt_created:'Créé', rpt_patient:'Patient', rpt_practice:'Cabinet',
+    rpt_today:"Aujourd'hui", rpt_stage:'Plateau', rpt_phase:'Phase',
+    rpt_col_day:'Jour', rpt_col_wear:'Temps de port', rpt_col_status:'Statut',
+    rpt_goal_met:'✓ Objectif atteint', rpt_below_goal:"⚠ Sous l'objectif",
+    rpt_mon:'Lundi', rpt_tue:'Mardi', rpt_wed:'Mercredi', rpt_thu:'Jeudi', rpt_fri:'Vendredi', rpt_sat:'Samedi',
+    rpt_footer:'VISIBAL v1.0 · nivellipso® · Swiss-Made · Créé'
   },
   it: {
     morning:'Buongiorno', afternoon:'Buongiorno', evening:'Buonasera',
@@ -804,7 +825,14 @@ const VISIBAL_T = {
     ob4_title:'Privacy e consenso', ob4_sub:'Si prega di leggere brevemente — poi si può iniziare.',
     ob4_consent:'I vostri dati (tempo di porto, foto, chat, segnalazioni di dolore) vengono archiviati in forma cifrata su server UE a Francoforte e trasmessi esclusivamente al vostro studio. Nivellmedical AG non riceve dati personali. Potete esportare o richiedere la cancellazione dei vostri dati in qualsiasi momento (GDPR Art. 15–20, LPD svizzera). L\'app non formula diagnosi — tutte le decisioni mediche spettano al vostro studio.',
     ob4_label:'Ho letto l\'informativa sulla privacy e acconsento al trattamento dei miei dati sanitari per il supporto al mio trattamento con allineatori.',
-    ob4_btn:'Avvia l\'app →'
+    ob4_btn:'Avvia l\'app →',
+    print_btn:'Stampa rapporto / PDF',
+    rpt_title:'VISIBAL — Rapporto di porto', rpt_created:'Creato', rpt_patient:'Paziente', rpt_practice:'Studio',
+    rpt_today:'Oggi', rpt_stage:'Stadio', rpt_phase:'Fase',
+    rpt_col_day:'Giorno', rpt_col_wear:'Tempo di porto', rpt_col_status:'Stato',
+    rpt_goal_met:'✓ Obiettivo raggiunto', rpt_below_goal:"⚠ Sotto l'obiettivo",
+    rpt_mon:'Lunedì', rpt_tue:'Martedì', rpt_wed:'Mercoledì', rpt_thu:'Giovedì', rpt_fri:'Venerdì', rpt_sat:'Sabato',
+    rpt_footer:'VISIBAL v1.0 · nivellipso® · Swiss-Made · Creato'
   },
   ru: {
     morning:'Доброе утро', afternoon:'Добрый день', evening:'Добрый вечер',
@@ -862,7 +890,14 @@ const VISIBAL_T = {
     ob4_title:'Конфиденциальность и согласие', ob4_sub:'Ознакомьтесь кратко — и можно начинать.',
     ob4_consent:'Ваши данные (время ношения, фото, чат, сообщения о боли) хранятся в зашифрованном виде на серверах ЕС во Франкфурте и передаются исключительно вашей лечащей клинике. Nivellmedical AG не получает персональных данных. Вы можете в любое время экспортировать данные или запросить их удаление (GDPR ст. 15–20, Швейцарский DSG). Приложение не ставит диагнозов — все медицинские решения принимает ваша клиника.',
     ob4_label:'Я ознакомился с политикой конфиденциальности и даю согласие на обработку моих медицинских данных для сопровождения лечения элайнерами.',
-    ob4_btn:'Запустить приложение →'
+    ob4_btn:'Запустить приложение →',
+    print_btn:'Печать отчёта / PDF',
+    rpt_title:'VISIBAL — Отчёт о ношении', rpt_created:'Создан', rpt_patient:'Пациент', rpt_practice:'Клиника',
+    rpt_today:'Сегодня', rpt_stage:'Стадия', rpt_phase:'Фаза',
+    rpt_col_day:'День', rpt_col_wear:'Время ношения', rpt_col_status:'Статус',
+    rpt_goal_met:'✓ Цель достигнута', rpt_below_goal:'⚠ Ниже цели',
+    rpt_mon:'Понедельник', rpt_tue:'Вторник', rpt_wed:'Среда', rpt_thu:'Четверг', rpt_fri:'Пятница', rpt_sat:'Суббота',
+    rpt_footer:'VISIBAL v1.0 · nivellipso® · Swiss-Made · Создан'
   },
   es: {
     morning:'Buenos días', afternoon:'Buenas tardes', evening:'Buenas noches',
@@ -920,7 +955,14 @@ const VISIBAL_T = {
     ob4_title:'Privacidad y consentimiento', ob4_sub:'Por favor lea brevemente — ya puede comenzar.',
     ob4_consent:'Sus datos (tiempo de uso, fotos, chat, reportes de dolor) se almacenan cifrados en servidores UE en Frankfurt y se transmiten exclusivamente a su clínica tratante. Nivellmedical AG no recibe datos personales. Puede exportar o solicitar la eliminación de sus datos en cualquier momento (RGPD Art. 15–20, LPD suiza). La aplicación no realiza diagnósticos — todas las decisiones médicas las toma su clínica.',
     ob4_label:'He leído la declaración de privacidad y consiento el tratamiento de mis datos de salud para el acompañamiento de mi tratamiento con alineadores.',
-    ob4_btn:'Iniciar app →'
+    ob4_btn:'Iniciar app →',
+    print_btn:'Imprimir informe / PDF',
+    rpt_title:'VISIBAL — Informe de uso', rpt_created:'Generado', rpt_patient:'Paciente', rpt_practice:'Clínica',
+    rpt_today:'Hoy', rpt_stage:'Etapa', rpt_phase:'Fase',
+    rpt_col_day:'Día', rpt_col_wear:'Tiempo de uso', rpt_col_status:'Estado',
+    rpt_goal_met:'✓ Meta cumplida', rpt_below_goal:'⚠ Bajo la meta',
+    rpt_mon:'Lunes', rpt_tue:'Martes', rpt_wed:'Miércoles', rpt_thu:'Jueves', rpt_fri:'Viernes', rpt_sat:'Sábado',
+    rpt_footer:'VISIBAL v1.0 · nivellipso® · Swiss-Made · Generado'
   }
 };
 
@@ -1004,7 +1046,7 @@ function showConfirm(title, sub, yesLabel, noLabel, cb) {
   _confirmCb = cb;
   document.getElementById('confirmModal').classList.add('show');
 }
-function doConfirm() { closeConfirm(); if (_confirmCb) _confirmCb(); }
+function doConfirm() { const cb = _confirmCb; closeConfirm(); if (cb) cb(); }
 function closeConfirm() { document.getElementById('confirmModal').classList.remove('show'); _confirmCb = null; }
 
 // ── NOTIFICATION PANEL ────────────────────────────────────
@@ -1433,10 +1475,11 @@ function enableConsentBtn() {
 // ── PRINT WEAR REPORT ─────────────────────────────────────
 function printWearReport() {
   const secs = _totalWearSecs();
-  const lang = getAppLang();
-  const date = new Date().toLocaleDateString('de-CH');
+  const T = VISIBAL_T[getAppLang()] || VISIBAL_T.de;
+  const date = new Date().toLocaleDateString();
+  const ok = T.rpt_goal_met, warn = T.rpt_below_goal;
   const w = window.open('', '_blank');
-  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>VISIBAL Bericht</title><style>
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${T.rpt_title}</title><style>
     body{font-family:Arial,sans-serif;max-width:640px;margin:40px auto;color:#111;font-size:14px;}
     h1{color:#C00000;margin-bottom:4px;}
     .meta{color:#666;font-size:12px;margin-bottom:24px;}
@@ -1449,25 +1492,25 @@ function printWearReport() {
     .ok{color:#2d8a4e;font-weight:700;} .warn{color:#b87300;font-weight:700;}
     footer{margin-top:32px;font-size:10px;color:#aaa;text-align:center;}
   </style></head><body>
-    <h1>VISIBAL — Tragezeit-Bericht</h1>
-    <div class="meta">Erstellt: ${date} &nbsp;·&nbsp; Patient: Marie Müller &nbsp;·&nbsp; Praxis: Dr. med. dent. Schmidt</div>
+    <h1>${T.rpt_title}</h1>
+    <div class="meta">${T.rpt_created}: ${date} &nbsp;·&nbsp; ${T.rpt_patient}: Marie Müller &nbsp;·&nbsp; ${T.rpt_practice}: Dr. med. dent. Schmidt</div>
     <div class="stats">
-      <div><div class="stat-n">${_fmtWear(secs)}</div><div class="stat-l">Heute</div></div>
+      <div><div class="stat-n">${_fmtWear(secs)}</div><div class="stat-l">${T.rpt_today}</div></div>
       <div><div class="stat-n">94%</div><div class="stat-l">Compliance</div></div>
-      <div><div class="stat-n">8/14</div><div class="stat-l">Stufe</div></div>
-      <div><div class="stat-n">REGULAR</div><div class="stat-l">Phase</div></div>
+      <div><div class="stat-n">8/14</div><div class="stat-l">${T.rpt_stage}</div></div>
+      <div><div class="stat-n">REGULAR</div><div class="stat-l">${T.rpt_phase}</div></div>
     </div>
     <table>
-      <tr><th>Tag</th><th>Tragezeit</th><th>Status</th></tr>
-      <tr><td>Montag</td><td>22h 00min</td><td class="ok">✓ Ziel erreicht</td></tr>
-      <tr><td>Dienstag</td><td>23h 10min</td><td class="ok">✓ Ziel erreicht</td></tr>
-      <tr><td>Mittwoch</td><td>17h 30min</td><td class="warn">⚠ Unter Ziel</td></tr>
-      <tr><td>Donnerstag</td><td>22h 00min</td><td class="ok">✓ Ziel erreicht</td></tr>
-      <tr><td>Freitag</td><td>22h 15min</td><td class="ok">✓ Ziel erreicht</td></tr>
-      <tr><td>Samstag</td><td>23h 00min</td><td class="ok">✓ Ziel erreicht</td></tr>
-      <tr><td>Heute</td><td>${_fmtWear(secs)}</td><td class="${secs>=79200?'ok':'warn'}">${secs>=79200?'✓ Ziel erreicht':'⚠ Unter Ziel'}</td></tr>
+      <tr><th>${T.rpt_col_day}</th><th>${T.rpt_col_wear}</th><th>${T.rpt_col_status}</th></tr>
+      <tr><td>${T.rpt_mon}</td><td>22h 00min</td><td class="ok">${ok}</td></tr>
+      <tr><td>${T.rpt_tue}</td><td>23h 10min</td><td class="ok">${ok}</td></tr>
+      <tr><td>${T.rpt_wed}</td><td>17h 30min</td><td class="warn">${warn}</td></tr>
+      <tr><td>${T.rpt_thu}</td><td>22h 00min</td><td class="ok">${ok}</td></tr>
+      <tr><td>${T.rpt_fri}</td><td>22h 15min</td><td class="ok">${ok}</td></tr>
+      <tr><td>${T.rpt_sat}</td><td>23h 00min</td><td class="ok">${ok}</td></tr>
+      <tr><td>${T.rpt_today}</td><td>${_fmtWear(secs)}</td><td class="${secs>=79200?'ok':'warn'}">${secs>=79200?ok:warn}</td></tr>
     </table>
-    <footer>VISIBAL v1.0 · nivellipso® · Swiss-Made · Erstellt ${date}</footer>
+    <footer>${T.rpt_footer} ${date}</footer>
   </body></html>`);
   w.document.close();
   w.print();
