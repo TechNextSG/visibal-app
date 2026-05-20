@@ -70,6 +70,13 @@
 .settings-row:last-child{border-bottom:none;}
 .settings-row-label{font-size:13px;font-weight:600;color:var(--text);}
 .settings-row-sub{font-size:11px;color:var(--grey);margin-top:1px;}
+/* ── LIVE ACTIVITY ── */
+@keyframes livePulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(1.4);}}
+.live-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#2d8a4e;animation:livePulse 1.4s ease-in-out infinite;flex-shrink:0;}
+.live-banner{background:linear-gradient(135deg,#edfff5,#f4fff8);border:1px solid #a8dfc0;border-radius:12px;padding:12px 14px;margin-bottom:12px;display:flex;align-items:center;gap:10px;}
+.activity-item{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border);}
+.activity-item:last-child{border-bottom:none;}
+.activity-icon{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
 /* ── FORM EDIT MODAL ── */
 .form-field{margin-bottom:12px;}
 .form-label{font-size:11px;font-weight:700;color:var(--grey);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;}
@@ -121,6 +128,16 @@
           <div class="stat-mini-n" id="statAlert">1<em>!</em></div>
           <div class="stat-mini-l">Kritisch</div>
         </div>
+      </div>
+
+      <!-- Live Banner -->
+      <div class="live-banner" id="liveBanner">
+        <div class="live-dot"></div>
+        <div style="flex:1;">
+          <div style="font-size:13px;font-weight:700;color:#1a5c30;" id="liveBannerName">Marie Schmidt ist gerade aktiv</div>
+          <div style="font-size:11px;color:#2d8a4e;margin-top:1px;" id="liveBannerSub">22h Tracker läuft · Tragezeit heute: 21h 40min</div>
+        </div>
+        <span style="font-size:10px;font-weight:700;color:#2d8a4e;background:rgba(45,138,78,.15);padding:3px 8px;border-radius:8px;white-space:nowrap;">● LIVE</span>
       </div>
 
       <!-- Alert: Critical Patient -->
@@ -211,18 +228,36 @@
         </div>
       </div>
 
-      <!-- 7 Day Compliance -->
-      <div class="sec-label">Tragezeit · letzte 7 Tage</div>
+      <!-- 7 Day Compliance — Line Chart -->
+      <div class="sec-label">Tragezeit · diese Woche</div>
       <div class="card">
-        <div style="display:flex;gap:6px;align-items:flex-end;height:80px;margin-bottom:10px;">
-          <div style="flex:1;text-align:center;"><div style="background:var(--red);height:88%;border-radius:4px 4px 0 0;margin-bottom:4px;"></div><div style="font-size:9px;color:var(--grey);">Mo<br>22h</div></div>
-          <div style="flex:1;text-align:center;"><div style="background:var(--red);height:96%;border-radius:4px 4px 0 0;margin-bottom:4px;"></div><div style="font-size:9px;color:var(--grey);">Di<br>23h</div></div>
-          <div style="flex:1;text-align:center;"><div style="background:var(--warn);height:70%;border-radius:4px 4px 0 0;margin-bottom:4px;"></div><div style="font-size:9px;color:var(--grey);">Mi<br>17h</div></div>
-          <div style="flex:1;text-align:center;"><div style="background:var(--red);height:90%;border-radius:4px 4px 0 0;margin-bottom:4px;"></div><div style="font-size:9px;color:var(--grey);">Do<br>22h</div></div>
-          <div style="flex:1;text-align:center;"><div style="background:var(--red);height:92%;border-radius:4px 4px 0 0;margin-bottom:4px;"></div><div style="font-size:9px;color:var(--grey);">Fr<br>22h</div></div>
-          <div style="flex:1;text-align:center;"><div style="background:var(--red);height:96%;border-radius:4px 4px 0 0;margin-bottom:4px;"></div><div style="font-size:9px;color:var(--grey);">Sa<br>23h</div></div>
-          <div style="flex:1;text-align:center;"><div style="background:var(--red);height:90%;border-radius:4px 4px 0 0;margin-bottom:4px;"></div><div style="font-size:9px;color:var(--grey);font-weight:700;">Heute<br>22h</div></div>
-        </div>
+        <svg viewBox="0 0 280 98" style="width:100%;height:auto;display:block;overflow:visible;">
+          <line x1="14" y1="15" x2="266" y2="15" stroke="#e8e8e8" stroke-width="1.5" stroke-dasharray="5,4"/>
+          <text x="268" y="18" font-size="8" fill="#bbb" font-family="sans-serif">22h</text>
+          <polygon points="20,15 60,10 100,40 140,15 180,15 220,10 260,15 260,65 20,65" fill="rgba(192,0,0,.07)"/>
+          <polyline points="20,15 60,10 100,40 140,15 180,15 220,10 260,15" fill="none" stroke="#C00000" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <circle cx="20"  cy="15" r="4" fill="white" stroke="#C00000" stroke-width="2"/>
+          <circle cx="60"  cy="10" r="4" fill="white" stroke="#C00000" stroke-width="2"/>
+          <circle cx="100" cy="40" r="4" fill="white" stroke="#b87300" stroke-width="2"/>
+          <circle cx="140" cy="15" r="4" fill="white" stroke="#C00000" stroke-width="2"/>
+          <circle cx="180" cy="15" r="4" fill="white" stroke="#C00000" stroke-width="2"/>
+          <circle cx="220" cy="10" r="4" fill="white" stroke="#C00000" stroke-width="2"/>
+          <circle cx="260" cy="15" r="4" fill="white" stroke="#C00000" stroke-width="2"/>
+          <text x="20"  y="79" text-anchor="middle" font-size="9" fill="#888" font-family="sans-serif">Mo</text>
+          <text x="60"  y="79" text-anchor="middle" font-size="9" fill="#888" font-family="sans-serif">Di</text>
+          <text x="100" y="79" text-anchor="middle" font-size="9" fill="#888" font-family="sans-serif">Mi</text>
+          <text x="140" y="79" text-anchor="middle" font-size="9" fill="#888" font-family="sans-serif">Do</text>
+          <text x="180" y="79" text-anchor="middle" font-size="9" fill="#888" font-family="sans-serif">Fr</text>
+          <text x="220" y="79" text-anchor="middle" font-size="9" fill="#888" font-family="sans-serif">Sa</text>
+          <text x="260" y="79" text-anchor="middle" font-size="9" fill="#888" font-weight="700" font-family="sans-serif">Heute</text>
+          <text x="20"  y="91" text-anchor="middle" font-size="9" fill="#C00000" font-weight="700" font-family="sans-serif">22h</text>
+          <text x="60"  y="91" text-anchor="middle" font-size="9" fill="#C00000" font-weight="700" font-family="sans-serif">23h</text>
+          <text x="100" y="91" text-anchor="middle" font-size="9" fill="#b87300" font-weight="700" font-family="sans-serif">17h</text>
+          <text x="140" y="91" text-anchor="middle" font-size="9" fill="#C00000" font-weight="700" font-family="sans-serif">22h</text>
+          <text x="180" y="91" text-anchor="middle" font-size="9" fill="#C00000" font-weight="700" font-family="sans-serif">22h</text>
+          <text x="220" y="91" text-anchor="middle" font-size="9" fill="#C00000" font-weight="700" font-family="sans-serif">23h</text>
+          <text x="260" y="91" text-anchor="middle" font-size="9" fill="#C00000" font-weight="700" font-family="sans-serif">22h</text>
+        </svg>
         <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--grey);padding-top:8px;border-top:1px solid var(--border);">
           <span>Ø 21h 28min</span>
           <span style="color:var(--ok);font-weight:700;">94% Compliance</span>
@@ -237,15 +272,52 @@
         <div style="border-radius:8px;aspect-ratio:1;display:flex;align-items:flex-end;padding:8px;font-size:9px;font-weight:700;color:white;background:linear-gradient(0deg,rgba(0,0,0,.6),transparent 50%),linear-gradient(135deg,#fdd8d8,#fff5f5);border:2px solid var(--red);">Stufe 8<br>Aktuell</div>
       </div>
 
-      <!-- Notes -->
-      <div class="sec-label">Klinische Notizen</div>
-      <div class="card">
-        <div style="font-size:12px;color:var(--grey);margin-bottom:6px;">Letzte Anpassung · 12.04.2026</div>
-        <div style="font-size:13px;color:var(--text);line-height:1.6;">Patientin zeigt sehr gute Compliance. SOFT-Phase reibungslos abgeschlossen. REGULAR läuft planmässig. Beim nächsten Termin: Druckverteilung an Zahn 12 prüfen.</div>
+      <!-- Activity Log -->
+      <div class="sec-label">Live-Aktivitäten</div>
+      <div class="card" style="padding:0 14px;">
+        <div class="activity-item">
+          <div class="activity-icon" style="background:#e8fff3;color:#2d8a4e;">⏱</div>
+          <div style="flex:1;"><div style="font-size:12px;font-weight:700;color:var(--text);">WEAR — Schiene eingesetzt</div><div style="font-size:10px;color:var(--grey);">Heute, 18:34 Uhr</div></div>
+          <span style="font-size:9px;font-weight:700;color:#2d8a4e;background:#e8fff3;padding:2px 6px;border-radius:6px;">LIVE</span>
+        </div>
+        <div class="activity-item">
+          <div class="activity-icon" style="background:var(--red-light);color:var(--red);">😕</div>
+          <div style="flex:1;"><div style="font-size:12px;font-weight:700;color:var(--text);">PAIN — Level 3 gemeldet</div><div style="font-size:10px;color:var(--grey);">Heute, 13:12 Uhr</div></div>
+          <span style="font-size:9px;font-weight:700;color:var(--red);background:var(--red-light);padding:2px 6px;border-radius:6px;">PAIN</span>
+        </div>
+        <div class="activity-item">
+          <div class="activity-icon" style="background:#fff8e8;color:#b87300;">📸</div>
+          <div style="flex:1;"><div style="font-size:12px;font-weight:700;color:var(--text);">PHOTO — 3 Fotos hochgeladen</div><div style="font-size:10px;color:var(--grey);">Gestern, 19:45 Uhr</div></div>
+          <span style="font-size:9px;font-weight:700;color:#b87300;background:#fff8e8;padding:2px 6px;border-radius:6px;">FOTO</span>
+        </div>
+        <div class="activity-item">
+          <div class="activity-icon" style="background:#f0f0ff;color:#5050cc;">💬</div>
+          <div style="flex:1;"><div style="font-size:12px;font-weight:700;color:var(--text);">CHAT — Frage an Assistent</div><div style="font-size:10px;color:var(--grey);">Gestern, 12:08 Uhr</div></div>
+          <span style="font-size:9px;font-weight:700;color:#5050cc;background:#f0f0ff;padding:2px 6px;border-radius:6px;">CHAT</span>
+        </div>
+        <div class="activity-item">
+          <div class="activity-icon" style="background:var(--bg);color:var(--grey);">📲</div>
+          <div style="flex:1;"><div style="font-size:12px;font-weight:700;color:var(--text);">APP — App geöffnet</div><div style="font-size:10px;color:var(--grey);">Gestern, 08:02 Uhr</div></div>
+          <span style="font-size:9px;font-weight:700;color:var(--grey);background:var(--bg);padding:2px 6px;border-radius:6px;">APP</span>
+        </div>
       </div>
-      <button class="action-btn outline full-row" onclick="showToast('Notiz-Editor öffnet sich (Demo)')">
+
+      <!-- Notes -->
+      <div class="sec-label" style="margin-top:20px;">Klinische Notizen</div>
+      <div class="card" id="notesCard">
+        <div style="font-size:12px;color:var(--grey);margin-bottom:6px;" id="notesDate">Letzte Anpassung · 12.04.2026</div>
+        <div style="font-size:13px;color:var(--text);line-height:1.6;" id="notesText">Patientin zeigt sehr gute Compliance. SOFT-Phase reibungslos abgeschlossen. REGULAR läuft planmässig. Beim nächsten Termin: Druckverteilung an Zahn 12 prüfen.</div>
+      </div>
+      <div id="notesEditorWrap" style="display:none;margin-bottom:10px;">
+        <textarea id="notesEditor" style="width:100%;border:1px solid var(--border);border-radius:10px;padding:11px 12px;font-size:13px;font-family:inherit;outline:none;background:var(--bg);color:var(--text);resize:vertical;min-height:100px;box-sizing:border-box;line-height:1.6;" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+        <div style="display:flex;gap:8px;margin-top:8px;">
+          <button class="action-btn" style="flex:1;margin:0;padding:11px;" onclick="saveNote()">Notiz speichern</button>
+          <button class="action-btn outline" style="flex:1;margin:0;padding:11px;" onclick="cancelNote()">Abbrechen</button>
+        </div>
+      </div>
+      <button class="action-btn outline full-row" id="addNoteBtn" onclick="openNoteEditor()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-        Neue Notiz hinzufügen
+        Notiz bearbeiten / hinzufügen
       </button>
     </div>
 
@@ -271,17 +343,35 @@
         <div style="font-size:10px;color:var(--grey-light);">Zielwert: ≥ 85% — erfüllt ✓</div>
       </div>
 
-      <div class="sec-label">Praxis-Tragezeit · letzte 7 Tage</div>
+      <div class="sec-label">Praxis-Tragezeit · diese Woche</div>
       <div class="card" style="margin-bottom:14px;">
-        <div style="display:flex;gap:6px;align-items:flex-end;height:80px;margin-bottom:10px;">
-          <div style="flex:1;text-align:center;"><div style="background:var(--red);height:86%;border-radius:4px 4px 0 0;margin-bottom:4px;"></div><div style="font-size:9px;color:var(--grey);">Mo<br>Ø 21h</div></div>
-          <div style="flex:1;text-align:center;"><div style="background:var(--red);height:95%;border-radius:4px 4px 0 0;margin-bottom:4px;"></div><div style="font-size:9px;color:var(--grey);">Di<br>Ø 22h</div></div>
-          <div style="flex:1;text-align:center;"><div style="background:var(--warn);height:72%;border-radius:4px 4px 0 0;margin-bottom:4px;"></div><div style="font-size:9px;color:var(--grey);">Mi<br>Ø 17h</div></div>
-          <div style="flex:1;text-align:center;"><div style="background:var(--red);height:91%;border-radius:4px 4px 0 0;margin-bottom:4px;"></div><div style="font-size:9px;color:var(--grey);">Do<br>Ø 22h</div></div>
-          <div style="flex:1;text-align:center;"><div style="background:var(--red);height:88%;border-radius:4px 4px 0 0;margin-bottom:4px;"></div><div style="font-size:9px;color:var(--grey);">Fr<br>Ø 21h</div></div>
-          <div style="flex:1;text-align:center;"><div style="background:var(--red);height:95%;border-radius:4px 4px 0 0;margin-bottom:4px;"></div><div style="font-size:9px;color:var(--grey);">Sa<br>Ø 22h</div></div>
-          <div style="flex:1;text-align:center;"><div style="background:var(--red);height:91%;border-radius:4px 4px 0 0;margin-bottom:4px;"></div><div style="font-size:9px;color:var(--grey);font-weight:700;">Heute<br>Ø 22h</div></div>
-        </div>
+        <svg viewBox="0 0 280 98" style="width:100%;height:auto;display:block;overflow:visible;">
+          <line x1="14" y1="15" x2="266" y2="15" stroke="#e8e8e8" stroke-width="1.5" stroke-dasharray="5,4"/>
+          <text x="268" y="18" font-size="8" fill="#bbb" font-family="sans-serif">22h</text>
+          <polygon points="20,20 60,15 100,40 140,15 180,20 220,15 260,15 260,65 20,65" fill="rgba(192,0,0,.07)"/>
+          <polyline points="20,20 60,15 100,40 140,15 180,20 220,15 260,15" fill="none" stroke="#C00000" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <circle cx="20"  cy="20" r="4" fill="white" stroke="#C00000" stroke-width="2"/>
+          <circle cx="60"  cy="15" r="4" fill="white" stroke="#C00000" stroke-width="2"/>
+          <circle cx="100" cy="40" r="4" fill="white" stroke="#b87300" stroke-width="2"/>
+          <circle cx="140" cy="15" r="4" fill="white" stroke="#C00000" stroke-width="2"/>
+          <circle cx="180" cy="20" r="4" fill="white" stroke="#C00000" stroke-width="2"/>
+          <circle cx="220" cy="15" r="4" fill="white" stroke="#C00000" stroke-width="2"/>
+          <circle cx="260" cy="15" r="4" fill="white" stroke="#C00000" stroke-width="2"/>
+          <text x="20"  y="79" text-anchor="middle" font-size="9" fill="#888" font-family="sans-serif">Mo</text>
+          <text x="60"  y="79" text-anchor="middle" font-size="9" fill="#888" font-family="sans-serif">Di</text>
+          <text x="100" y="79" text-anchor="middle" font-size="9" fill="#888" font-family="sans-serif">Mi</text>
+          <text x="140" y="79" text-anchor="middle" font-size="9" fill="#888" font-family="sans-serif">Do</text>
+          <text x="180" y="79" text-anchor="middle" font-size="9" fill="#888" font-family="sans-serif">Fr</text>
+          <text x="220" y="79" text-anchor="middle" font-size="9" fill="#888" font-family="sans-serif">Sa</text>
+          <text x="260" y="79" text-anchor="middle" font-size="9" fill="#888" font-weight="700" font-family="sans-serif">Heute</text>
+          <text x="20"  y="91" text-anchor="middle" font-size="9" fill="#C00000" font-weight="700" font-family="sans-serif">Ø21h</text>
+          <text x="60"  y="91" text-anchor="middle" font-size="9" fill="#C00000" font-weight="700" font-family="sans-serif">Ø22h</text>
+          <text x="100" y="91" text-anchor="middle" font-size="9" fill="#b87300" font-weight="700" font-family="sans-serif">Ø17h</text>
+          <text x="140" y="91" text-anchor="middle" font-size="9" fill="#C00000" font-weight="700" font-family="sans-serif">Ø22h</text>
+          <text x="180" y="91" text-anchor="middle" font-size="9" fill="#C00000" font-weight="700" font-family="sans-serif">Ø21h</text>
+          <text x="220" y="91" text-anchor="middle" font-size="9" fill="#C00000" font-weight="700" font-family="sans-serif">Ø22h</text>
+          <text x="260" y="91" text-anchor="middle" font-size="9" fill="#C00000" font-weight="700" font-family="sans-serif">Ø22h</text>
+        </svg>
         <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--grey);padding-top:8px;border-top:1px solid var(--border);">
           <span>Praxis-Ø 21h 12min / Tag</span>
           <span style="color:var(--ok);font-weight:700;">87% Compliance</span>
@@ -305,7 +395,7 @@
       </div>
 
       <div class="sec-label">Phasen-Verteilung</div>
-      <div class="card">
+      <div class="card" style="margin-bottom:14px;">
         <div class="phase-row">
           <div class="phase-label">SOFT</div>
           <div class="phase-bar-wrap"><div class="phase-bar-fill" style="width:28%;background:var(--warn-light);border:1px solid var(--warn);"></div></div>
@@ -322,6 +412,10 @@
           <div class="phase-count">6</div>
         </div>
       </div>
+      <button class="action-btn outline full-row" onclick="exportCSV()" style="margin-bottom:8px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+        Wochenstatistik als CSV exportieren
+      </button>
     </div>
 
     <!-- VIEW: MESSAGES -->
@@ -771,11 +865,78 @@ function renderHotTopics() {
   `).join('');
 }
 
+// ── NOTES EDITOR ──────────────────────────────────────────
+const _DEFAULT_NOTE = 'Patientin zeigt sehr gute Compliance. SOFT-Phase reibungslos abgeschlossen. REGULAR läuft planmässig. Beim nächsten Termin: Druckverteilung an Zahn 12 prüfen.';
+function openNoteEditor() {
+  const stored = localStorage.getItem('visibal_notes') || _DEFAULT_NOTE;
+  const ed = document.getElementById('notesEditor');
+  if (ed) ed.value = stored;
+  document.getElementById('notesEditorWrap').style.display = '';
+  document.getElementById('addNoteBtn').style.display = 'none';
+  if (ed) ed.focus();
+}
+function saveNote() {
+  const text = (document.getElementById('notesEditor')?.value || '').trim();
+  if (!text) return;
+  localStorage.setItem('visibal_notes', text);
+  const notesText = document.getElementById('notesText');
+  if (notesText) notesText.textContent = text;
+  const notesDate = document.getElementById('notesDate');
+  if (notesDate) notesDate.textContent = 'Letzte Anpassung · ' + new Date().toLocaleDateString('de-CH');
+  document.getElementById('notesEditorWrap').style.display = 'none';
+  document.getElementById('addNoteBtn').style.display = '';
+  showToast('Notiz gespeichert ✓', 'ok');
+  _trackEvent('save_note');
+}
+function cancelNote() {
+  document.getElementById('notesEditorWrap').style.display = 'none';
+  document.getElementById('addNoteBtn').style.display = '';
+}
+
+// ── CSV EXPORT ────────────────────────────────────────────
+function exportCSV() {
+  const date = new Date().toLocaleDateString('de-CH');
+  const rows = [
+    ['Patient', 'Stufe', 'Phase', 'Compliance', 'Status', 'Letzte Aktivität'],
+    ...patients.map(p => [p.name, p.stage, p.phase, p.wear, p.status, date])
+  ];
+  const csv = rows.map(r => r.map(c => `"${c}"`).join(',')).join('\n');
+  const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'VISIBAL-Wochenstatistik-' + new Date().toISOString().slice(0,10) + '.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('CSV exportiert ✓', 'ok');
+  _trackEvent('csv_export');
+}
+
+// ── LIVE BANNER ───────────────────────────────────────────
+function _initLiveBanner() {
+  const active = patients.filter(p => p.status === 'ok');
+  if (!active.length) return;
+  let idx = 0;
+  function rotate() {
+    const p = active[idx % active.length];
+    const n = document.getElementById('liveBannerName');
+    const s = document.getElementById('liveBannerSub');
+    if (n) n.textContent = p.name + ' ist gerade aktiv';
+    if (s) { const h = new Date().getHours(), m = String(new Date().getMinutes()).padStart(2,'0'); s.textContent = '22h Tracker läuft · zuletzt aktiv ' + h + ':' + m + ' Uhr'; }
+    idx++;
+  }
+  rotate();
+  setInterval(rotate, 8000);
+}
+
 // Init
 renderPatients();
 _updateFilterCounts();
 renderHotTopics();
 loadPractice();
+_initLiveBanner();
 _applyTheme();
 if (sessionStorage.getItem('notifs_seen')) {
   const b = document.getElementById('notifBadge');

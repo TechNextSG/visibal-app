@@ -68,7 +68,8 @@
 .notif-body strong{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px;}
 .notif-body span{font-size:11px;color:var(--grey);}
 /* ── TIMER ANIMATION ── */
-#timerCircle{transition:stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1);}
+#timerCircle{transition:stroke-dashoffset 1.2s cubic-bezier(.4,0,.2,1),stroke .4s;}
+#timerCircle.goal-reached{stroke:#2d8a4e;}
 /* ── CHAT ERROR ── */
 .chat-msg.error{background:#fff0f0;border-left:3px solid var(--red);color:#b00000;padding-left:12px;}
 /* ── NOTIFICATION BADGE ── */
@@ -119,7 +120,7 @@
     <div class="view active" id="view-home">
       <div class="greeting">
         <div class="greeting-time" id="greetingTime">Guten Tag</div>
-        <div class="greeting-name">Marie 👋</div>
+        <div class="greeting-name" id="greetingName">Marie 👋</div>
       </div>
 
       <!-- Progress Hero -->
@@ -222,16 +223,17 @@
         <div class="timer-status ok" data-i18n="timer_status">✓ 20 Minuten bis Tagesziel</div>
         <button class="action-btn full-row" onclick="logWear()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v16m8-8H4"/></svg>
-          <span data-i18n="log_wear">Tragezeit eintragen</span>
+          <span data-i18n="log_wear">+ Schiene drin</span>
         </button>
         <button class="action-btn outline full-row" onclick="logRemove()" style="margin-top:8px;">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 12H4"/></svg>
-          <span data-i18n="aligner_removed">Schiene entfernt</span>
+          <span data-i18n="aligner_removed">− Schiene raus (Pause)</span>
         </button>
       </div>
 
       <!-- Pain Report -->
-      <div class="sec-label" style="margin-top:24px;" data-i18n="pain_label">Schmerzen melden</div>
+      <div class="sec-label" style="margin-top:24px;" data-i18n="pain_label">Zwickt's wo?</div>
+      <div style="font-size:12px;color:var(--grey);margin:-8px 0 10px;padding:0 4px;" data-i18n="pain_sub">Sag uns, wenn was drückt. Deine Praxis sieht das sofort.</div>
       <div class="card pain-card">
         <div class="pain-row">
           <button class="pain-btn" onclick="logPain(1)">😊<span>1</span></button>
@@ -323,30 +325,31 @@
     <div class="view" id="view-photos">
       <div class="greeting">
         <div class="greeting-time" data-i18n="photos_title">Foto-Dokumentation</div>
-        <div class="greeting-name" data-i18n="photos_sub">Ihre Behandlung in Bildern</div>
+        <div class="greeting-name" data-i18n="photos_sub">Sieh, wie dein Lächeln wächst</div>
       </div>
 
       <!-- Photo Actions -->
       <div class="sec-label" data-i18n="new_photo">Neue Aufnahme</div>
+      <div style="font-size:12px;color:var(--grey);margin:-8px 0 10px;padding:0 4px;" data-i18n="photos_rule">Drei Fotos. Drei Klicks.</div>
       <div class="photo-actions">
         <button class="photo-action-btn" onclick="takePhoto('frontal')">
           <div class="photo-action-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><circle cx="12" cy="13" r="3"/></svg></div>
-          <div class="photo-action-label" data-i18n="frontal">Frontal</div>
-          <div class="photo-action-sub" data-i18n="frontal_sub">Lächeln, geschlossen</div>
+          <div class="photo-action-label" data-i18n="frontal">Von vorne</div>
+          <div class="photo-action-sub" data-i18n="frontal_sub">Lächel rein.</div>
         </button>
         <button class="photo-action-btn" onclick="takePhoto('lateral')">
           <div class="photo-action-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><circle cx="12" cy="13" r="3"/></svg></div>
-          <div class="photo-action-label" data-i18n="lateral">Lateral</div>
-          <div class="photo-action-sub" data-i18n="lateral_sub">Seitenansicht</div>
+          <div class="photo-action-label" data-i18n="lateral">Von der Seite</div>
+          <div class="photo-action-sub" data-i18n="lateral_sub">Kopf zur Seite</div>
         </button>
       </div>
       <button class="action-btn outline full-row" onclick="takePhoto('occlusal')" style="margin-bottom:24px;">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><circle cx="12" cy="13" r="3"/></svg>
-        <span data-i18n="occlusal">Okklusal-Aufnahme (von oben)</span>
+        <span data-i18n="occlusal">Von oben (Mund auf)</span>
       </button>
 
       <!-- Timeline -->
-      <div class="sec-label" data-i18n="timeline">Verlauf</div>
+      <div class="sec-label" data-i18n="timeline">Dein Weg bisher</div>
       <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;">
         <div style="background:white;border:1px solid var(--border);border-radius:10px;padding:10px;">
           <div style="aspect-ratio:1;background:linear-gradient(135deg,#fceaea,#fcf0f0);border-radius:6px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;font-size:32px;">😬</div>
@@ -578,7 +581,7 @@ const VISIBAL_T = {
     morning:'Guten Morgen', afternoon:'Guten Tag', evening:'Guten Abend',
     stage_label:'Stufe 8 von 14', stage_sub:'Three-Aligner · Dual Arch · Tag 17 dieser Stufe',
     soft_done:'SOFT ✓', pct_done:'57% abgeschlossen', intense_label:'INTENSE',
-    reminder_title:'Heute: 21h 40min Tragezeit', reminder_sub:'Ziel fast erreicht — bleiben Sie dran!',
+    reminder_title:'Heute: 21h 40min Tragezeit', reminder_sub:'Ziel fast erreicht — bleib dran!',
     stat_in_stage:'In Stufe 8', stat_to_phase:'Bis Phase 3', compliance:'Compliance',
     today:'Heute', upcoming:'Demnächst',
     photo_due:'Foto-Dokumentation fällig', photo_due_sub:'Frontal, lateral, okklusal', now_btn:'Jetzt',
@@ -587,22 +590,22 @@ const VISIBAL_T = {
     tracker_title:'22h Tracker', tracker_sub:'Heutige Tragezeit',
     of_22h:'von 22h', hours_min:'Stunden:Minuten',
     timer_status:'✓ 20 Minuten bis Tagesziel',
-    log_wear:'Tragezeit eintragen', aligner_removed:'Schiene entfernt',
-    last7:'Letzte 7 Tage',
+    log_wear:'+ Schiene drin', aligner_removed:'− Schiene raus (Pause)',
+    last7:'Diese Woche',
     day_mo:'Mo', day_tu:'Di', day_we:'Mi', day_th:'Do', day_fr:'Fr', day_sa:'Sa', day_today:'Heute',
     avg_wear:'Ø 21h 28min', compliance_pct:'94% Compliance',
     reminders:'Erinnerungen',
     wear_reminder:'Tragezeit-Erinnerung', wear_reminder_sub:'Bei Aligner-Entnahme >2h',
     stage_reminder:'Stufenwechsel-Reminder', stage_reminder_sub:'24h vor dem Wechsel',
     photo_reminder:'Foto-Erinnerung', photo_reminder_sub:'Wöchentlich · Sonntag 19:00',
-    chat_title:'Online-Assistent', chat_sub:'Fragen Sie alles',
-    chat_greeting:'Hallo Marie! 👋 Ich beantworte Ihre Fragen zur Behandlung — Schmerzen, Tragezeit, Essen, alles. In der REGULAR-Phase sind kleine Druckgefühle normal und gewünscht.',
+    chat_title:'Online-Assistent', chat_sub:'Frag uns alles',
+    chat_greeting:'Hallo! 👋 Ich beantworte deine Fragen zur Behandlung — Schmerzen, Tragezeit, Essen, alles. In der REGULAR-Phase sind kleine Druckgefühle normal und gewünscht.',
     sugg1:'Schiene drückt — normal?', sugg2:'Was darf ich essen?', sugg3:'Stufenwechsel: wann?', sugg4:'Schmerzen lindern',
-    photos_title:'Foto-Dokumentation', photos_sub:'Ihre Behandlung in Bildern',
-    new_photo:'Neue Aufnahme',
-    frontal:'Frontal', frontal_sub:'Lächeln, geschlossen',
-    lateral:'Lateral', lateral_sub:'Seitenansicht',
-    occlusal:'Okklusal-Aufnahme (von oben)', timeline:'Verlauf',
+    photos_title:'Foto-Dokumentation', photos_sub:'Sieh, wie dein Lächeln wächst',
+    new_photo:'Neue Aufnahme', photos_rule:'Drei Fotos. Drei Klicks.',
+    frontal:'Von vorne', frontal_sub:'Lächel rein.',
+    lateral:'Von der Seite', lateral_sub:'Kopf zur Seite',
+    occlusal:'Von oben (Mund auf)', timeline:'Dein Weg bisher',
     start_photo:'Startaufnahme', current_label:'Aktuell',
     last_photo:'Letzte Aufnahme: 24 Tage', photo_recommend:'Wir empfehlen alle 2 Wochen neue Fotos',
     profile_title:'Profil', my_practice:'Meine Praxis',
@@ -612,25 +615,34 @@ const VISIBAL_T = {
     notifs:'Benachrichtigungen', notifs_sub:'3 aktiv',
     privacy:'Datenschutz', privacy_sub:'DSGVO-konform',
     help:'Hilfe & FAQ', help_sub:'Häufige Fragen', logout_txt:'Abmelden',
-    tab_home:'Home', tab_tracking:'22h', tab_chat:'Online-Chat', tab_photos:'Fotos', tab_profile:'Profil',
+    tab_home:'Home', tab_tracking:'22h', tab_chat:'Online-Chat', tab_photos:'Fotos', tab_profile:'Du',
     chat_input_ph:'Frage eingeben...',
-    chat_system:'Du bist der VISIBAL Online-Assistent für Aligner-Patienten. Aktueller Stand: REGULAR-Phase, Stufe 8/14, Three-Aligner-System. Beantworte Fragen zu Schmerzen, Tragezeit (22h-Regel), Essen, Phasenwechsel, Pflege, Notfällen. Antworte warm, verständlich. Max. 3 Sätze. Auf Deutsch.',
-    pain_label:'Schmerzen melden', pain_none:'Kein Schmerz', pain_severe:'Stark',
+    chat_system:'Du bist der VISIBAL Online-Assistent für Aligner-Patienten. Aktueller Stand: REGULAR-Phase, Stufe 8/14, Three-Aligner-System. Beantworte Fragen zu Schmerzen, Tragezeit (22h-Regel), Essen, Phasenwechsel, Pflege, Notfällen. Antworte warm und per du. Max. 3 Sätze. Auf Deutsch.',
+    pain_label:'Zwickt\'s wo?', pain_sub:'Sag uns, wenn was drückt. Deine Praxis sieht das sofort.',
+    pain_none:'Kein Schmerz', pain_severe:'Stark',
     pain_none_today:'Kein Schmerz heute gemeldet',
     pain_reported_at:'heute {time} Uhr gemeldet', pain_alert_sent:'Schmerz-Alert an Praxis gesendet ✓',
     export_title:'Meine Daten exportieren', export_sub:'DSGVO Art. 20 — JSON-Download', export_done:'Daten exportiert ✓',
     reset_title:'Demo zurücksetzen', reset_sub:'Alle lokalen Daten löschen',
     reset_confirm_title:'Demo zurücksetzen?', reset_confirm_sub:'Alle lokalen Daten werden gelöscht. Das Onboarding startet neu.', reset_ok:'Zurücksetzen', reset_cancel:'Abbrechen',
-    ob1_title:'Willkommen bei VISIBAL', ob1_sub:'Ihre persönliche Begleitung für die nivellipso® Aligner-Behandlung.',
-    ob1_f1:'✓ Tragezeit automatisch tracken', ob1_f2:'✓ KI-Assistent bei Fragen', ob1_f3:'✓ Fotos dokumentieren', ob1_f4:'✓ Direkt mit Ihrer Praxis in Kontakt',
+    ob1_title:'Willkommen bei VISIBAL', ob1_sub:'Deine smarte Begleitung für die nivellipso® Aligner-Behandlung.',
     ob1_btn:'Loslegen →',
-    ob2_title:'Kamera erlauben', ob2_sub:'Für die Foto-Dokumentation Ihres Behandlungsfortschritts. Ihre Bilder bleiben privat.', ob2_btn:'Kamera erlauben',
-    ob3_title:'Erinnerungen aktivieren', ob3_sub:'Tägliche Tragezeit-Erinnerungen und Mitteilungen von Ihrer Praxis.', ob3_btn:'Benachrichtigungen erlauben',
-    ob_skip:'Überspringen',
-    ob4_title:'Datenschutz & Einwilligung', ob4_sub:'Bitte kurz durchlesen — dann kann es losgehen.',
-    ob4_consent:'Ihre Daten (Tragezeit, Fotos, Chat, Schmerzmeldungen) werden verschlüsselt auf EU-Servern in Frankfurt gespeichert und ausschliesslich an Ihre behandelnde Praxis übermittelt. Nivellmedical AG erhält keine persönlichen Daten. Sie können Ihre Daten jederzeit exportieren oder löschen lassen (DSGVO Art. 15–20, Schweizer DSG). Die App stellt keine Diagnosen — alle medizinischen Entscheidungen trifft Ihre Praxis.',
-    ob4_label:'Ich habe die Datenschutzerklärung gelesen und stimme der Verarbeitung meiner Gesundheitsdaten für die Begleitung meiner Aligner-Behandlung zu.',
-    ob4_btn:'App starten →',
+    ob2_title:'Drei einfache Regeln',
+    ob2_r1:'⏱ 22h — Aligner täglich 22 Stunden tragen',
+    ob2_r2:'📸 Fotos — Alle 2 Wochen 3 Fotos machen',
+    ob2_r3:'👆 Tippen — Schmerzen sofort über die App melden',
+    ob2_btn:'Verstanden →',
+    ob3_title:'Deine Daten, dein Schutz',
+    ob3_b1:'🔒 Daten bleiben in der EU (Frankfurt)',
+    ob3_b2:'👩‍⚕️ Nur deine Praxis hat Zugang',
+    ob3_b3:'❌ Keine Diagnosen durch die App',
+    ob3_b4:'📤 Export & Löschung jederzeit möglich',
+    ob3_btn:'Ich verstehe und stimme zu →',
+    ob_skip:'Überspringen', ob_back:'← Zurück',
+    ob4_title:'Fast fertig!', ob4_sub:'Damit wir dich persönlich ansprechen können.',
+    ob4_firstname:'Vorname', ob4_fullname:'Vollständiger Name',
+    ob4_aligner_nr:'Schiene Nr.', ob4_total:'Gesamt',
+    ob4_btn:'Los geht\'s →',
     print_btn:'Bericht drucken / PDF',
     rpt_title:'VISIBAL — Tragezeit-Bericht', rpt_created:'Erstellt', rpt_patient:'Patient', rpt_practice:'Praxis',
     rpt_today:'Heute', rpt_stage:'Stufe', rpt_phase:'Phase',
@@ -652,8 +664,8 @@ const VISIBAL_T = {
     tracker_title:'22h Tracker', tracker_sub:"Today's Wear Time",
     of_22h:'of 22h', hours_min:'Hours:Minutes',
     timer_status:'✓ 20 minutes to daily goal',
-    log_wear:'Log wear time', aligner_removed:'Aligner removed',
-    last7:'Last 7 Days',
+    log_wear:'+ Aligner in', aligner_removed:'− Aligner out (pause)',
+    last7:'This Week',
     day_mo:'Mo', day_tu:'Tu', day_we:'We', day_th:'Th', day_fr:'Fr', day_sa:'Sa', day_today:'Today',
     avg_wear:'Avg 21h 28min', compliance_pct:'94% Compliance',
     reminders:'Reminders',
@@ -663,11 +675,11 @@ const VISIBAL_T = {
     chat_title:'Online Assistant', chat_sub:'Ask anything',
     chat_greeting:'Hello Marie! 👋 I can answer your questions about treatment — pain, wear time, eating, everything. In the REGULAR phase, slight pressure is normal and expected.',
     sugg1:'Aligner feels tight — normal?', sugg2:'What can I eat?', sugg3:'Stage change: when?', sugg4:'Relieve discomfort',
-    photos_title:'Photo Documentation', photos_sub:'Your treatment in pictures',
-    new_photo:'New Photo',
-    frontal:'Frontal', frontal_sub:'Smile, closed',
-    lateral:'Lateral', lateral_sub:'Side view',
-    occlusal:'Occlusal (from above)', timeline:'Timeline',
+    photos_title:'Photo Documentation', photos_sub:'Watch your smile transform',
+    new_photo:'New Photo', photos_rule:'Three photos. Three taps.',
+    frontal:'Front view', frontal_sub:'Show your smile.',
+    lateral:'Side view', lateral_sub:'Tilt head sideways',
+    occlusal:'From above (mouth open)', timeline:'Your journey so far',
     start_photo:'Start photo', current_label:'Current',
     last_photo:'Last photo: 24 days ago', photo_recommend:'We recommend new photos every 2 weeks',
     profile_title:'Profile', my_practice:'My Practice',
@@ -680,22 +692,31 @@ const VISIBAL_T = {
     tab_home:'Home', tab_tracking:'22h', tab_chat:'Chat', tab_photos:'Photos', tab_profile:'Profile',
     chat_input_ph:'Type a question...',
     chat_system:'You are the VISIBAL online assistant for aligner patients. Current status: REGULAR phase, stage 8/14, Three-Aligner system. Answer questions about pain, wear time (22h rule), eating, phase changes, care, emergencies. Reply warmly and clearly. Max 3 sentences. In English.',
-    pain_label:'Report Pain', pain_none:'No Pain', pain_severe:'Severe',
+    pain_label:'Anything hurting?', pain_sub:'Tell us if something hurts. Your practice sees it instantly.',
+    pain_none:'No Pain', pain_severe:'Severe',
     pain_none_today:'No pain reported today',
     pain_reported_at:'reported today at {time}', pain_alert_sent:'Pain alert sent to practice ✓',
     export_title:'Export my data', export_sub:'GDPR Art. 20 — JSON Download', export_done:'Data exported ✓',
     reset_title:'Reset demo', reset_sub:'Delete all local data',
     reset_confirm_title:'Reset demo?', reset_confirm_sub:'All local data will be deleted. Onboarding will restart.', reset_ok:'Reset', reset_cancel:'Cancel',
-    ob1_title:'Welcome to VISIBAL', ob1_sub:'Your personal companion for your nivellipso® aligner treatment.',
-    ob1_f1:'✓ Track wear time automatically', ob1_f2:'✓ AI assistant for questions', ob1_f3:'✓ Document photos', ob1_f4:'✓ Stay in direct contact with your practice',
+    ob1_title:'Welcome to VISIBAL', ob1_sub:'Your smart companion for your nivellipso® aligner treatment.',
     ob1_btn:'Get started →',
-    ob2_title:'Allow camera', ob2_sub:'For photo documentation of your treatment progress. Your images stay private.', ob2_btn:'Allow Camera',
-    ob3_title:'Enable reminders', ob3_sub:'Daily wear time reminders and messages from your practice.', ob3_btn:'Allow Notifications',
-    ob_skip:'Skip',
-    ob4_title:'Privacy & Consent', ob4_sub:'Please read briefly — then you\'re ready to go.',
-    ob4_consent:'Your data (wear time, photos, chat, pain reports) is stored encrypted on EU servers in Frankfurt and shared exclusively with your treating practice. Nivellmedical AG receives no personal data. You may export or request deletion of your data at any time (GDPR Art. 15–20, Swiss DSG). The app makes no diagnoses — all medical decisions are made by your practice.',
-    ob4_label:'I have read the privacy policy and consent to the processing of my health data for the support of my aligner treatment.',
-    ob4_btn:'Start app →',
+    ob2_title:'Three Simple Rules',
+    ob2_r1:'⏱ 22h — Wear your aligner 22 hours a day',
+    ob2_r2:'📸 Photos — Take 3 photos every 2 weeks',
+    ob2_r3:'👆 Tap — Report pain immediately via the app',
+    ob2_btn:'Got it →',
+    ob3_title:'Your Data, Your Privacy',
+    ob3_b1:'🔒 Data stays in the EU (Frankfurt)',
+    ob3_b2:'👩‍⚕️ Only your practice has access',
+    ob3_b3:'❌ No diagnoses made by the app',
+    ob3_b4:'📤 Export & deletion available anytime',
+    ob3_btn:'I understand and agree →',
+    ob_skip:'Skip', ob_back:'← Back',
+    ob4_title:'Almost done!', ob4_sub:'So we can address you personally.',
+    ob4_firstname:'First name', ob4_fullname:'Full name',
+    ob4_aligner_nr:'Aligner No.', ob4_total:'Total',
+    ob4_btn:'Let\'s go →',
     print_btn:'Print report / PDF',
     rpt_title:'VISIBAL — Wear Time Report', rpt_created:'Generated', rpt_patient:'Patient', rpt_practice:'Practice',
     rpt_today:'Today', rpt_stage:'Stage', rpt_phase:'Phase',
@@ -717,8 +738,8 @@ const VISIBAL_T = {
     tracker_title:'Suivi 22h', tracker_sub:"Temps de port aujourd'hui",
     of_22h:'sur 22h', hours_min:'Heures:Minutes',
     timer_status:'✓ 20 minutes avant l\'objectif',
-    log_wear:'Enregistrer le port', aligner_removed:'Gouttière retirée',
-    last7:'7 derniers jours',
+    log_wear:'+ Gouttière en bouche', aligner_removed:'− Gouttière retirée (pause)',
+    last7:'Cette semaine',
     day_mo:'Lu', day_tu:'Ma', day_we:'Me', day_th:'Je', day_fr:'Ve', day_sa:'Sa', day_today:"Auj.",
     avg_wear:'Moy. 21h 28min', compliance_pct:'94% Compliance',
     reminders:'Rappels',
@@ -728,11 +749,11 @@ const VISIBAL_T = {
     chat_title:'Assistant en ligne', chat_sub:'Posez toutes vos questions',
     chat_greeting:'Bonjour Marie! 👋 Je réponds à vos questions sur le traitement — douleurs, temps de port, alimentation, tout. En phase REGULAR, de légères pressions sont normales et souhaitées.',
     sugg1:'La gouttière appuie — normal?', sugg2:'Que puis-je manger?', sugg3:'Changement: quand?', sugg4:'Soulager la douleur',
-    photos_title:'Documentation photo', photos_sub:'Votre traitement en images',
-    new_photo:'Nouvelle photo',
-    frontal:'Frontal', frontal_sub:'Sourire, bouche fermée',
-    lateral:'Latéral', lateral_sub:'Vue de côté',
-    occlusal:'Occlusal (vue du dessus)', timeline:'Historique',
+    photos_title:'Documentation photo', photos_sub:'Voyez votre sourire se transformer',
+    new_photo:'Nouvelle photo', photos_rule:'Trois photos. Trois clics.',
+    frontal:'De face', frontal_sub:'Souriez, montrez vos dents.',
+    lateral:'De côté', lateral_sub:'Inclinez la tête',
+    occlusal:'Du dessus (bouche ouverte)', timeline:'Votre parcours',
     start_photo:'Photo de départ', current_label:'Actuel',
     last_photo:'Dernière photo: 24 jours', photo_recommend:'Nous recommandons de nouvelles photos toutes les 2 semaines',
     profile_title:'Profil', my_practice:'Mon cabinet',
@@ -745,22 +766,31 @@ const VISIBAL_T = {
     tab_home:'Accueil', tab_tracking:'22h', tab_chat:'Chat', tab_photos:'Photos', tab_profile:'Profil',
     chat_input_ph:'Posez une question...',
     chat_system:"Vous êtes l'assistant VISIBAL pour patients aligner. Statut: phase REGULAR, plateau 8/14, système Three-Aligner. Répondez aux questions sur la douleur, le temps de port (règle 22h), l'alimentation, les changements de phase, les soins, les urgences. Répondez chaleureusement. 3 phrases max. En français.",
-    pain_label:'Signaler la douleur', pain_none:'Pas de douleur', pain_severe:'Intense',
+    pain_label:'Quelque chose qui gêne?', pain_sub:'Dites-nous si quelque chose fait mal. Votre cabinet le voit immédiatement.',
+    pain_none:'Pas de douleur', pain_severe:'Intense',
     pain_none_today:"Aucune douleur signalée aujourd'hui",
     pain_reported_at:"signalée aujourd'hui à {time}", pain_alert_sent:'Alerte douleur envoyée au cabinet ✓',
     export_title:'Exporter mes données', export_sub:'RGPD Art. 20 — Téléchargement JSON', export_done:'Données exportées ✓',
     reset_title:'Réinitialiser la démo', reset_sub:'Supprimer toutes les données locales',
     reset_confirm_title:'Réinitialiser la démo?', reset_confirm_sub:"Toutes les données locales seront supprimées. L'intégration redémarrera.", reset_ok:'Réinitialiser', reset_cancel:'Annuler',
-    ob1_title:'Bienvenue sur VISIBAL', ob1_sub:'Votre accompagnement personnel pour votre traitement par gouttières nivellipso®.',
-    ob1_f1:'✓ Suivi automatique du temps de port', ob1_f2:'✓ Assistant IA pour vos questions', ob1_f3:'✓ Documenter les photos', ob1_f4:'✓ En contact direct avec votre cabinet',
+    ob1_title:'Bienvenue sur VISIBAL', ob1_sub:'Votre accompagnement intelligent pour votre traitement par gouttières nivellipso®.',
     ob1_btn:'Commencer →',
-    ob2_title:'Autoriser la caméra', ob2_sub:'Pour documenter votre progression de traitement en photos. Vos images restent privées.', ob2_btn:'Autoriser la caméra',
-    ob3_title:'Activer les rappels', ob3_sub:'Rappels quotidiens de port et messages de votre cabinet.', ob3_btn:'Autoriser les notifications',
-    ob_skip:'Passer',
-    ob4_title:'Confidentialité & Consentement', ob4_sub:'Veuillez lire brièvement — vous êtes prêt.',
-    ob4_consent:"Vos données (temps de port, photos, chat, signalements de douleurs) sont stockées de manière chiffrée sur des serveurs UE à Francfort et transmises exclusivement à votre cabinet traitant. Nivellmedical AG ne reçoit pas de données personnelles. Vous pouvez à tout moment exporter ou faire supprimer vos données (RGPD Art. 15–20, LPD suisse). L'application ne pose pas de diagnostic — toutes les décisions médicales sont prises par votre cabinet.",
-    ob4_label:'J\'ai lu la déclaration de confidentialité et consens au traitement de mes données de santé pour le suivi de mon traitement par gouttières.',
-    ob4_btn:'Démarrer l\'app →',
+    ob2_title:'Trois règles simples',
+    ob2_r1:'⏱ 22h — Porter la gouttière 22 heures par jour',
+    ob2_r2:'📸 Photos — Prendre 3 photos toutes les 2 semaines',
+    ob2_r3:'👆 Appuyer — Signaler la douleur via l\'app',
+    ob2_btn:'Compris →',
+    ob3_title:'Vos données, votre protection',
+    ob3_b1:'🔒 Données dans l\'UE (Francfort)',
+    ob3_b2:'👩‍⚕️ Seul votre cabinet a accès',
+    ob3_b3:'❌ Pas de diagnostics par l\'app',
+    ob3_b4:'📤 Export & suppression à tout moment',
+    ob3_btn:'Je comprends et j\'accepte →',
+    ob_skip:'Passer', ob_back:'← Retour',
+    ob4_title:'Presque terminé!', ob4_sub:'Pour pouvoir vous adresser personnellement.',
+    ob4_firstname:'Prénom', ob4_fullname:'Nom complet',
+    ob4_aligner_nr:'Gouttière N°', ob4_total:'Total',
+    ob4_btn:'C\'est parti →',
     print_btn:'Imprimer rapport / PDF',
     rpt_title:'VISIBAL — Rapport de port', rpt_created:'Créé', rpt_patient:'Patient', rpt_practice:'Cabinet',
     rpt_today:"Aujourd'hui", rpt_stage:'Plateau', rpt_phase:'Phase',
@@ -782,8 +812,8 @@ const VISIBAL_T = {
     tracker_title:'Tracker 22h', tracker_sub:'Tempo di porto oggi',
     of_22h:'di 22h', hours_min:'Ore:Minuti',
     timer_status:'✓ 20 minuti al traguardo giornaliero',
-    log_wear:'Registra porto', aligner_removed:'Allineatore rimosso',
-    last7:'Ultimi 7 giorni',
+    log_wear:'+ Allineatore in bocca', aligner_removed:'− Allineatore fuori (pausa)',
+    last7:'Questa settimana',
     day_mo:'Lu', day_tu:'Ma', day_we:'Me', day_th:'Gi', day_fr:'Ve', day_sa:'Sa', day_today:'Oggi',
     avg_wear:'Media 21h 28min', compliance_pct:'94% Compliance',
     reminders:'Promemoria',
@@ -793,11 +823,11 @@ const VISIBAL_T = {
     chat_title:'Assistente online', chat_sub:'Chiedete qualsiasi cosa',
     chat_greeting:'Ciao Marie! 👋 Rispondo alle vostre domande sul trattamento — dolori, tempo di porto, alimentazione, tutto. Nella fase REGULAR, lievi pressioni sono normali e attese.',
     sugg1:"L'allineatore stringe — normale?", sugg2:'Cosa posso mangiare?', sugg3:'Cambio stadio: quando?', sugg4:'Alleviare il dolore',
-    photos_title:'Documentazione fotografica', photos_sub:'Il vostro trattamento in immagini',
-    new_photo:'Nuova foto',
-    frontal:'Frontale', frontal_sub:'Sorriso, bocca chiusa',
-    lateral:'Laterale', lateral_sub:'Vista laterale',
-    occlusal:"Occlusale (dall'alto)", timeline:'Cronologia',
+    photos_title:'Documentazione fotografica', photos_sub:'Guarda come cresce il tuo sorriso',
+    new_photo:'Nuova foto', photos_rule:'Tre foto. Tre clic.',
+    frontal:'Di fronte', frontal_sub:'Mostra il sorriso.',
+    lateral:'Di lato', lateral_sub:'Inclina la testa',
+    occlusal:'Dall\'alto (bocca aperta)', timeline:'Il tuo percorso',
     start_photo:'Foto iniziale', current_label:'Attuale',
     last_photo:'Ultima foto: 24 giorni', photo_recommend:'Consigliamo nuove foto ogni 2 settimane',
     profile_title:'Profilo', my_practice:'Il mio studio',
@@ -810,22 +840,31 @@ const VISIBAL_T = {
     tab_home:'Home', tab_tracking:'22h', tab_chat:'Chat', tab_photos:'Foto', tab_profile:'Profilo',
     chat_input_ph:'Scrivi una domanda...',
     chat_system:'Sei l\'assistente VISIBAL per pazienti aligner. Stato attuale: fase REGULAR, stadio 8/14, sistema Three-Aligner. Rispondi a domande su dolore, tempo di porto (regola 22h), alimentazione, cambi di fase, cura, emergenze. Rispondi calorosamente. Max 3 frasi. In italiano.',
-    pain_label:'Segnala dolore', pain_none:'Nessun dolore', pain_severe:'Intenso',
+    pain_label:'Qualcosa che dà fastidio?', pain_sub:'Dicci se qualcosa fa male. Il tuo studio lo vede subito.',
+    pain_none:'Nessun dolore', pain_severe:'Intenso',
     pain_none_today:'Nessun dolore segnalato oggi',
     pain_reported_at:'segnalato oggi alle {time}', pain_alert_sent:'Avviso dolore inviato allo studio ✓',
     export_title:'Esporta i miei dati', export_sub:'GDPR Art. 20 — Download JSON', export_done:'Dati esportati ✓',
     reset_title:'Reimposta demo', reset_sub:'Elimina tutti i dati locali',
     reset_confirm_title:'Reimposta demo?', reset_confirm_sub:"Tutti i dati locali verranno eliminati. L'onboarding verrà riavviato.", reset_ok:'Reimposta', reset_cancel:'Annulla',
-    ob1_title:'Benvenuto in VISIBAL', ob1_sub:'Il tuo accompagnamento personale per il trattamento con allineatori nivellipso®.',
-    ob1_f1:'✓ Traccia il tempo di porto automaticamente', ob1_f2:'✓ Assistente IA per le domande', ob1_f3:'✓ Documenta le foto', ob1_f4:'✓ Contatto diretto con il tuo studio',
+    ob1_title:'Benvenuto in VISIBAL', ob1_sub:'Il tuo accompagnamento intelligente per il trattamento con allineatori nivellipso®.',
     ob1_btn:'Inizia →',
-    ob2_title:'Consenti fotocamera', ob2_sub:'Per la documentazione fotografica del vostro progresso. Le vostre immagini rimangono private.', ob2_btn:'Consenti fotocamera',
-    ob3_title:'Attiva i promemoria', ob3_sub:'Promemoria giornalieri di porto e messaggi dal tuo studio.', ob3_btn:'Consenti notifiche',
-    ob_skip:'Salta',
-    ob4_title:'Privacy e consenso', ob4_sub:'Si prega di leggere brevemente — poi si può iniziare.',
-    ob4_consent:'I vostri dati (tempo di porto, foto, chat, segnalazioni di dolore) vengono archiviati in forma cifrata su server UE a Francoforte e trasmessi esclusivamente al vostro studio. Nivellmedical AG non riceve dati personali. Potete esportare o richiedere la cancellazione dei vostri dati in qualsiasi momento (GDPR Art. 15–20, LPD svizzera). L\'app non formula diagnosi — tutte le decisioni mediche spettano al vostro studio.',
-    ob4_label:'Ho letto l\'informativa sulla privacy e acconsento al trattamento dei miei dati sanitari per il supporto al mio trattamento con allineatori.',
-    ob4_btn:'Avvia l\'app →',
+    ob2_title:'Tre regole semplici',
+    ob2_r1:'⏱ 22h — Indossa l\'allineatore 22 ore al giorno',
+    ob2_r2:'📸 Foto — Scatta 3 foto ogni 2 settimane',
+    ob2_r3:'👆 Tocca — Segnala il dolore subito via app',
+    ob2_btn:'Capito →',
+    ob3_title:'I tuoi dati, la tua protezione',
+    ob3_b1:'🔒 Dati nell\'UE (Francoforte)',
+    ob3_b2:'👩‍⚕️ Solo il tuo studio ha accesso',
+    ob3_b3:'❌ Nessuna diagnosi dall\'app',
+    ob3_b4:'📤 Esporta & cancella quando vuoi',
+    ob3_btn:'Capisco e acconsento →',
+    ob_skip:'Salta', ob_back:'← Indietro',
+    ob4_title:'Quasi finito!', ob4_sub:'Per poterti chiamare per nome.',
+    ob4_firstname:'Nome', ob4_fullname:'Nome completo',
+    ob4_aligner_nr:'Allineatore N.', ob4_total:'Totale',
+    ob4_btn:'Andiamo →',
     print_btn:'Stampa rapporto / PDF',
     rpt_title:'VISIBAL — Rapporto di porto', rpt_created:'Creato', rpt_patient:'Paziente', rpt_practice:'Studio',
     rpt_today:'Oggi', rpt_stage:'Stadio', rpt_phase:'Fase',
@@ -847,8 +886,8 @@ const VISIBAL_T = {
     tracker_title:'Трекер 22ч', tracker_sub:'Время ношения сегодня',
     of_22h:'из 22ч', hours_min:'Часы:Минуты',
     timer_status:'✓ 20 минут до цели дня',
-    log_wear:'Записать ношение', aligner_removed:'Элайнер снят',
-    last7:'Последние 7 дней',
+    log_wear:'+ Элайнер надет', aligner_removed:'− Элайнер снят (пауза)',
+    last7:'Эта неделя',
     day_mo:'Пн', day_tu:'Вт', day_we:'Ср', day_th:'Чт', day_fr:'Пт', day_sa:'Сб', day_today:'Сег.',
     avg_wear:'Ср. 21ч 28мин', compliance_pct:'94% соответствие',
     reminders:'Напоминания',
@@ -858,11 +897,11 @@ const VISIBAL_T = {
     chat_title:'Онлайн-ассистент', chat_sub:'Задайте любой вопрос',
     chat_greeting:'Привет, Мари! 👋 Отвечу на вопросы о лечении — боль, время ношения, еда и всё остальное. В фазе REGULAR небольшое давление — норма.',
     sugg1:'Элайнер давит — нормально?', sugg2:'Что можно есть?', sugg3:'Смена стадии: когда?', sugg4:'Снять дискомфорт',
-    photos_title:'Фото-документация', photos_sub:'Ваше лечение в снимках',
-    new_photo:'Новое фото',
-    frontal:'Фронтальный', frontal_sub:'Улыбка, рот закрыт',
-    lateral:'Боковой', lateral_sub:'Вид сбоку',
-    occlusal:'Окклюзионный (сверху)', timeline:'История',
+    photos_title:'Фото-документация', photos_sub:'Смотри, как растёт твоя улыбка',
+    new_photo:'Новое фото', photos_rule:'Три фото. Три нажатия.',
+    frontal:'Спереди', frontal_sub:'Улыбнись.',
+    lateral:'Сбоку', lateral_sub:'Наклони голову',
+    occlusal:'Сверху (рот открыт)', timeline:'Твой путь',
     start_photo:'Начальное фото', current_label:'Текущий',
     last_photo:'Последнее фото: 24 дня', photo_recommend:'Рекомендуем новые фото каждые 2 недели',
     profile_title:'Профиль', my_practice:'Моя клиника',
@@ -875,22 +914,31 @@ const VISIBAL_T = {
     tab_home:'Главная', tab_tracking:'22ч', tab_chat:'Чат', tab_photos:'Фото', tab_profile:'Профиль',
     chat_input_ph:'Задайте вопрос...',
     chat_system:'Ты VISIBAL-ассистент для пациентов с элайнерами. Текущий статус: фаза REGULAR, стадия 8/14, система Three-Aligner. Отвечай на вопросы о боли, времени ношения (правило 22ч), еде, смене фаз, уходе, экстренных случаях. Отвечай тепло и понятно. Максимум 3 предложения. На русском.',
-    pain_label:'Сообщить о боли', pain_none:'Нет боли', pain_severe:'Сильная',
+    pain_label:'Что-то болит?', pain_sub:'Сообщи нам, если что-то давит. Твоя клиника увидит это сразу.',
+    pain_none:'Нет боли', pain_severe:'Сильная',
     pain_none_today:'Сегодня боль не зафиксирована',
     pain_reported_at:'зафиксирована сегодня в {time}', pain_alert_sent:'Оповещение о боли отправлено в клинику ✓',
     export_title:'Экспортировать данные', export_sub:'GDPR ст. 20 — JSON-загрузка', export_done:'Данные экспортированы ✓',
     reset_title:'Сбросить демо', reset_sub:'Удалить все локальные данные',
     reset_confirm_title:'Сбросить демо?', reset_confirm_sub:'Все локальные данные будут удалены. Онбординг запустится заново.', reset_ok:'Сбросить', reset_cancel:'Отмена',
-    ob1_title:'Добро пожаловать в VISIBAL', ob1_sub:'Ваш персональный помощник в лечении элайнерами nivellipso®.',
-    ob1_f1:'✓ Автоматический учёт времени ношения', ob1_f2:'✓ ИИ-ассистент по вопросам', ob1_f3:'✓ Фото-документация', ob1_f4:'✓ Прямая связь с клиникой',
+    ob1_title:'Добро пожаловать в VISIBAL', ob1_sub:'Твой умный помощник в лечении элайнерами nivellipso®.',
     ob1_btn:'Начать →',
-    ob2_title:'Разрешить камеру', ob2_sub:'Для фото-документации вашего лечения. Ваши снимки остаются приватными.', ob2_btn:'Разрешить камеру',
-    ob3_title:'Включить напоминания', ob3_sub:'Ежедневные напоминания о ношении и сообщения от клиники.', ob3_btn:'Разрешить уведомления',
-    ob_skip:'Пропустить',
-    ob4_title:'Конфиденциальность и согласие', ob4_sub:'Ознакомьтесь кратко — и можно начинать.',
-    ob4_consent:'Ваши данные (время ношения, фото, чат, сообщения о боли) хранятся в зашифрованном виде на серверах ЕС во Франкфурте и передаются исключительно вашей лечащей клинике. Nivellmedical AG не получает персональных данных. Вы можете в любое время экспортировать данные или запросить их удаление (GDPR ст. 15–20, Швейцарский DSG). Приложение не ставит диагнозов — все медицинские решения принимает ваша клиника.',
-    ob4_label:'Я ознакомился с политикой конфиденциальности и даю согласие на обработку моих медицинских данных для сопровождения лечения элайнерами.',
-    ob4_btn:'Запустить приложение →',
+    ob2_title:'Три простых правила',
+    ob2_r1:'⏱ 22ч — Носи элайнер 22 часа в день',
+    ob2_r2:'📸 Фото — Делай 3 фото каждые 2 недели',
+    ob2_r3:'👆 Нажми — Сообщай о боли через приложение',
+    ob2_btn:'Понял →',
+    ob3_title:'Твои данные, твоя защита',
+    ob3_b1:'🔒 Данные в ЕС (Франкфурт)',
+    ob3_b2:'👩‍⚕️ Доступ только у твоей клиники',
+    ob3_b3:'❌ Приложение не ставит диагнозов',
+    ob3_b4:'📤 Экспорт и удаление в любое время',
+    ob3_btn:'Я понимаю и соглашаюсь →',
+    ob_skip:'Пропустить', ob_back:'← Назад',
+    ob4_title:'Почти готово!', ob4_sub:'Чтобы мы могли обращаться к тебе лично.',
+    ob4_firstname:'Имя', ob4_fullname:'Полное имя',
+    ob4_aligner_nr:'Элайнер №', ob4_total:'Всего',
+    ob4_btn:'Поехали →',
     print_btn:'Печать отчёта / PDF',
     rpt_title:'VISIBAL — Отчёт о ношении', rpt_created:'Создан', rpt_patient:'Пациент', rpt_practice:'Клиника',
     rpt_today:'Сегодня', rpt_stage:'Стадия', rpt_phase:'Фаза',
@@ -912,8 +960,8 @@ const VISIBAL_T = {
     tracker_title:'Rastreador 22h', tracker_sub:'Tiempo de uso hoy',
     of_22h:'de 22h', hours_min:'Horas:Minutos',
     timer_status:'✓ 20 minutos para el objetivo diario',
-    log_wear:'Registrar uso', aligner_removed:'Alineador retirado',
-    last7:'Últimos 7 días',
+    log_wear:'+ Alineador puesto', aligner_removed:'− Alineador fuera (pausa)',
+    last7:'Esta semana',
     day_mo:'Lu', day_tu:'Ma', day_we:'Mi', day_th:'Ju', day_fr:'Vi', day_sa:'Sa', day_today:'Hoy',
     avg_wear:'Prom. 21h 28min', compliance_pct:'94% Cumplimiento',
     reminders:'Recordatorios',
@@ -923,11 +971,11 @@ const VISIBAL_T = {
     chat_title:'Asistente en línea', chat_sub:'Pregunte lo que quiera',
     chat_greeting:'¡Hola Marie! 👋 Respondo sus preguntas sobre el tratamiento — dolor, tiempo de uso, comida, todo. En la fase REGULAR, leve presión es normal y esperada.',
     sugg1:'¿El alineador presiona — normal?', sugg2:'¿Qué puedo comer?', sugg3:'Cambio de fase: ¿cuándo?', sugg4:'Aliviar el malestar',
-    photos_title:'Documentación fotográfica', photos_sub:'Su tratamiento en imágenes',
-    new_photo:'Nueva foto',
-    frontal:'Frontal', frontal_sub:'Sonrisa, boca cerrada',
-    lateral:'Lateral', lateral_sub:'Vista lateral',
-    occlusal:'Oclusal (desde arriba)', timeline:'Historial',
+    photos_title:'Documentación fotográfica', photos_sub:'Mira cómo crece tu sonrisa',
+    new_photo:'Nueva foto', photos_rule:'Tres fotos. Tres clics.',
+    frontal:'De frente', frontal_sub:'Muestra tu sonrisa.',
+    lateral:'De lado', lateral_sub:'Inclina la cabeza',
+    occlusal:'Desde arriba (boca abierta)', timeline:'Tu camino',
     start_photo:'Foto inicial', current_label:'Actual',
     last_photo:'Última foto: 24 días', photo_recommend:'Recomendamos nuevas fotos cada 2 semanas',
     profile_title:'Perfil', my_practice:'Mi clínica',
@@ -940,22 +988,31 @@ const VISIBAL_T = {
     tab_home:'Inicio', tab_tracking:'22h', tab_chat:'Chat', tab_photos:'Fotos', tab_profile:'Perfil',
     chat_input_ph:'Escribe una pregunta...',
     chat_system:'Eres el asistente VISIBAL para pacientes con alineadores. Estado actual: fase REGULAR, etapa 8/14, sistema Three-Aligner. Responde preguntas sobre dolor, tiempo de uso (regla 22h), alimentación, cambios de fase, cuidados, emergencias. Responde calurosamente. Máx. 3 frases. En español.',
-    pain_label:'Informar dolor', pain_none:'Sin dolor', pain_severe:'Intenso',
+    pain_label:'¿Algo que molesta?', pain_sub:'Dinos si algo duele. Tu clínica lo ve al instante.',
+    pain_none:'Sin dolor', pain_severe:'Intenso',
     pain_none_today:'Sin dolor reportado hoy',
     pain_reported_at:'reportado hoy a las {time}', pain_alert_sent:'Alerta de dolor enviada a la clínica ✓',
     export_title:'Exportar mis datos', export_sub:'RGPD Art. 20 — Descarga JSON', export_done:'Datos exportados ✓',
     reset_title:'Restablecer demo', reset_sub:'Eliminar todos los datos locales',
     reset_confirm_title:'¿Restablecer demo?', reset_confirm_sub:'Todos los datos locales se eliminarán. La configuración inicial se reiniciará.', reset_ok:'Restablecer', reset_cancel:'Cancelar',
-    ob1_title:'Bienvenido a VISIBAL', ob1_sub:'Tu acompañamiento personal para tu tratamiento con alineadores nivellipso®.',
-    ob1_f1:'✓ Seguimiento automático del tiempo de uso', ob1_f2:'✓ Asistente IA para preguntas', ob1_f3:'✓ Documentar fotos', ob1_f4:'✓ Contacto directo con tu clínica',
+    ob1_title:'Bienvenido a VISIBAL', ob1_sub:'Tu acompañamiento inteligente para tu tratamiento con alineadores nivellipso®.',
     ob1_btn:'Empezar →',
-    ob2_title:'Permitir cámara', ob2_sub:'Para documentar su progreso de tratamiento con fotos. Sus imágenes son privadas.', ob2_btn:'Permitir cámara',
-    ob3_title:'Activar recordatorios', ob3_sub:'Recordatorios diarios de uso y mensajes de su clínica.', ob3_btn:'Permitir notificaciones',
-    ob_skip:'Omitir',
-    ob4_title:'Privacidad y consentimiento', ob4_sub:'Por favor lea brevemente — ya puede comenzar.',
-    ob4_consent:'Sus datos (tiempo de uso, fotos, chat, reportes de dolor) se almacenan cifrados en servidores UE en Frankfurt y se transmiten exclusivamente a su clínica tratante. Nivellmedical AG no recibe datos personales. Puede exportar o solicitar la eliminación de sus datos en cualquier momento (RGPD Art. 15–20, LPD suiza). La aplicación no realiza diagnósticos — todas las decisiones médicas las toma su clínica.',
-    ob4_label:'He leído la declaración de privacidad y consiento el tratamiento de mis datos de salud para el acompañamiento de mi tratamiento con alineadores.',
-    ob4_btn:'Iniciar app →',
+    ob2_title:'Tres reglas simples',
+    ob2_r1:'⏱ 22h — Lleva el alineador 22 horas al día',
+    ob2_r2:'📸 Fotos — Toma 3 fotos cada 2 semanas',
+    ob2_r3:'👆 Toca — Informa el dolor inmediatamente en la app',
+    ob2_btn:'Entendido →',
+    ob3_title:'Tus datos, tu protección',
+    ob3_b1:'🔒 Datos en la UE (Frankfurt)',
+    ob3_b2:'👩‍⚕️ Solo tu clínica tiene acceso',
+    ob3_b3:'❌ Sin diagnósticos de la app',
+    ob3_b4:'📤 Exportar y borrar en cualquier momento',
+    ob3_btn:'Entiendo y acepto →',
+    ob_skip:'Omitir', ob_back:'← Volver',
+    ob4_title:'¡Casi listo!', ob4_sub:'Para poder dirigirnos a ti personalmente.',
+    ob4_firstname:'Nombre', ob4_fullname:'Nombre completo',
+    ob4_aligner_nr:'Alineador N°', ob4_total:'Total',
+    ob4_btn:'¡Vamos →',
     print_btn:'Imprimir informe / PDF',
     rpt_title:'VISIBAL — Informe de uso', rpt_created:'Generado', rpt_patient:'Paciente', rpt_practice:'Clínica',
     rpt_today:'Hoy', rpt_stage:'Etapa', rpt_phase:'Fase',
@@ -1227,7 +1284,7 @@ function _updateTimerUI() {
   const offset = +(534.07 * (1 - Math.min(1, secs / target))).toFixed(1);
   const circle = document.getElementById('timerCircle');
   const hoursEl = document.getElementById('timerHours');
-  if (circle) circle.style.strokeDashoffset = offset;
+  if (circle) { circle.style.strokeDashoffset = offset; circle.classList.toggle('goal-reached', secs >= target); }
   if (hoursEl) hoursEl.textContent = _fmtWear(secs);
   const statusEl = document.querySelector('.timer-status');
   if (statusEl) {
@@ -1355,6 +1412,7 @@ function _demoResponse(text, lang) {
 applyLang(getAppLang());
 _initWear();
 updateTrackerDate();
+updatePatientName();
 
 // Deep-link tab routing from manifest shortcuts
 const _urlTab = new URLSearchParams(window.location.search).get('tab');
@@ -1377,25 +1435,33 @@ function onboardNext(step) {
   if (s) s.classList.add('active');
   if (d) d.classList.add('active');
 }
-async function requestCamera() {
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-    stream.getTracks().forEach(t => t.stop());
-    showToast('Kamera erlaubt ✓', 'ok');
-  } catch(e) { showToast('Kamera nicht verfügbar', 'err'); }
-  onboardNext(3);
-}
-async function requestNotifications() {
-  try { if ('Notification' in window) await Notification.requestPermission(); } catch(e) {}
+function acceptConsent() {
+  localStorage.setItem('visibal_consent_ts', new Date().toISOString());
   onboardNext(4);
 }
 function completeOnboarding() {
-  const chk = document.getElementById('consentCheck');
-  if (chk && !chk.checked) return;
+  const firstName = (document.getElementById('obFirstName')?.value || '').trim() || 'Marie';
+  const fullName  = (document.getElementById('obFullName')?.value  || '').trim() || 'Marie Müller';
+  const alignerNr = parseInt(document.getElementById('obAlignerNr')?.value) || 8;
+  const total     = parseInt(document.getElementById('obTotal')?.value)     || 14;
+  localStorage.setItem('visibal_patient_data', JSON.stringify({ firstName, fullName, alignerNr, total }));
   localStorage.setItem('visibal_onboarded', '1');
-  localStorage.setItem('visibal_consent_ts', new Date().toISOString());
+  if (!localStorage.getItem('visibal_consent_ts')) {
+    localStorage.setItem('visibal_consent_ts', new Date().toISOString());
+  }
   document.getElementById('onboardOverlay').style.display = 'none';
   _trackEvent('onboarding_complete');
+  updatePatientName();
+}
+
+function updatePatientName() {
+  const data = JSON.parse(localStorage.getItem('visibal_patient_data') || '{}');
+  const name = data.firstName || 'Marie';
+  const el = document.getElementById('greetingName');
+  if (el) el.textContent = name + ' 👋';
+  // Update profile name
+  const pn = document.querySelector('#view-profile .greeting-name');
+  if (pn) pn.textContent = data.fullName || 'Marie Müller';
 }
 
 // ── PAIN REPORT ───────────────────────────────────────────
@@ -1421,10 +1487,11 @@ function logPain(level) {
 
 // ── GDPR DATA EXPORT ──────────────────────────────────────
 function exportUserData() {
+  const _epd = JSON.parse(localStorage.getItem('visibal_patient_data') || '{}');
   const data = {
     export_timestamp: new Date().toISOString(),
     gdpr_basis: 'DSGVO Art. 15 / Art. 20 — Recht auf Auskunft und Datenübertragbarkeit',
-    patient: 'Marie Müller',
+    patient: _epd.fullName || _epd.firstName || 'Marie Müller',
     practice: 'Dr. med. dent. Schmidt · Schaffhausen',
     consent_given: localStorage.getItem('visibal_consent_ts') || null,
     wear: { today_secs: localStorage.getItem('vw_secs'), date: localStorage.getItem('vw_date') },
@@ -1470,6 +1537,8 @@ function printWearReport() {
   const secs = _totalWearSecs();
   const T = VISIBAL_T[getAppLang()] || VISIBAL_T.de;
   const date = new Date().toLocaleDateString();
+  const _pd = JSON.parse(localStorage.getItem('visibal_patient_data') || '{}');
+  const _patName = _pd.fullName || _pd.firstName || 'Marie Müller';
   const ok = T.rpt_goal_met, warn = T.rpt_below_goal;
   const w = window.open('', '_blank');
   w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${T.rpt_title}</title><style>
@@ -1486,7 +1555,7 @@ function printWearReport() {
     footer{margin-top:32px;font-size:10px;color:#aaa;text-align:center;}
   </style></head><body>
     <h1>${T.rpt_title}</h1>
-    <div class="meta">${T.rpt_created}: ${date} &nbsp;·&nbsp; ${T.rpt_patient}: Marie Müller &nbsp;·&nbsp; ${T.rpt_practice}: Dr. med. dent. Schmidt</div>
+    <div class="meta">${T.rpt_created}: ${date} &nbsp;·&nbsp; ${T.rpt_patient}: ${_patName} &nbsp;·&nbsp; ${T.rpt_practice}: Dr. med. dent. Schmidt</div>
     <div class="stats">
       <div><div class="stat-n">${_fmtWear(secs)}</div><div class="stat-l">${T.rpt_today}</div></div>
       <div><div class="stat-n">94%</div><div class="stat-l">Compliance</div></div>
@@ -1522,42 +1591,62 @@ if (!localStorage.getItem('visibal_onboarded')) {
 
 <!-- ONBOARDING OVERLAY -->
 <div class="onboard-overlay" id="onboardOverlay">
+  <!-- Step 1: Welcome -->
   <div class="onboard-step active" id="onboard-step-1">
     <div class="onboard-logo">V</div>
     <div class="onboard-title" data-i18n="ob1_title">Willkommen bei VISIBAL</div>
-    <div class="onboard-sub" data-i18n="ob1_sub">Ihre persönliche Begleitung für die nivellipso® Aligner-Behandlung.</div>
-    <ul class="onboard-features">
-      <li data-i18n="ob1_f1">✓ Tragezeit automatisch tracken</li>
-      <li data-i18n="ob1_f2">✓ KI-Assistent bei Fragen</li>
-      <li data-i18n="ob1_f3">✓ Fotos dokumentieren</li>
-      <li data-i18n="ob1_f4">✓ Direkt mit Ihrer Praxis in Kontakt</li>
-    </ul>
+    <div class="onboard-sub" data-i18n="ob1_sub">Deine smarte Begleitung für die nivellipso® Aligner-Behandlung.</div>
     <button class="onboard-btn" onclick="onboardNext(2)" data-i18n="ob1_btn">Loslegen →</button>
   </div>
+  <!-- Step 2: Three Simple Rules -->
   <div class="onboard-step" id="onboard-step-2">
-    <div class="onboard-perm-ico">📷</div>
-    <div class="onboard-title" data-i18n="ob2_title">Kamera erlauben</div>
-    <div class="onboard-sub" data-i18n="ob2_sub">Für die Foto-Dokumentation Ihres Behandlungsfortschritts. Ihre Bilder bleiben privat.</div>
-    <button class="onboard-btn" onclick="requestCamera()" data-i18n="ob2_btn">Kamera erlauben</button>
-    <button class="onboard-btn-skip" onclick="onboardNext(3)" data-i18n="ob_skip">Überspringen</button>
+    <div class="onboard-logo" style="font-size:36px;background:var(--red-light);color:var(--red);">📋</div>
+    <div class="onboard-title" data-i18n="ob2_title">Drei einfache Regeln</div>
+    <ul class="onboard-features" style="margin-bottom:28px;">
+      <li data-i18n="ob2_r1">⏱ <strong>22h</strong> — Aligner täglich 22 Stunden tragen</li>
+      <li data-i18n="ob2_r2">📸 <strong>Fotos</strong> — Alle 2 Wochen 3 Fotos machen</li>
+      <li data-i18n="ob2_r3">👆 <strong>Tippen</strong> — Schmerzen sofort über die App melden</li>
+    </ul>
+    <button class="onboard-btn" onclick="onboardNext(3)" data-i18n="ob2_btn">Verstanden →</button>
   </div>
+  <!-- Step 3: GDPR Consent -->
   <div class="onboard-step" id="onboard-step-3">
-    <div class="onboard-perm-ico">🔔</div>
-    <div class="onboard-title" data-i18n="ob3_title">Erinnerungen aktivieren</div>
-    <div class="onboard-sub" data-i18n="ob3_sub">Tägliche Tragezeit-Erinnerungen und Mitteilungen von Ihrer Praxis.</div>
-    <button class="onboard-btn" onclick="requestNotifications()" data-i18n="ob3_btn">Benachrichtigungen erlauben</button>
-    <button class="onboard-btn-skip" onclick="onboardNext(4)" data-i18n="ob_skip">Überspringen</button>
+    <div class="onboard-logo" style="font-size:36px;background:var(--red-light);color:var(--red);">🔒</div>
+    <div class="onboard-title" data-i18n="ob3_title">Deine Daten, dein Schutz</div>
+    <ul class="onboard-features" style="margin-bottom:28px;">
+      <li data-i18n="ob3_b1">🔒 Daten bleiben in der EU (Frankfurt)</li>
+      <li data-i18n="ob3_b2">👩‍⚕️ Nur deine Praxis hat Zugang</li>
+      <li data-i18n="ob3_b3">❌ Keine Diagnosen durch die App</li>
+      <li data-i18n="ob3_b4">📤 Export &amp; Löschung jederzeit möglich</li>
+    </ul>
+    <button class="onboard-btn" onclick="acceptConsent()" data-i18n="ob3_btn">Ich verstehe und stimme zu →</button>
+    <button class="onboard-btn-skip" onclick="onboardNext(2)" data-i18n="ob_back">← Zurück</button>
   </div>
+  <!-- Step 4: Treatment Data Form -->
   <div class="onboard-step" id="onboard-step-4">
-    <div class="onboard-perm-ico">🔒</div>
-    <div class="onboard-title" data-i18n="ob4_title">Datenschutz & Einwilligung</div>
-    <div class="onboard-sub" data-i18n="ob4_sub">Bitte kurz durchlesen — dann kann es losgehen.</div>
-    <div class="consent-box" data-i18n="ob4_consent">Ihre Daten (Tragezeit, Fotos, Chat, Schmerzmeldungen) werden verschlüsselt auf EU-Servern in Frankfurt gespeichert und ausschliesslich an Ihre behandelnde Praxis übermittelt. Nivellmedical AG erhält keine persönlichen Daten. Sie können Ihre Daten jederzeit exportieren oder löschen lassen (DSGVO Art. 15–20, Schweizer DSG). Die App stellt keine Diagnosen — alle medizinischen Entscheidungen trifft Ihre Praxis.</div>
-    <div class="consent-check-row">
-      <input type="checkbox" id="consentCheck" onchange="enableConsentBtn()">
-      <label for="consentCheck" data-i18n="ob4_label">Ich habe die Datenschutzerklärung gelesen und stimme der Verarbeitung meiner Gesundheitsdaten für die Begleitung meiner Aligner-Behandlung zu.</label>
+    <div class="onboard-logo" style="font-size:36px;background:var(--red-light);color:var(--red);">👋</div>
+    <div class="onboard-title" data-i18n="ob4_title">Fast fertig!</div>
+    <div class="onboard-sub" data-i18n="ob4_sub">Damit wir dich persönlich ansprechen können.</div>
+    <div style="width:100%;margin-bottom:12px;">
+      <div style="font-size:11px;font-weight:700;color:var(--grey);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;" data-i18n="ob4_firstname">Vorname</div>
+      <input type="text" id="obFirstName" style="width:100%;border:1px solid var(--border);border-radius:10px;padding:11px 12px;font-size:15px;font-family:inherit;outline:none;background:white;color:var(--text);box-sizing:border-box;" placeholder="Marie" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--border)'">
     </div>
-    <button class="onboard-btn" id="consentCompleteBtn" onclick="completeOnboarding()" disabled style="opacity:.5;cursor:default;" data-i18n="ob4_btn">App starten →</button>
+    <div style="width:100%;margin-bottom:12px;">
+      <div style="font-size:11px;font-weight:700;color:var(--grey);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;" data-i18n="ob4_fullname">Vollständiger Name</div>
+      <input type="text" id="obFullName" style="width:100%;border:1px solid var(--border);border-radius:10px;padding:11px 12px;font-size:15px;font-family:inherit;outline:none;background:white;color:var(--text);box-sizing:border-box;" placeholder="Marie Müller" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--border)'">
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;margin-bottom:24px;">
+      <div>
+        <div style="font-size:11px;font-weight:700;color:var(--grey);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;" data-i18n="ob4_aligner_nr">Schiene Nr.</div>
+        <input type="number" id="obAlignerNr" min="1" max="99" style="width:100%;border:1px solid var(--border);border-radius:10px;padding:11px 12px;font-size:15px;font-family:inherit;outline:none;background:white;color:var(--text);box-sizing:border-box;" placeholder="8" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--border)'">
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:700;color:var(--grey);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;" data-i18n="ob4_total">Gesamt</div>
+        <input type="number" id="obTotal" min="1" max="99" style="width:100%;border:1px solid var(--border);border-radius:10px;padding:11px 12px;font-size:15px;font-family:inherit;outline:none;background:white;color:var(--text);box-sizing:border-box;" placeholder="14" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--border)'">
+      </div>
+    </div>
+    <button class="onboard-btn" onclick="completeOnboarding()" data-i18n="ob4_btn">Los geht's →</button>
+    <button class="onboard-btn-skip" onclick="onboardNext(3)" data-i18n="ob_back">← Zurück</button>
   </div>
   <div class="onboard-dots">
     <span class="onboard-dot active" id="odot-1"></span>
