@@ -131,7 +131,7 @@
       </div>
 
       <!-- Live Banner -->
-      <div class="live-banner" id="liveBanner">
+      <div class="live-banner" id="liveBanner" style="display:none;">
         <div class="live-dot"></div>
         <div style="flex:1;">
           <div style="font-size:13px;font-weight:700;color:#1a5c30;" id="liveBannerName">Marie Schmidt ist gerade aktiv</div>
@@ -141,7 +141,7 @@
       </div>
 
       <!-- Alert: Critical Patient -->
-      <div class="reminder-card" style="background:var(--alert-light);border-left-color:var(--red);">
+      <div class="reminder-card" id="alertCard" style="display:none;background:var(--alert-light);border-left-color:var(--red);">
         <div class="reminder-ico" style="background:white;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v2m0 4h.01M12 21a9 9 0 100-18 9 9 0 000 18z"/></svg></div>
         <div class="reminder-text">
           <strong data-i18n="alert_crit_title">1 Patient kritisch — Aktion erforderlich</strong>
@@ -399,51 +399,18 @@
         <div class="greeting-name" data-i18n="msgs_name">3 ungelesene Nachrichten</div>
       </div>
 
-      <div class="card" style="padding:0 16px;">
-        <div class="msg-thread" onclick="showToast('Chat mit T. Brauer öffnet sich (Demo)')">
-          <div class="msg-unread-dot"></div>
-          <div style="width:40px;height:40px;border-radius:50%;background:var(--alert-light);color:var(--red);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;">TB</div>
-          <div style="flex:1;min-width:0;">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;">
-              <div class="msg-thread-name">Tobias Brauer</div>
-              <div class="msg-thread-time">Heute, 08:14</div>
-            </div>
-            <div style="font-size:11px;color:var(--red);font-weight:600;margin-bottom:1px;">! Tragezeit unter 60% — 4 Tage</div>
-            <div class="msg-thread-preview">Ich habe Schmerzen beim Tragen...</div>
-          </div>
-        </div>
-        <div class="msg-thread" onclick="showToast('Chat mit K. Weber öffnet sich (Demo)')">
-          <div class="msg-unread-dot"></div>
-          <div style="width:40px;height:40px;border-radius:50%;background:var(--red-light);color:var(--red);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;">KW</div>
-          <div style="flex:1;min-width:0;">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;">
-              <div class="msg-thread-name">Klara Weber</div>
-              <div class="msg-thread-time">Heute, 09:32</div>
-            </div>
-            <div class="msg-thread-preview">Kann ich die Schiene auch nachts abnehmem?</div>
-          </div>
-        </div>
-        <div class="msg-thread" onclick="showToast('Fotos von M. Schmidt öffnen sich (Demo)')">
-          <div class="msg-unread-dot"></div>
-          <div style="width:40px;height:40px;border-radius:50%;background:var(--red-light);color:var(--red);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;">MS</div>
-          <div style="flex:1;min-width:0;">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;">
-              <div class="msg-thread-name">Marie Schmidt</div>
-              <div class="msg-thread-time">Gestern, 19:45</div>
-            </div>
-            <div class="msg-thread-preview">📷 Foto-Upload: Stufe 8 · Prüfung ausstehend</div>
-          </div>
-        </div>
+      <div class="card" style="text-align:center;padding:40px 20px;">
+        <div style="font-size:36px;margin-bottom:10px;">💬</div>
+        <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;" data-i18n="msgs_empty_title">Keine Nachrichten</div>
+        <div style="font-size:12px;color:var(--grey);" data-i18n="msgs_empty_sub">Patienten-Nachrichten erscheinen hier</div>
       </div>
-
-      <div style="margin-top:8px;text-align:center;font-size:12px;color:var(--grey-light);padding:16px;" data-i18n="msgs_none">Keine weiteren Nachrichten</div>
     </div>
 
     <!-- VIEW: SETTINGS -->
     <div class="view" id="view-settings">
       <div class="greeting">
         <div class="greeting-time" data-i18n="settings_time">Praxis-Einstellungen</div>
-        <div class="greeting-name">Dr. med. Schmidt</div>
+        <div class="greeting-name" id="settingsGreetingName">—</div>
       </div>
 
       <div class="sec-label" data-i18n="sec_practice">Praxis</div>
@@ -451,9 +418,9 @@
         <div style="display:flex;gap:14px;align-items:center;margin-bottom:16px;">
           <div class="settings-avatar">PS</div>
           <div>
-            <div style="font-size:16px;font-weight:700;color:var(--black);" id="practiceName">Dr. med. P. Schmidt</div>
-            <div style="font-size:12px;color:var(--grey);margin-top:2px;" id="practiceSpec">Zahnarzt & Kieferchirurg</div>
-            <div style="font-size:11px;color:var(--grey-light);margin-top:2px;" id="practiceAddr">Bahnhofstrasse 12 · 8001 Zürich</div>
+            <div style="font-size:16px;font-weight:700;color:var(--black);" id="practiceName">—</div>
+            <div style="font-size:12px;color:var(--grey);margin-top:2px;" id="practiceSpec">—</div>
+            <div style="font-size:11px;color:var(--grey-light);margin-top:2px;" id="practiceAddr">—</div>
           </div>
         </div>
         <button class="action-btn outline full-row" onclick="editPractice()">
@@ -613,26 +580,7 @@
 <script>
 if (localStorage.getItem('visibal_role') !== 'doctor') { window.location.replace('index.html'); }
 
-const patients = [
-  { id:1,  name:'Marie Schmidt',  initials:'MS', stage:'8/14',  phase:'REGULAR', status:'ok',    wear:'94%', phone:'+41441110001', week:[22,23,17,22,22,23,22] },
-  { id:2,  name:'Tobias Brauer',  initials:'TB', stage:'12/14', phase:'INTENSE', status:'alert', wear:'54%', phone:'+41441110002', week:[12,14,10,15,13,12,14] },
-  { id:3,  name:'Klara Weber',    initials:'KW', stage:'4/8',   phase:'SOFT',    status:'warn',  wear:'74%', phone:'+41441110003', week:[18,20,17,22,19,21,18] },
-  { id:4,  name:'Lukas Frey',     initials:'LF', stage:'7/14',  phase:'REGULAR', status:'ok',    wear:'91%', phone:'+41441110004', week:[22,22,20,22,23,22,21] },
-  { id:5,  name:'Sofia Müller',   initials:'SM', stage:'3/8',   phase:'SOFT',    status:'ok',    wear:'89%', phone:'+41441110005', week:[22,21,20,22,22,22,21] },
-  { id:6,  name:'Anna Krause',    initials:'AK', stage:'14/14', phase:'INTENSE', status:'ok',    wear:'98%', phone:'+41441110006', week:[23,23,22,23,22,23,22] },
-  { id:7,  name:'Daniel Häfeli',  initials:'DH', stage:'6/14',  phase:'REGULAR', status:'warn',  wear:'78%', phone:'+41441110007', week:[19,22,17,20,22,19,20] },
-  { id:8,  name:'Eva Bachmann',   initials:'EB', stage:'8/14',  phase:'REGULAR', status:'ok',    wear:'93%', phone:'+41441110008', week:[22,22,21,22,23,22,22] },
-  { id:9,  name:'Felix Wagner',   initials:'FW', stage:'5/8',   phase:'REGULAR', status:'ok',    wear:'95%', phone:'+41441110009', week:[22,23,22,22,23,22,22] },
-  { id:10, name:'Greta Hofmann',  initials:'GH', stage:'10/14', phase:'INTENSE', status:'ok',    wear:'92%', phone:'+41441110010', week:[22,22,21,23,22,22,21] },
-  { id:11, name:'Hans Imhof',     initials:'HI', stage:'2/8',   phase:'SOFT',    status:'warn',  wear:'72%', phone:'+41441110011', week:[17,20,18,22,19,17,20] },
-  { id:12, name:'Isabella Jung',  initials:'IJ', stage:'11/14', phase:'INTENSE', status:'ok',    wear:'96%', phone:'+41441110012', week:[22,23,22,23,22,23,22] },
-  { id:13, name:'Jonas Meier',    initials:'JM', stage:'3/14',  phase:'SOFT',    status:'ok',    wear:'88%', phone:'+41441110013', week:[22,21,20,22,22,21,21] },
-  { id:14, name:'Laura Schäfer',  initials:'LS', stage:'7/8',   phase:'INTENSE', status:'ok',    wear:'97%', phone:'+41441110014', week:[22,23,22,23,22,23,23] },
-  { id:15, name:'Marco Brunner',  initials:'MB', stage:'11/14', phase:'INTENSE', status:'ok',    wear:'90%', phone:'+41441110015', week:[22,22,20,22,22,21,22] },
-  { id:16, name:'Nina Vogel',     initials:'NV', stage:'5/14',  phase:'REGULAR', status:'ok',    wear:'91%', phone:'+41441110016', week:[22,22,21,22,23,22,21] },
-  { id:17, name:'Oliver Suter',   initials:'OS', stage:'8/14',  phase:'REGULAR', status:'ok',    wear:'93%', phone:'+41441110017', week:[22,22,22,22,23,22,22] },
-  { id:18, name:'Petra Lang',     initials:'PL', stage:'2/8',   phase:'SOFT',    status:'ok',    wear:'85%', phone:'+41441110018', week:[21,22,19,22,21,22,20] },
-];
+const patients = [];
 let _currentPatient = null;
 
 // ── TRANSLATIONS ──────────────────────────────────────────
@@ -658,7 +606,7 @@ const DOC_T = {
     sec_practice_wear:'Praxis-Tragezeit · diese Woche', sec_status_dist:'Status-Verteilung', sec_phase_dist:'Phasen-Verteilung',
     phase_soft:'SOFT', phase_regular:'REGULAR', phase_intense:'INTENSE',
     csv_export_btn:'Wochenstatistik als CSV exportieren',
-    msgs_time:'Nachrichten', msgs_name:'3 ungelesene Nachrichten', msgs_none:'Keine weiteren Nachrichten',
+    msgs_time:'Nachrichten', msgs_name:'Keine neuen Nachrichten', msgs_none:'Keine weiteren Nachrichten', msgs_empty_title:'Keine Nachrichten', msgs_empty_sub:'Patienten-Nachrichten erscheinen hier',
     settings_time:'Praxis-Einstellungen', sec_practice:'Praxis', edit_practice_btn:'Praxisdaten bearbeiten',
     sec_notifs:'Benachrichtigungen',
     notif_critical:'Kritische Alerts', notif_critical_sub:'Sofort bei Compliance unter 60%',
@@ -690,7 +638,7 @@ const DOC_T = {
     sec_practice_wear:'Practice Wear Time · this week', sec_status_dist:'Status Distribution', sec_phase_dist:'Phase Distribution',
     phase_soft:'SOFT', phase_regular:'REGULAR', phase_intense:'INTENSE',
     csv_export_btn:'Export weekly stats as CSV',
-    msgs_time:'Messages', msgs_name:'3 unread messages', msgs_none:'No more messages',
+    msgs_time:'Messages', msgs_name:'No new messages', msgs_none:'No more messages', msgs_empty_title:'No Messages', msgs_empty_sub:'Patient messages will appear here',
     settings_time:'Practice Settings', sec_practice:'Practice', edit_practice_btn:'Edit practice details',
     sec_notifs:'Notifications',
     notif_critical:'Critical Alerts', notif_critical_sub:'Immediately when compliance below 60%',
@@ -722,7 +670,7 @@ const DOC_T = {
     sec_practice_wear:'Temps de port cabinet · cette semaine', sec_status_dist:'Répartition des statuts', sec_phase_dist:'Répartition des phases',
     phase_soft:'SOFT', phase_regular:'REGULAR', phase_intense:'INTENSE',
     csv_export_btn:'Exporter les stats hebdomadaires en CSV',
-    msgs_time:'Messages', msgs_name:'3 messages non lus', msgs_none:'Aucun autre message',
+    msgs_time:'Messages', msgs_name:'Aucun nouveau message', msgs_none:'Aucun autre message', msgs_empty_title:'Aucun message', msgs_empty_sub:'Les messages des patients apparaîtront ici',
     settings_time:'Paramètres du cabinet', sec_practice:'Cabinet', edit_practice_btn:'Modifier les données du cabinet',
     sec_notifs:'Notifications',
     notif_critical:'Alertes critiques', notif_critical_sub:'Immédiatement si compliance < 60%',
@@ -754,7 +702,7 @@ const DOC_T = {
     sec_practice_wear:'Tempo utilizzo studio · questa settimana', sec_status_dist:'Distribuzione stati', sec_phase_dist:'Distribuzione fasi',
     phase_soft:'SOFT', phase_regular:'REGULAR', phase_intense:'INTENSE',
     csv_export_btn:'Esporta statistiche settimanali in CSV',
-    msgs_time:'Messaggi', msgs_name:'3 messaggi non letti', msgs_none:'Nessun altro messaggio',
+    msgs_time:'Messaggi', msgs_name:'Nessun nuovo messaggio', msgs_none:'Nessun altro messaggio', msgs_empty_title:'Nessun messaggio', msgs_empty_sub:'I messaggi dei pazienti appariranno qui',
     settings_time:'Impostazioni studio', sec_practice:'Studio', edit_practice_btn:'Modifica dati studio',
     sec_notifs:'Notifiche',
     notif_critical:'Avvisi critici', notif_critical_sub:'Immediatamente se compliance < 60%',
@@ -786,7 +734,7 @@ const DOC_T = {
     sec_practice_wear:'Ношение в клинике · эта неделя', sec_status_dist:'Распределение по статусу', sec_phase_dist:'Распределение по фазам',
     phase_soft:'SOFT', phase_regular:'REGULAR', phase_intense:'INTENSE',
     csv_export_btn:'Экспорт статистики за неделю в CSV',
-    msgs_time:'Сообщения', msgs_name:'3 непрочитанных сообщения', msgs_none:'Больше сообщений нет',
+    msgs_time:'Сообщения', msgs_name:'Нет новых сообщений', msgs_none:'Больше сообщений нет', msgs_empty_title:'Нет сообщений', msgs_empty_sub:'Сообщения пациентов появятся здесь',
     settings_time:'Настройки клиники', sec_practice:'Клиника', edit_practice_btn:'Редактировать данные клиники',
     sec_notifs:'Уведомления',
     notif_critical:'Критические уведомления', notif_critical_sub:'Немедленно при соответствии < 60%',
@@ -818,7 +766,7 @@ const DOC_T = {
     sec_practice_wear:'Tiempo de uso práctica · esta semana', sec_status_dist:'Distribución de estados', sec_phase_dist:'Distribución de fases',
     phase_soft:'SOFT', phase_regular:'REGULAR', phase_intense:'INTENSE',
     csv_export_btn:'Exportar estadísticas semanales como CSV',
-    msgs_time:'Mensajes', msgs_name:'3 mensajes no leídos', msgs_none:'No hay más mensajes',
+    msgs_time:'Mensajes', msgs_name:'Sin mensajes nuevos', msgs_none:'No hay más mensajes', msgs_empty_title:'Sin mensajes', msgs_empty_sub:'Los mensajes de pacientes aparecerán aquí',
     settings_time:'Configuración de práctica', sec_practice:'Práctica', edit_practice_btn:'Editar datos de la práctica',
     sec_notifs:'Notificaciones',
     notif_critical:'Alertas críticas', notif_critical_sub:'Inmediatamente si cumplimiento < 60%',
@@ -877,6 +825,8 @@ function _updateFilterCounts() {
   const sOk = document.getElementById('statOk'); if (sOk) sOk.innerHTML = ok + '<em style="color:var(--ok);">✓</em>';
   const sWarn = document.getElementById('statWarn'); if (sWarn) sWarn.innerHTML = wa + '<em style="color:var(--warn);">⚠</em>';
   const sAlert = document.getElementById('statAlert'); if (sAlert) sAlert.innerHTML = al + '<em>!</em>';
+  // show alert card only when there are critical patients
+  const ac = document.getElementById('alertCard'); if (ac) ac.style.display = al > 0 ? '' : 'none';
 }
 
 function _patientRow(p) {
@@ -1031,18 +981,19 @@ function closeNotifs() { document.getElementById('notifOverlay').classList.remov
 // ── PRACTICE PROFILE EDITOR ───────────────────────────────
 function loadPractice() {
   const p = JSON.parse(localStorage.getItem('visibal_practice') || '{}');
-  const name = p.name || 'Dr. med. P. Schmidt';
+  const name = p.name || '—';
   const n = document.getElementById('practiceName'); if (n) n.textContent = name;
-  const s = document.getElementById('practiceSpec'); if (s) s.textContent = p.spec || 'Zahnarzt & Kieferchirurg';
-  const a = document.getElementById('practiceAddr'); if (a) a.textContent = (p.addr || 'Bahnhofstrasse 12') + ' · ' + (p.city || '8001 Zürich');
+  const s = document.getElementById('practiceSpec'); if (s) s.textContent = p.spec || '—';
+  const a = document.getElementById('practiceAddr'); if (a) a.textContent = p.addr ? (p.addr + (p.city ? ' · ' + p.city : '')) : '—';
   const g1 = document.getElementById('overviewGreetingTime'); if (g1) g1.textContent = 'Dashboard · ' + name;
   const g2 = document.getElementById('analyticsGreetingTime'); if (g2) g2.textContent = 'Statistik · ' + name;
+  const g3 = document.getElementById('settingsGreetingName'); if (g3) g3.textContent = name;
 }
 function editPractice() {
   const p = JSON.parse(localStorage.getItem('visibal_practice') || '{}');
-  document.getElementById('editPracticeName').value  = p.name  || 'Dr. med. P. Schmidt';
-  document.getElementById('editPracticeSpec').value  = p.spec  || 'Zahnarzt & Kieferchirurg';
-  document.getElementById('editPracticeAddr').value  = p.addr  || 'Bahnhofstrasse 12';
+  document.getElementById('editPracticeName').value  = p.name  || '';
+  document.getElementById('editPracticeSpec').value  = p.spec  || '';
+  document.getElementById('editPracticeAddr').value  = p.addr  || '';
   document.getElementById('editPracticeCity').value  = p.city  || '8001 Zürich';
   document.getElementById('editPracticePhone').value = p.phone || '+41 44 000 00 00';
   document.getElementById('practiceEditModal').classList.add('show');
@@ -1192,7 +1143,9 @@ function exportCSV() {
 // ── LIVE BANNER ───────────────────────────────────────────
 function _initLiveBanner() {
   const active = patients.filter(p => p.status === 'ok');
-  if (!active.length) return;
+  const banner = document.getElementById('liveBanner');
+  if (!active.length || !banner) return;
+  banner.style.display = '';
   let idx = 0;
   function rotate() {
     const p = active[idx % active.length];

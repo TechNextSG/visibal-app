@@ -120,18 +120,18 @@
     <div class="view active" id="view-home">
       <div class="greeting">
         <div class="greeting-time" id="greetingTime">Guten Tag</div>
-        <div class="greeting-name" id="greetingName">Marie 👋</div>
+        <div class="greeting-name" id="greetingName">👋</div>
       </div>
 
       <!-- Progress Hero -->
       <div class="progress-hero">
-        <div class="progress-phase-tag">REGULAR PHASE</div>
-        <div class="progress-step" data-i18n="stage_label">Stufe 8 von 14</div>
-        <div class="progress-substep" data-i18n="stage_sub">Three-Aligner · Dual Arch · Tag 17 dieser Stufe</div>
-        <div class="progress-bar"><div class="progress-fill" style="width:57%;"></div></div>
+        <div class="progress-phase-tag" id="progressPhaseTag">SOFT PHASE</div>
+        <div class="progress-step" id="progressStep" data-i18n="stage_label">Stufe 1 von 8</div>
+        <div class="progress-substep" id="progressSubstep" data-i18n="stage_sub">Three-Aligner · Dual Arch · Tag 1 dieser Stufe</div>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:12%;"></div></div>
         <div class="progress-labels">
-          <span data-i18n="soft_done">SOFT ✓</span>
-          <span data-i18n="pct_done">57% abgeschlossen</span>
+          <span data-i18n="soft_label">SOFT</span>
+          <span data-i18n="pct_done" id="progressPct">12% abgeschlossen</span>
           <span data-i18n="intense_label">INTENSE</span>
         </div>
       </div>
@@ -148,15 +148,15 @@
       <!-- Quick Stats -->
       <div class="quick-stats">
         <div class="stat-mini">
-          <div class="stat-mini-n">17<em>d</em></div>
-          <div class="stat-mini-l" data-i18n="stat_in_stage">In Stufe 8</div>
+          <div class="stat-mini-n" id="statDaysInStage">1<em>d</em></div>
+          <div class="stat-mini-l" data-i18n="stat_in_stage">In Stufe 1</div>
         </div>
         <div class="stat-mini">
-          <div class="stat-mini-n">6<em>w</em></div>
+          <div class="stat-mini-n">—</div>
           <div class="stat-mini-l" data-i18n="stat_to_phase">Bis Phase 3</div>
         </div>
         <div class="stat-mini">
-          <div class="stat-mini-n">94<em>%</em></div>
+          <div class="stat-mini-n" id="statCompliance">0<em>%</em></div>
           <div class="stat-mini-l" data-i18n="compliance">Compliance</div>
         </div>
       </div>
@@ -191,10 +191,10 @@
       <div class="sec-label" style="margin-top:24px;" data-i18n="upcoming">Demnächst</div>
       <div class="card">
         <div class="card-title" data-i18n="next_stage">Nächster Stufenwechsel</div>
-        <div class="card-sub" data-i18n="next_stage_sub">in 3 Tagen · Stufe 9 startet automatisch</div>
+        <div class="card-sub" id="nextStageSub" data-i18n="next_stage_sub">in 21 Tagen · Stufe 2 startet automatisch</div>
         <div style="display:flex;gap:8px;align-items:center;font-size:12px;color:var(--grey);">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          Samstag, 23. Mai 2026
+          <span id="nextStageDate">—</span>
         </div>
       </div>
     </div>
@@ -380,7 +380,7 @@
     <div class="view" id="view-profile">
       <div class="greeting">
         <div class="greeting-time" data-i18n="profile_title">Profil</div>
-        <div class="greeting-name">Marie Müller</div>
+        <div class="greeting-name" id="profileName">—</div>
       </div>
 
       <!-- Practice Info -->
@@ -586,7 +586,7 @@ const VISIBAL_T = {
   de: {
     morning:'Guten Morgen', afternoon:'Guten Tag', evening:'Guten Abend',
     stage_label:'Stufe 8 von 14', stage_sub:'Three-Aligner · Dual Arch · Tag 17 dieser Stufe',
-    soft_done:'SOFT ✓', pct_done:'57% abgeschlossen', intense_label:'INTENSE',
+    soft_done:'SOFT ✓', soft_label:'SOFT', pct_done:'57% abgeschlossen', intense_label:'INTENSE',
     reminder_title:'Heute: 21h 40min Tragezeit', reminder_sub:'Ziel fast erreicht — bleib dran!',
     stat_in_stage:'In Stufe 8', stat_to_phase:'Bis Phase 3', compliance:'Compliance',
     today:'Heute', upcoming:'Demnächst',
@@ -605,7 +605,7 @@ const VISIBAL_T = {
     stage_reminder:'Stufenwechsel-Reminder', stage_reminder_sub:'24h vor dem Wechsel',
     photo_reminder:'Foto-Erinnerung', photo_reminder_sub:'Wöchentlich · Sonntag 19:00',
     chat_title:'Online-Assistent', chat_sub:'Frag uns alles',
-    chat_greeting:'Hallo! 👋 Ich beantworte deine Fragen zur Behandlung — Schmerzen, Tragezeit, Essen, alles. In der REGULAR-Phase sind kleine Druckgefühle normal und gewünscht.',
+    chat_greeting:'Hallo! 👋 Ich beantworte deine Fragen zur Behandlung — Schmerzen, Tragezeit, Essen, alles. Frag mich jederzeit.',
     sugg1:'Schiene drückt — normal?', sugg2:'Was darf ich essen?', sugg3:'Stufenwechsel: wann?', sugg4:'Schmerzen lindern',
     photos_title:'Foto-Dokumentation', photos_sub:'Sieh, wie dein Lächeln wächst',
     new_photo:'Neue Aufnahme', photos_rule:'Drei Fotos. Drei Klicks.',
@@ -660,7 +660,7 @@ const VISIBAL_T = {
   en: {
     morning:'Good Morning', afternoon:'Good Afternoon', evening:'Good Evening',
     stage_label:'Stage 8 of 14', stage_sub:'Three-Aligner · Dual Arch · Day 17 of this stage',
-    soft_done:'SOFT ✓', pct_done:'57% complete', intense_label:'INTENSE',
+    soft_done:'SOFT ✓', soft_label:'SOFT', pct_done:'57% complete', intense_label:'INTENSE',
     reminder_title:'Today: 21h 40min wear time', reminder_sub:'Almost at goal — keep it up!',
     stat_in_stage:'In Stage 8', stat_to_phase:'To Phase 3', compliance:'Compliance',
     today:'Today', upcoming:'Upcoming',
@@ -679,7 +679,7 @@ const VISIBAL_T = {
     stage_reminder:'Stage change reminder', stage_reminder_sub:'24h before the change',
     photo_reminder:'Photo reminder', photo_reminder_sub:'Weekly · Sunday 7:00 PM',
     chat_title:'Online Assistant', chat_sub:'Ask anything',
-    chat_greeting:'Hello Marie! 👋 I can answer your questions about treatment — pain, wear time, eating, everything. In the REGULAR phase, slight pressure is normal and expected.',
+    chat_greeting:'Hello! 👋 I can answer your questions about treatment — pain, wear time, eating, everything. Ask me anytime.',
     sugg1:'Aligner feels tight — normal?', sugg2:'What can I eat?', sugg3:'Stage change: when?', sugg4:'Relieve discomfort',
     photos_title:'Photo Documentation', photos_sub:'Watch your smile transform',
     new_photo:'New Photo', photos_rule:'Three photos. Three taps.',
@@ -734,7 +734,7 @@ const VISIBAL_T = {
   fr: {
     morning:'Bonjour', afternoon:'Bonjour', evening:'Bonsoir',
     stage_label:'Plateau 8 sur 14', stage_sub:'Three-Aligner · Dual Arch · Jour 17 de ce plateau',
-    soft_done:'SOFT ✓', pct_done:'57% terminé', intense_label:'INTENSE',
+    soft_done:'SOFT ✓', soft_label:'SOFT', pct_done:'57% terminé', intense_label:'INTENSE',
     reminder_title:"Aujourd'hui: 21h 40min de port", reminder_sub:'Presque au but — continuez!',
     stat_in_stage:'Plateau 8', stat_to_phase:'Vers Phase 3', compliance:'Compliance',
     today:"Aujourd'hui", upcoming:'Prochainement',
@@ -753,7 +753,7 @@ const VISIBAL_T = {
     stage_reminder:'Rappel changement plateau', stage_reminder_sub:'24h avant le changement',
     photo_reminder:'Rappel photo', photo_reminder_sub:'Hebdomadaire · Dimanche 19h00',
     chat_title:'Assistant en ligne', chat_sub:'Posez toutes vos questions',
-    chat_greeting:'Bonjour Marie! 👋 Je réponds à vos questions sur le traitement — douleurs, temps de port, alimentation, tout. En phase REGULAR, de légères pressions sont normales et souhaitées.',
+    chat_greeting:'Bonjour! 👋 Je réponds à vos questions sur le traitement — douleurs, temps de port, alimentation, tout. Posez-moi vos questions à tout moment.',
     sugg1:'La gouttière appuie — normal?', sugg2:'Que puis-je manger?', sugg3:'Changement: quand?', sugg4:'Soulager la douleur',
     photos_title:'Documentation photo', photos_sub:'Voyez votre sourire se transformer',
     new_photo:'Nouvelle photo', photos_rule:'Trois photos. Trois clics.',
@@ -808,7 +808,7 @@ const VISIBAL_T = {
   it: {
     morning:'Buongiorno', afternoon:'Buongiorno', evening:'Buonasera',
     stage_label:'Stadio 8 di 14', stage_sub:'Three-Aligner · Dual Arch · Giorno 17 di questo stadio',
-    soft_done:'SOFT ✓', pct_done:'57% completato', intense_label:'INTENSE',
+    soft_done:'SOFT ✓', soft_label:'SOFT', pct_done:'57% completato', intense_label:'INTENSE',
     reminder_title:'Oggi: 21h 40min di porto', reminder_sub:"Quasi all'obiettivo — continua così!",
     stat_in_stage:'Stadio 8', stat_to_phase:'Verso Fase 3', compliance:'Compliance',
     today:'Oggi', upcoming:'Prossimamente',
@@ -827,7 +827,7 @@ const VISIBAL_T = {
     stage_reminder:'Promemoria cambio stadio', stage_reminder_sub:'24h prima del cambio',
     photo_reminder:'Promemoria foto', photo_reminder_sub:'Settimanale · Domenica 19:00',
     chat_title:'Assistente online', chat_sub:'Chiedete qualsiasi cosa',
-    chat_greeting:'Ciao Marie! 👋 Rispondo alle vostre domande sul trattamento — dolori, tempo di porto, alimentazione, tutto. Nella fase REGULAR, lievi pressioni sono normali e attese.',
+    chat_greeting:'Ciao! 👋 Rispondo alle vostre domande sul trattamento — dolori, tempo di porto, alimentazione, tutto. Chiedetemi in qualsiasi momento.',
     sugg1:"L'allineatore stringe — normale?", sugg2:'Cosa posso mangiare?', sugg3:'Cambio stadio: quando?', sugg4:'Alleviare il dolore',
     photos_title:'Documentazione fotografica', photos_sub:'Guarda come cresce il tuo sorriso',
     new_photo:'Nuova foto', photos_rule:'Tre foto. Tre clic.',
@@ -882,7 +882,7 @@ const VISIBAL_T = {
   ru: {
     morning:'Доброе утро', afternoon:'Добрый день', evening:'Добрый вечер',
     stage_label:'Стадия 8 из 14', stage_sub:'Three-Aligner · Dual Arch · День 17 этой стадии',
-    soft_done:'SOFT ✓', pct_done:'57% завершено', intense_label:'INTENSE',
+    soft_done:'SOFT ✓', soft_label:'SOFT', pct_done:'57% завершено', intense_label:'INTENSE',
     reminder_title:'Сегодня: 21ч 40мин ношения', reminder_sub:'Почти у цели — продолжайте!',
     stat_in_stage:'Стадия 8', stat_to_phase:'До фазы 3', compliance:'Соответствие',
     today:'Сегодня', upcoming:'Ближайшее',
@@ -901,7 +901,7 @@ const VISIBAL_T = {
     stage_reminder:'Напоминание о смене стадии', stage_reminder_sub:'За 24ч до смены',
     photo_reminder:'Напоминание о фото', photo_reminder_sub:'Еженедельно · Воскресенье 19:00',
     chat_title:'Онлайн-ассистент', chat_sub:'Задайте любой вопрос',
-    chat_greeting:'Привет, Мари! 👋 Отвечу на вопросы о лечении — боль, время ношения, еда и всё остальное. В фазе REGULAR небольшое давление — норма.',
+    chat_greeting:'Привет! 👋 Отвечу на вопросы о лечении — боль, время ношения, еда и всё остальное. Спрашивайте в любое время.',
     sugg1:'Элайнер давит — нормально?', sugg2:'Что можно есть?', sugg3:'Смена стадии: когда?', sugg4:'Снять дискомфорт',
     photos_title:'Фото-документация', photos_sub:'Смотри, как растёт твоя улыбка',
     new_photo:'Новое фото', photos_rule:'Три фото. Три нажатия.',
@@ -956,7 +956,7 @@ const VISIBAL_T = {
   es: {
     morning:'Buenos días', afternoon:'Buenas tardes', evening:'Buenas noches',
     stage_label:'Fase 8 de 14', stage_sub:'Three-Aligner · Dual Arch · Día 17 de esta fase',
-    soft_done:'SOFT ✓', pct_done:'57% completado', intense_label:'INTENSE',
+    soft_done:'SOFT ✓', soft_label:'SOFT', pct_done:'57% completado', intense_label:'INTENSE',
     reminder_title:'Hoy: 21h 40min de uso', reminder_sub:'¡Casi en el objetivo — sigue así!',
     stat_in_stage:'Fase 8', stat_to_phase:'Hasta Fase 3', compliance:'Cumplimiento',
     today:'Hoy', upcoming:'Próximamente',
@@ -975,7 +975,7 @@ const VISIBAL_T = {
     stage_reminder:'Recordatorio cambio de fase', stage_reminder_sub:'24h antes del cambio',
     photo_reminder:'Recordatorio de fotos', photo_reminder_sub:'Semanal · Domingo 19:00',
     chat_title:'Asistente en línea', chat_sub:'Pregunte lo que quiera',
-    chat_greeting:'¡Hola Marie! 👋 Respondo sus preguntas sobre el tratamiento — dolor, tiempo de uso, comida, todo. En la fase REGULAR, leve presión es normal y esperada.',
+    chat_greeting:'¡Hola! 👋 Respondo sus preguntas sobre el tratamiento — dolor, tiempo de uso, comida, todo. Pregúnteme en cualquier momento.',
     sugg1:'¿El alineador presiona — normal?', sugg2:'¿Qué puedo comer?', sugg3:'Cambio de fase: ¿cuándo?', sugg4:'Aliviar el malestar',
     photos_title:'Documentación fotográfica', photos_sub:'Mira cómo crece tu sonrisa',
     new_photo:'Nueva foto', photos_rule:'Tres fotos. Tres clics.',
@@ -1513,12 +1513,27 @@ function completeOnboarding() {
 
 function updatePatientName() {
   const data = JSON.parse(localStorage.getItem('visibal_patient_data') || '{}');
-  const name = data.firstName || 'Marie';
+  const name = data.firstName || '';
   const el = document.getElementById('greetingName');
-  if (el) el.textContent = name + ' 👋';
+  if (el) el.textContent = name ? name + ' 👋' : '👋';
+  // update progress hero from stored stage data
+  const nr = parseInt(data.alignerNr) || 1;
+  const tot = parseInt(data.total) || 8;
+  const pct = Math.round(nr / tot * 100);
+  const phase = nr <= Math.floor(tot * 0.3) ? 'SOFT' : nr <= Math.floor(tot * 0.65) ? 'REGULAR' : 'INTENSE';
+  const tag = document.getElementById('progressPhaseTag'); if (tag) tag.textContent = phase + ' PHASE';
+  const step = document.getElementById('progressStep'); if (step) step.textContent = 'Stufe ' + nr + ' von ' + tot;
+  const fill = document.getElementById('progressFill'); if (fill) fill.style.width = pct + '%';
+  const pctEl = document.getElementById('progressPct'); if (pctEl) pctEl.textContent = pct + '% abgeschlossen';
+  const compliance = document.getElementById('statCompliance');
+  if (compliance) {
+    const secs = _totalWearSecs ? _totalWearSecs() : 0;
+    const pctW = Math.min(100, Math.round(secs / (22 * 3600) * 100));
+    compliance.innerHTML = pctW + '<em>%</em>';
+  }
   // Update profile name
   const pn = document.querySelector('#view-profile .greeting-name');
-  if (pn) pn.textContent = data.fullName || 'Marie Müller';
+  if (pn) pn.textContent = data.fullName || data.firstName || '—';
 }
 
 // ── PAIN REPORT ───────────────────────────────────────────
