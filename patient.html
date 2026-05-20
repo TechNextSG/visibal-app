@@ -321,6 +321,9 @@
       <button class="chat-send-btn" onclick="sendMessage()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
     </div>
 
+    <!-- hidden camera input -->
+    <input type="file" id="photoInput" accept="image/*" style="display:none;" onchange="onPhotoSelected(this)">
+
     <!-- VIEW: PHOTOS -->
     <div class="view" id="view-photos">
       <div class="greeting">
@@ -360,7 +363,7 @@
           <div style="font-size:10px;color:var(--grey);" data-i18n="start_photo">Startaufnahme</div>
         </div>
         <div style="background:white;border:1px solid var(--border);border-radius:10px;padding:10px;border-top:3px solid var(--red);">
-          <div style="aspect-ratio:1;background:linear-gradient(135deg,#fcf0f0,#fff5f5);border-radius:6px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;font-size:32px;">😊</div>
+          <div id="currentPhotoThumb" style="aspect-ratio:1;background:linear-gradient(135deg,#fcf0f0,#fff5f5);border-radius:6px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;font-size:32px;overflow:hidden;background-size:cover;background-position:center;">😊</div>
           <div style="font-size:11px;font-weight:700;color:var(--black);">Stufe 8 · 18.05</div>
           <div style="font-size:10px;color:var(--red);font-weight:700;" data-i18n="current_label">Aktuell</div>
         </div>
@@ -368,7 +371,7 @@
 
       <div class="card" style="background:var(--bg);border:1px dashed var(--border);text-align:center;">
         <div style="font-size:24px;margin-bottom:6px;">📸</div>
-        <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;" data-i18n="last_photo">Letzte Aufnahme: 24 Tage</div>
+        <div id="lastPhotoText" style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px;" data-i18n="last_photo">Letzte Aufnahme: 24 Tage</div>
         <div style="font-size:11px;color:var(--grey);" data-i18n="photo_recommend">Wir empfehlen alle 2 Wochen neue Fotos</div>
       </div>
     </div>
@@ -1201,9 +1204,59 @@ function logRemove() {
   showToast(m[lang] || m.de);
 }
 function takePhoto(type) {
+  const input = document.getElementById('photoInput');
+  // frontal/lateral: front camera; occlusal: back camera
+  input.setAttribute('capture', type === 'occlusal' ? 'environment' : 'user');
+  input.dataset.photoType = type;
+  input.value = '';
+  input.click();
+}
+function onPhotoSelected(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const type = input.dataset.photoType;
   const lang = getAppLang();
-  const m = { de:`Kamera für ${type} bereit`, en:`Camera ready for ${type}`, fr:`Caméra prête pour ${type}`, it:`Fotocamera pronta per ${type}`, ru:`Камера готова для ${type}`, es:`Cámara lista para ${type}` };
-  showToast(m[lang] || m.de, 'ok');
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    localStorage.setItem('visibal_photo_' + type, e.target.result);
+    localStorage.setItem('visibal_lastphoto_ts', Date.now().toString());
+    _refreshPhotoTimeline();
+    const m = { de:'Foto gespeichert ✓', en:'Photo saved ✓', fr:'Photo enregistrée ✓', it:'Foto salvata ✓', ru:'Фото сохранено ✓', es:'Foto guardada ✓' };
+    showToast(m[lang] || m.de, 'ok');
+  };
+  reader.readAsDataURL(file);
+}
+function _refreshPhotoTimeline() {
+  const frontal = localStorage.getItem('visibal_photo_frontal')
+    || localStorage.getItem('visibal_photo_lateral')
+    || localStorage.getItem('visibal_photo_occlusal');
+  const thumb = document.getElementById('currentPhotoThumb');
+  if (thumb && frontal) {
+    thumb.style.backgroundImage = 'url(' + frontal + ')';
+    thumb.style.backgroundSize = 'cover';
+    thumb.style.backgroundPosition = 'center';
+    thumb.textContent = '';
+  }
+  const ts = localStorage.getItem('visibal_lastphoto_ts');
+  const el = document.getElementById('lastPhotoText');
+  if (ts && el) {
+    const lang = getAppLang();
+    const days = Math.floor((Date.now() - parseInt(ts)) / 86400000);
+    if (days === 0) {
+      const m = { de:'Letzte Aufnahme: heute', en:'Last photo: today', fr:'Dernière photo: aujourd\'hui', it:'Ultima foto: oggi', ru:'Последнее фото: сегодня', es:'Última foto: hoy' };
+      el.textContent = m[lang] || m.de;
+    } else {
+      const m = {
+        de:`Letzte Aufnahme: vor ${days} Tag${days===1?'':'en'}`,
+        en:`Last photo: ${days} day${days===1?'':'s'} ago`,
+        fr:`Dernière photo: il y a ${days} jour${days===1?'':'s'}`,
+        it:`Ultima foto: ${days} giorno${days===1?'':'i'} fa`,
+        ru:`Последнее фото: ${days} дн. назад`,
+        es:`Última foto: hace ${days} día${days===1?'':'s'}`
+      };
+      el.textContent = m[lang] || m.de;
+    }
+  }
 }
 function showNotifications() { openNotifs(); }
 
@@ -1416,6 +1469,7 @@ applyLang(getAppLang());
 _initWear();
 updateTrackerDate();
 updatePatientName();
+_refreshPhotoTimeline();
 
 // Deep-link tab routing from manifest shortcuts
 const _urlTab = new URLSearchParams(window.location.search).get('tab');
