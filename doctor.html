@@ -110,7 +110,7 @@
     <!-- VIEW: OVERVIEW -->
     <div class="view active" id="view-overview">
       <div class="greeting">
-        <div class="greeting-time">Dashboard · Praxis Schmidt</div>
+        <div class="greeting-time" id="overviewGreetingTime">Dashboard · Praxis Schmidt</div>
         <div class="greeting-name" id="patientCountHead">18 aktive Patienten</div>
       </div>
 
@@ -183,24 +183,24 @@
       </div>
 
       <div style="display:flex;gap:14px;align-items:center;margin-bottom:18px;">
-        <div class="patient-avatar" style="width:60px;height:60px;font-size:20px;background:var(--red-light);color:var(--red);">MS</div>
+        <div class="patient-avatar" id="detailAvatar" style="width:60px;height:60px;font-size:20px;background:var(--red-light);color:var(--red);">MS</div>
         <div style="flex:1;">
-          <div style="font-size:18px;font-weight:700;color:var(--black);">Marie Schmidt</div>
-          <div style="font-size:12px;color:var(--grey);">Stufe 8 von 14 · REGULAR · Dual Arch</div>
+          <div style="font-size:18px;font-weight:700;color:var(--black);" id="detailName">Marie Schmidt</div>
+          <div style="font-size:12px;color:var(--grey);" id="detailMeta">Stufe 8/14 · REGULAR · Dual Arch</div>
           <div style="margin-top:6px;display:flex;gap:6px;align-items:center;">
-            <span class="patient-status-pill pill-ok">✓ 22h</span>
-            <span style="font-size:11px;color:var(--grey);">Compliance: 94%</span>
+            <span class="patient-status-pill pill-ok" id="detailStatusPill">✓ 22h</span>
+            <span style="font-size:11px;color:var(--grey);" id="detailCompliance">Compliance: 94%</span>
           </div>
         </div>
       </div>
 
       <!-- Quick Actions -->
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:16px;">
-        <button class="action-btn outline" style="margin:0;padding:10px;font-size:11px;" onclick="window.location.href='sms:+41520000000'">
+        <button class="action-btn outline" id="detailSmsBtn" style="margin:0;padding:10px;font-size:11px;">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
           <div>SMS</div>
         </button>
-        <button class="action-btn outline" style="margin:0;padding:10px;font-size:11px;" onclick="window.location.href='tel:+41520000000'">
+        <button class="action-btn outline" id="detailCallBtn" style="margin:0;padding:10px;font-size:11px;">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
           <div>Anrufen</div>
         </button>
@@ -217,13 +217,13 @@
       <!-- Treatment Progress -->
       <div class="sec-label">Behandlungsfortschritt</div>
       <div class="progress-hero" style="margin-bottom:14px;">
-        <div class="progress-phase-tag">REGULAR PHASE</div>
-        <div class="progress-step">Stufe 8 von 14</div>
-        <div class="progress-substep">Three-Aligner · Tag 17 dieser Stufe · Start: 14.03.2026</div>
-        <div class="progress-bar"><div class="progress-fill" style="width:57%;"></div></div>
+        <div class="progress-phase-tag" id="detailProgressPhase">REGULAR PHASE</div>
+        <div class="progress-step" id="detailProgressStep">Stufe 8/14</div>
+        <div class="progress-substep" id="detailProgressSub">Dual Arch · Behandlung läuft</div>
+        <div class="progress-bar"><div class="progress-fill" id="detailProgressFill" style="width:57%;"></div></div>
         <div class="progress-labels">
           <span>SOFT ✓</span>
-          <span>57%</span>
+          <span id="detailProgressPct">57%</span>
           <span>INTENSE</span>
         </div>
       </div>
@@ -231,34 +231,8 @@
       <!-- 7 Day Compliance — Line Chart -->
       <div class="sec-label">Tragezeit · diese Woche</div>
       <div class="card">
-        <svg viewBox="0 0 280 98" style="width:100%;height:auto;display:block;overflow:visible;">
-          <line x1="14" y1="15" x2="266" y2="15" stroke="#e8e8e8" stroke-width="1.5" stroke-dasharray="5,4"/>
-          <text x="268" y="18" font-size="8" fill="#bbb" font-family="sans-serif">22h</text>
-          <polygon points="20,15 60,10 100,40 140,15 180,15 220,10 260,15 260,65 20,65" fill="rgba(192,0,0,.07)"/>
-          <polyline points="20,15 60,10 100,40 140,15 180,15 220,10 260,15" fill="none" stroke="#C00000" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
-          <circle cx="20"  cy="15" r="4" fill="white" stroke="#C00000" stroke-width="2"/>
-          <circle cx="60"  cy="10" r="4" fill="white" stroke="#C00000" stroke-width="2"/>
-          <circle cx="100" cy="40" r="4" fill="white" stroke="#b87300" stroke-width="2"/>
-          <circle cx="140" cy="15" r="4" fill="white" stroke="#C00000" stroke-width="2"/>
-          <circle cx="180" cy="15" r="4" fill="white" stroke="#C00000" stroke-width="2"/>
-          <circle cx="220" cy="10" r="4" fill="white" stroke="#C00000" stroke-width="2"/>
-          <circle cx="260" cy="15" r="4" fill="white" stroke="#C00000" stroke-width="2"/>
-          <text x="20"  y="79" text-anchor="middle" font-size="9" fill="#888" font-family="sans-serif">Mo</text>
-          <text x="60"  y="79" text-anchor="middle" font-size="9" fill="#888" font-family="sans-serif">Di</text>
-          <text x="100" y="79" text-anchor="middle" font-size="9" fill="#888" font-family="sans-serif">Mi</text>
-          <text x="140" y="79" text-anchor="middle" font-size="9" fill="#888" font-family="sans-serif">Do</text>
-          <text x="180" y="79" text-anchor="middle" font-size="9" fill="#888" font-family="sans-serif">Fr</text>
-          <text x="220" y="79" text-anchor="middle" font-size="9" fill="#888" font-family="sans-serif">Sa</text>
-          <text x="260" y="79" text-anchor="middle" font-size="9" fill="#888" font-weight="700" font-family="sans-serif">Heute</text>
-          <text x="20"  y="91" text-anchor="middle" font-size="9" fill="#C00000" font-weight="700" font-family="sans-serif">22h</text>
-          <text x="60"  y="91" text-anchor="middle" font-size="9" fill="#C00000" font-weight="700" font-family="sans-serif">23h</text>
-          <text x="100" y="91" text-anchor="middle" font-size="9" fill="#b87300" font-weight="700" font-family="sans-serif">17h</text>
-          <text x="140" y="91" text-anchor="middle" font-size="9" fill="#C00000" font-weight="700" font-family="sans-serif">22h</text>
-          <text x="180" y="91" text-anchor="middle" font-size="9" fill="#C00000" font-weight="700" font-family="sans-serif">22h</text>
-          <text x="220" y="91" text-anchor="middle" font-size="9" fill="#C00000" font-weight="700" font-family="sans-serif">23h</text>
-          <text x="260" y="91" text-anchor="middle" font-size="9" fill="#C00000" font-weight="700" font-family="sans-serif">22h</text>
-        </svg>
-        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--grey);padding-top:8px;border-top:1px solid var(--border);">
+        <svg id="detailChart" viewBox="0 0 280 98" style="width:100%;height:auto;display:block;overflow:visible;"></svg>
+        <div id="detailChartFooter" style="display:flex;justify-content:space-between;font-size:11px;color:var(--grey);padding-top:8px;border-top:1px solid var(--border);">
           <span>Ø 21h 28min</span>
           <span style="color:var(--ok);font-weight:700;">94% Compliance</span>
         </div>
@@ -324,7 +298,7 @@
     <!-- VIEW: ANALYTICS -->
     <div class="view" id="view-analytics">
       <div class="greeting">
-        <div class="greeting-time">Statistik · Praxis Schmidt</div>
+        <div class="greeting-time" id="analyticsGreetingTime">Statistik · Praxis Schmidt</div>
         <div class="greeting-name">Compliance-Analyse</div>
       </div>
 
@@ -513,11 +487,39 @@
         </div>
       </div>
 
-      <div class="sec-label">Darstellung</div>
+      <div class="sec-label" id="lblLang">Sprache · Language</div>
+      <div class="card" style="margin-bottom:14px;">
+        <div class="settings-row" onclick="setDocLang('de')" style="cursor:pointer;">
+          <div><div class="settings-row-label">🇨🇭 Deutsch (Schweiz)</div></div>
+          <div style="color:var(--red);font-weight:700;font-size:15px;opacity:0;transition:opacity .15s;" id="lc-de">✓</div>
+        </div>
+        <div class="settings-row" onclick="setDocLang('en')" style="cursor:pointer;">
+          <div><div class="settings-row-label">🇬🇧 English</div></div>
+          <div style="color:var(--red);font-weight:700;font-size:15px;opacity:0;transition:opacity .15s;" id="lc-en">✓</div>
+        </div>
+        <div class="settings-row" onclick="setDocLang('fr')" style="cursor:pointer;">
+          <div><div class="settings-row-label">🇫🇷 Français</div></div>
+          <div style="color:var(--red);font-weight:700;font-size:15px;opacity:0;transition:opacity .15s;" id="lc-fr">✓</div>
+        </div>
+        <div class="settings-row" onclick="setDocLang('it')" style="cursor:pointer;">
+          <div><div class="settings-row-label">🇮🇹 Italiano</div></div>
+          <div style="color:var(--red);font-weight:700;font-size:15px;opacity:0;transition:opacity .15s;" id="lc-it">✓</div>
+        </div>
+        <div class="settings-row" onclick="setDocLang('ru')" style="cursor:pointer;">
+          <div><div class="settings-row-label">🇷🇺 Русский</div></div>
+          <div style="color:var(--red);font-weight:700;font-size:15px;opacity:0;transition:opacity .15s;" id="lc-ru">✓</div>
+        </div>
+        <div class="settings-row" onclick="setDocLang('es')" style="cursor:pointer;">
+          <div><div class="settings-row-label">🇪🇸 Español</div></div>
+          <div style="color:var(--red);font-weight:700;font-size:15px;opacity:0;transition:opacity .15s;" id="lc-es">✓</div>
+        </div>
+      </div>
+
+      <div class="sec-label" id="lblDisplay">Darstellung</div>
       <div class="card" style="margin-bottom:14px;">
         <div class="settings-row">
           <div>
-            <div class="settings-row-label">Dunkles Design</div>
+            <div class="settings-row-label" id="lblDarkMode">Dunkles Design</div>
             <div class="settings-row-sub" id="darkModeSubText">Aus</div>
           </div>
           <label class="switch"><input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()"><span class="switch-slider"></span></label>
@@ -610,90 +612,168 @@
 <script src="app.js"></script>
 <script>
 if (localStorage.getItem('visibal_role') !== 'doctor') { window.location.replace('index.html'); }
-// Demo Patient Data
-const patients = [
-  { id: 1, name: 'Marie Schmidt', stage: '8/14', phase: 'REGULAR', status: 'ok', wear: '94%', avatar: 'MS' },
-  { id: 2, name: 'Tobias Brauer', stage: '12/14', phase: 'INTENSE', status: 'alert', wear: '54%', avatar: 'TB' },
-  { id: 3, name: 'Klara Weber', stage: '4/8', phase: 'SOFT', status: 'warn', wear: '74%', avatar: 'KW' },
-  { id: 4, name: 'Lukas Frey', stage: '7/14', phase: 'REGULAR', status: 'ok', wear: '91%', avatar: 'LF' },
-  { id: 5, name: 'Sofia Müller', stage: '3/8', phase: 'SOFT', status: 'ok', wear: '89%', avatar: 'SM' },
-  { id: 6, name: 'Anna Krause', stage: '14/14', phase: 'INTENSE', status: 'ok', wear: '98%', avatar: 'AK' },
-  { id: 7, name: 'Daniel Häfeli', stage: '6/14', phase: 'REGULAR', status: 'warn', wear: '78%', avatar: 'DH' },
-  { id: 8, name: 'Eva Bachmann', stage: '8/14', phase: 'REGULAR', status: 'ok', wear: '93%', avatar: 'EB' },
-  { id: 9, name: 'Felix Wagner', stage: '5/8', phase: 'REGULAR', status: 'ok', wear: '95%', avatar: 'FW' },
-  { id: 10, name: 'Greta Hofmann', stage: '10/14', phase: 'INTENSE', status: 'ok', wear: '92%', avatar: 'GH' },
-  { id: 11, name: 'Hans Imhof', stage: '2/8', phase: 'SOFT', status: 'warn', wear: '72%', avatar: 'HI' },
-  { id: 12, name: 'Isabella Jung', stage: '11/14', phase: 'INTENSE', status: 'ok', wear: '96%', avatar: 'IJ' },
-  { id: 13, name: 'Jonas Meier', stage: '3/14', phase: 'SOFT', status: 'ok', wear: '88%', avatar: 'JM' },
-  { id: 14, name: 'Laura Schäfer', stage: '7/8', phase: 'INTENSE', status: 'ok', wear: '97%', avatar: 'LS' },
-  { id: 15, name: 'Marco Brunner', stage: '11/14', phase: 'INTENSE', status: 'ok', wear: '90%', avatar: 'MB' },
-  { id: 16, name: 'Nina Vogel', stage: '5/14', phase: 'REGULAR', status: 'ok', wear: '91%', avatar: 'NV' },
-  { id: 17, name: 'Oliver Suter', stage: '8/14', phase: 'REGULAR', status: 'ok', wear: '93%', avatar: 'OS' },
-  { id: 18, name: 'Petra Lang', stage: '2/8', phase: 'SOFT', status: 'ok', wear: '85%', avatar: 'PL' },
-];
 
+const patients = [
+  { id:1,  name:'Marie Schmidt',  initials:'MS', stage:'8/14',  phase:'REGULAR', status:'ok',    wear:'94%', phone:'+41441110001', week:[22,23,17,22,22,23,22] },
+  { id:2,  name:'Tobias Brauer',  initials:'TB', stage:'12/14', phase:'INTENSE', status:'alert', wear:'54%', phone:'+41441110002', week:[12,14,10,15,13,12,14] },
+  { id:3,  name:'Klara Weber',    initials:'KW', stage:'4/8',   phase:'SOFT',    status:'warn',  wear:'74%', phone:'+41441110003', week:[18,20,17,22,19,21,18] },
+  { id:4,  name:'Lukas Frey',     initials:'LF', stage:'7/14',  phase:'REGULAR', status:'ok',    wear:'91%', phone:'+41441110004', week:[22,22,20,22,23,22,21] },
+  { id:5,  name:'Sofia Müller',   initials:'SM', stage:'3/8',   phase:'SOFT',    status:'ok',    wear:'89%', phone:'+41441110005', week:[22,21,20,22,22,22,21] },
+  { id:6,  name:'Anna Krause',    initials:'AK', stage:'14/14', phase:'INTENSE', status:'ok',    wear:'98%', phone:'+41441110006', week:[23,23,22,23,22,23,22] },
+  { id:7,  name:'Daniel Häfeli',  initials:'DH', stage:'6/14',  phase:'REGULAR', status:'warn',  wear:'78%', phone:'+41441110007', week:[19,22,17,20,22,19,20] },
+  { id:8,  name:'Eva Bachmann',   initials:'EB', stage:'8/14',  phase:'REGULAR', status:'ok',    wear:'93%', phone:'+41441110008', week:[22,22,21,22,23,22,22] },
+  { id:9,  name:'Felix Wagner',   initials:'FW', stage:'5/8',   phase:'REGULAR', status:'ok',    wear:'95%', phone:'+41441110009', week:[22,23,22,22,23,22,22] },
+  { id:10, name:'Greta Hofmann',  initials:'GH', stage:'10/14', phase:'INTENSE', status:'ok',    wear:'92%', phone:'+41441110010', week:[22,22,21,23,22,22,21] },
+  { id:11, name:'Hans Imhof',     initials:'HI', stage:'2/8',   phase:'SOFT',    status:'warn',  wear:'72%', phone:'+41441110011', week:[17,20,18,22,19,17,20] },
+  { id:12, name:'Isabella Jung',  initials:'IJ', stage:'11/14', phase:'INTENSE', status:'ok',    wear:'96%', phone:'+41441110012', week:[22,23,22,23,22,23,22] },
+  { id:13, name:'Jonas Meier',    initials:'JM', stage:'3/14',  phase:'SOFT',    status:'ok',    wear:'88%', phone:'+41441110013', week:[22,21,20,22,22,21,21] },
+  { id:14, name:'Laura Schäfer',  initials:'LS', stage:'7/8',   phase:'INTENSE', status:'ok',    wear:'97%', phone:'+41441110014', week:[22,23,22,23,22,23,23] },
+  { id:15, name:'Marco Brunner',  initials:'MB', stage:'11/14', phase:'INTENSE', status:'ok',    wear:'90%', phone:'+41441110015', week:[22,22,20,22,22,21,22] },
+  { id:16, name:'Nina Vogel',     initials:'NV', stage:'5/14',  phase:'REGULAR', status:'ok',    wear:'91%', phone:'+41441110016', week:[22,22,21,22,23,22,21] },
+  { id:17, name:'Oliver Suter',   initials:'OS', stage:'8/14',  phase:'REGULAR', status:'ok',    wear:'93%', phone:'+41441110017', week:[22,22,22,22,23,22,22] },
+  { id:18, name:'Petra Lang',     initials:'PL', stage:'2/8',   phase:'SOFT',    status:'ok',    wear:'85%', phone:'+41441110018', week:[21,22,19,22,21,22,20] },
+];
+let _currentPatient = null;
+
+// ── TRANSLATIONS ──────────────────────────────────────────
+const DOC_T = {
+  de: { tab_overview:'Übersicht', tab_stats:'Statistik', tab_msgs:'Nachrichten', tab_practice:'Praxis', lbl_lang:'Sprache · Language', lbl_display:'Darstellung', lbl_dark:'Dunkles Design', search_ph:'Patient suchen...' },
+  en: { tab_overview:'Overview',  tab_stats:'Analytics',   tab_msgs:'Messages',    tab_practice:'Practice', lbl_lang:'Language',           lbl_display:'Display',       lbl_dark:'Dark Mode',      search_ph:'Search patient...' },
+  fr: { tab_overview:'Aperçu',    tab_stats:'Statistiques', tab_msgs:'Messages',    tab_practice:'Cabinet',  lbl_lang:'Langue',             lbl_display:'Affichage',     lbl_dark:'Mode sombre',    search_ph:'Rechercher un patient...' },
+  it: { tab_overview:'Panoramica',tab_stats:'Statistiche',  tab_msgs:'Messaggi',    tab_practice:'Studio',   lbl_lang:'Lingua',             lbl_display:'Aspetto',       lbl_dark:'Modalità scura', search_ph:'Cerca paziente...' },
+  ru: { tab_overview:'Обзор',     tab_stats:'Статистика',   tab_msgs:'Сообщения',   tab_practice:'Клиника',  lbl_lang:'Язык',               lbl_display:'Отображение',   lbl_dark:'Тёмный режим',   search_ph:'Поиск пациента...' },
+  es: { tab_overview:'Resumen',   tab_stats:'Estadísticas', tab_msgs:'Mensajes',    tab_practice:'Práctica', lbl_lang:'Idioma',             lbl_display:'Apariencia',    lbl_dark:'Modo oscuro',    search_ph:'Buscar paciente...' },
+};
+
+function setDocLang(lang) {
+  localStorage.setItem('visibal_lang', lang);
+  _applyDocLang(lang);
+  _updateLangChecks(lang);
+  showToast('✓', 'ok', 1200);
+}
+function _updateLangChecks(lang) {
+  ['de','en','fr','it','ru','es'].forEach(l => {
+    const el = document.getElementById('lc-' + l);
+    if (el) el.style.opacity = l === lang ? '1' : '0';
+  });
+}
+function _applyDocLang(lang) {
+  const t = DOC_T[lang] || DOC_T.de;
+  const tabs = document.querySelectorAll('.app-tab span');
+  if (tabs[0]) tabs[0].textContent = t.tab_overview;
+  if (tabs[1]) tabs[1].textContent = t.tab_stats;
+  if (tabs[2]) tabs[2].textContent = t.tab_msgs;
+  if (tabs[3]) tabs[3].textContent = t.tab_practice;
+  const lblLang = document.getElementById('lblLang'); if (lblLang) lblLang.textContent = t.lbl_lang;
+  const lblDisplay = document.getElementById('lblDisplay'); if (lblDisplay) lblDisplay.textContent = t.lbl_display;
+  const lblDark = document.getElementById('lblDarkMode'); if (lblDark) lblDark.textContent = t.lbl_dark;
+  const si = document.querySelector('.search-bar input'); if (si) si.placeholder = t.search_ph;
+  document.documentElement.lang = lang;
+}
+
+// ── FILTER COUNTS ─────────────────────────────────────────
 function _updateFilterCounts() {
   const tot = patients.length;
   const al = patients.filter(p => p.status === 'alert').length;
   const wa = patients.filter(p => p.status === 'warn').length;
   const ok = patients.filter(p => p.status === 'ok').length;
-  const h = document.getElementById('patientCountHead');
-  if (h) h.textContent = `${tot} aktive Patienten`;
-  const fpAll = document.getElementById('fpAll'); if (fpAll) fpAll.textContent = `Alle · ${tot}`;
-  const fpAlert = document.getElementById('fpAlert'); if (fpAlert) fpAlert.textContent = `! Kritisch · ${al}`;
-  const fpWarn = document.getElementById('fpWarn'); if (fpWarn) fpWarn.textContent = `⚠ Achtung · ${wa}`;
-  const fpOk = document.getElementById('fpOk'); if (fpOk) fpOk.textContent = `✓ OK · ${ok}`;
-  const sOk = document.getElementById('statOk'); if (sOk) sOk.innerHTML = `${ok}<em style="color:var(--ok);">✓</em>`;
-  const sWarn = document.getElementById('statWarn'); if (sWarn) sWarn.innerHTML = `${wa}<em style="color:var(--warn);">⚠</em>`;
-  const sAlert = document.getElementById('statAlert'); if (sAlert) sAlert.innerHTML = `${al}<em>!</em>`;
+  const h = document.getElementById('patientCountHead'); if (h) h.textContent = tot + ' aktive Patienten';
+  const fpAll = document.getElementById('fpAll'); if (fpAll) fpAll.textContent = 'Alle · ' + tot;
+  const fpAlert = document.getElementById('fpAlert'); if (fpAlert) fpAlert.textContent = '! Kritisch · ' + al;
+  const fpWarn = document.getElementById('fpWarn'); if (fpWarn) fpWarn.textContent = '⚠ Achtung · ' + wa;
+  const fpOk = document.getElementById('fpOk'); if (fpOk) fpOk.textContent = '✓ OK · ' + ok;
+  const sOk = document.getElementById('statOk'); if (sOk) sOk.innerHTML = ok + '<em style="color:var(--ok);">✓</em>';
+  const sWarn = document.getElementById('statWarn'); if (sWarn) sWarn.innerHTML = wa + '<em style="color:var(--warn);">⚠</em>';
+  const sAlert = document.getElementById('statAlert'); if (sAlert) sAlert.innerHTML = al + '<em>!</em>';
 }
 
-function renderPatients(filter='all') {
+function _patientRow(p) {
+  return `<div class="patient-row" onclick="showPatient(${p.id})">
+    <div class="patient-avatar">${p.initials}</div>
+    <div class="patient-info">
+      <div class="patient-name">${p.name}</div>
+      <div class="patient-meta">Stufe ${p.stage} · ${p.phase} · ${p.wear}</div>
+    </div>
+    <span class="patient-status-pill pill-${p.status}">${p.status==='ok'?'✓ OK':p.status==='warn'?'⚠ '+p.wear:'! Kritisch'}</span>
+  </div>`;
+}
+
+function renderPatients(filter) {
+  filter = filter || 'all';
   const list = document.getElementById('patientList');
   const filtered = filter === 'all' ? patients : patients.filter(p => p.status === filter);
-  if (!filtered.length) {
-    list.innerHTML = '<div class="empty-state"><div class="empty-state-ico">👤</div><div class="empty-state-title">Keine Patienten</div><div class="empty-state-sub">Kein Patient entspricht dem Filter.</div></div>';
-    return;
-  }
-  list.innerHTML = filtered.map(p => `
-    <div class="patient-row" onclick="showPatient(${p.id})">
-      <div class="patient-avatar">${p.avatar}</div>
-      <div class="patient-info">
-        <div class="patient-name">${p.name}</div>
-        <div class="patient-meta">Stufe ${p.stage} · ${p.phase} · ${p.wear}</div>
-      </div>
-      <span class="patient-status-pill pill-${p.status}">${p.status === 'ok' ? '✓ OK' : p.status === 'warn' ? '⚠ ' + p.wear : '! Kritisch'}</span>
-    </div>
-  `).join('');
+  if (!filtered.length) { list.innerHTML = '<div class="empty-state"><div class="empty-state-ico">👤</div><div class="empty-state-title">Keine Patienten</div><div class="empty-state-sub">Kein Patient entspricht dem Filter.</div></div>'; return; }
+  list.innerHTML = filtered.map(_patientRow).join('');
 }
 
 function filterPatients(query) {
   const list = document.getElementById('patientList');
   const filtered = patients.filter(p => p.name.toLowerCase().includes(query.toLowerCase()));
-  if (!filtered.length) {
-    list.innerHTML = `<div class="empty-state"><div class="empty-state-ico">🔍</div><div class="empty-state-title">Kein Ergebnis</div><div class="empty-state-sub">Kein Patient gefunden für „${query}".</div></div>`;
-    return;
-  }
-  list.innerHTML = filtered.map(p => `
-    <div class="patient-row" onclick="showPatient(${p.id})">
-      <div class="patient-avatar">${p.avatar}</div>
-      <div class="patient-info">
-        <div class="patient-name">${p.name}</div>
-        <div class="patient-meta">Stufe ${p.stage} · ${p.phase} · ${p.wear}</div>
-      </div>
-      <span class="patient-status-pill pill-${p.status}">${p.status === 'ok' ? '✓ OK' : p.status === 'warn' ? '⚠' : '!'}</span>
-    </div>
-  `).join('');
+  if (!filtered.length) { list.innerHTML = '<div class="empty-state"><div class="empty-state-ico">🔍</div><div class="empty-state-title">Kein Ergebnis</div><div class="empty-state-sub">Kein Patient gefunden für „' + query + '".</div></div>'; return; }
+  list.innerHTML = filtered.map(_patientRow).join('');
 }
 
 function filterByStatus(status, btn) {
   document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
-  if(btn) btn.classList.add('active');
+  if (btn) btn.classList.add('active');
   renderPatients(status);
 }
 
 function showPatient(id) {
+  const p = patients.find(pt => pt.id === id);
+  if (!p) return;
+  _currentPatient = p;
+
+  const av = document.getElementById('detailAvatar'); if (av) av.textContent = p.initials;
+  document.getElementById('detailName').textContent = p.name;
+  document.getElementById('detailMeta').textContent = 'Stufe ' + p.stage + ' · ' + p.phase + ' · Dual Arch';
+
+  const pill = document.getElementById('detailStatusPill');
+  if (pill) { pill.className = 'patient-status-pill pill-' + p.status; pill.textContent = p.status==='ok'?'✓ 22h':p.status==='warn'?'⚠ Achtung':'! Kritisch'; }
+  const comp = document.getElementById('detailCompliance'); if (comp) comp.textContent = 'Compliance: ' + p.wear;
+
+  const ph = document.getElementById('detailProgressPhase'); if (ph) ph.textContent = p.phase + ' PHASE';
+  const ps = document.getElementById('detailProgressStep'); if (ps) ps.textContent = 'Stufe ' + p.stage;
+  const parts = p.stage.split('/').map(Number);
+  const pct = Math.round(parts[0] / parts[1] * 100);
+  const pf = document.getElementById('detailProgressFill'); if (pf) pf.style.width = pct + '%';
+  const pp = document.getElementById('detailProgressPct'); if (pp) pp.textContent = pct + '%';
+  const psub = document.getElementById('detailProgressSub'); if (psub) psub.textContent = 'Dual Arch · Stufe ' + parts[0] + ' von ' + parts[1];
+
+  const smsBtn = document.getElementById('detailSmsBtn'); if (smsBtn) smsBtn.onclick = () => window.location.href = 'sms:' + p.phone;
+  const callBtn = document.getElementById('detailCallBtn'); if (callBtn) callBtn.onclick = () => window.location.href = 'tel:' + p.phone;
+
+  _renderDetailChart(p);
+
+  const noteKey = 'visibal_notes_' + p.id;
+  const defNote = p.name + ' · Stufe ' + p.stage + ' · ' + p.phase + ' · Compliance ' + p.wear + '.';
+  const nt = document.getElementById('notesText'); if (nt) nt.textContent = localStorage.getItem(noteKey) || defNote;
+  const nd = document.getElementById('notesDate'); if (nd) nd.textContent = 'Klinische Notizen · ' + new Date().toLocaleDateString('de-CH');
+
   switchDashView('detail');
+}
+
+function _renderDetailChart(p) {
+  const svg = document.getElementById('detailChart');
+  if (!svg) return;
+  const xs = [20,60,100,140,180,220,260];
+  const days = ['Mo','Di','Mi','Do','Fr','Sa','Heute'];
+  const hToY = h => 65 - (Math.min(Math.max(h,12),24)-12)*5;
+  const pts = p.week.map((h,i) => ({x:xs[i], y:hToY(h), h}));
+  const poly = pts.map(pt => pt.x+','+pt.y).join(' ');
+  const avg = (p.week.reduce((a,b)=>a+b,0)/p.week.length).toFixed(1);
+  const warnC = '#b87300', okC = '#C00000';
+  svg.innerHTML =
+    '<line x1="14" y1="15" x2="266" y2="15" stroke="#e8e8e8" stroke-width="1.5" stroke-dasharray="5,4"/>' +
+    '<text x="268" y="18" font-size="8" fill="#bbb" font-family="sans-serif">22h</text>' +
+    '<polygon points="'+poly+' '+xs[6]+',65 '+xs[0]+',65" fill="rgba(192,0,0,.07)"/>' +
+    '<polyline points="'+poly+'" fill="none" stroke="#C00000" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>' +
+    pts.map(pt=>'<circle cx="'+pt.x+'" cy="'+pt.y+'" r="4" fill="white" stroke="'+(pt.h<20?warnC:okC)+'" stroke-width="2"/>').join('') +
+    pts.map((pt,i)=>'<text x="'+pt.x+'" y="79" text-anchor="middle" font-size="9" fill="#888" font-family="sans-serif"'+(i===6?' font-weight="700"':'')+'>'+days[i]+'</text>').join('') +
+    pts.map(pt=>'<text x="'+pt.x+'" y="91" text-anchor="middle" font-size="9" fill="'+(pt.h<20?warnC:okC)+'" font-weight="700" font-family="sans-serif">'+pt.h+'h</text>').join('');
+  const sc = p.status==='ok'?'var(--ok)':p.status==='warn'?'var(--warn)':'var(--red)';
+  const footer = document.getElementById('detailChartFooter');
+  if (footer) footer.innerHTML = '<span>Ø '+avg+'h / Tag</span><span style="color:'+sc+';font-weight:700;">'+p.wear+' Compliance</span>';
 }
 
 function switchDashView(view, btn) {
@@ -759,9 +839,12 @@ function closeNotifs() { document.getElementById('notifOverlay').classList.remov
 // ── PRACTICE PROFILE EDITOR ───────────────────────────────
 function loadPractice() {
   const p = JSON.parse(localStorage.getItem('visibal_practice') || '{}');
-  const n = document.getElementById('practiceName'); if (n) n.textContent = p.name || 'Dr. med. P. Schmidt';
+  const name = p.name || 'Dr. med. P. Schmidt';
+  const n = document.getElementById('practiceName'); if (n) n.textContent = name;
   const s = document.getElementById('practiceSpec'); if (s) s.textContent = p.spec || 'Zahnarzt & Kieferchirurg';
   const a = document.getElementById('practiceAddr'); if (a) a.textContent = (p.addr || 'Bahnhofstrasse 12') + ' · ' + (p.city || '8001 Zürich');
+  const g1 = document.getElementById('overviewGreetingTime'); if (g1) g1.textContent = 'Dashboard · ' + name;
+  const g2 = document.getElementById('analyticsGreetingTime'); if (g2) g2.textContent = 'Statistik · ' + name;
 }
 function editPractice() {
   const p = JSON.parse(localStorage.getItem('visibal_practice') || '{}');
@@ -789,43 +872,44 @@ function savePractice() {
 
 // ── PRINT PATIENT REPORT ──────────────────────────────────
 function printPatientReport() {
+  const p = _currentPatient || patients[0];
+  const prac = JSON.parse(localStorage.getItem('visibal_practice') || '{}');
+  const pracName = prac.name || 'Dr. med. P. Schmidt';
   const date = new Date().toLocaleDateString('de-CH');
+  const dayNames = ['Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Heute'];
+  const rows = p.week.map((h, i) => {
+    const cls = h >= 22 ? 'ok' : h >= 18 ? 'warn' : 'alert';
+    const lbl = h >= 22 ? '✓ Konform' : h >= 18 ? '⚠ Unter Ziel' : '! Kritisch';
+    return '<tr><td>' + dayNames[i] + '</td><td>' + h + 'h 00min</td><td class="' + cls + '">' + lbl + '</td></tr>';
+  }).join('');
+  const noteKey = 'visibal_notes_' + p.id;
+  const note = localStorage.getItem(noteKey) || (p.name + ' · Stufe ' + p.stage + ' · ' + p.phase + ' · Compliance ' + p.wear + '.');
   const w = window.open('', '_blank');
-  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>VISIBAL Patientenbericht</title><style>
-    body{font-family:Arial,sans-serif;max-width:680px;margin:40px auto;color:#111;font-size:14px;}
-    h1{color:#C00000;margin-bottom:4px;} .meta{color:#666;font-size:12px;margin-bottom:24px;}
-    .stats{display:flex;gap:24px;margin-bottom:24px;padding:16px;background:#f7f7f7;border-radius:8px;flex-wrap:wrap;}
-    .stat-n{font-size:26px;font-weight:700;color:#111;} .stat-l{font-size:11px;color:#666;}
-    table{width:100%;border-collapse:collapse;margin-bottom:20px;}
-    th{background:#C00000;color:white;padding:9px 12px;text-align:left;font-size:13px;}
-    td{padding:9px 12px;border-bottom:1px solid #eee;font-size:13px;}
-    .ok{color:#2d8a4e;font-weight:700;} .warn{color:#b87300;font-weight:700;} .alert{color:#C00000;font-weight:700;}
-    h2{font-size:14px;color:#555;margin:20px 0 8px;text-transform:uppercase;letter-spacing:.5px;}
-    footer{margin-top:32px;font-size:10px;color:#aaa;text-align:center;border-top:1px solid #eee;padding-top:12px;}
-  </style></head><body>
-    <h1>VISIBAL — Compliance-Bericht</h1>
-    <div class="meta">Erstellt: ${date} &nbsp;·&nbsp; Praxis Dr. Schmidt &nbsp;·&nbsp; VISIBAL Clinic</div>
-    <div class="stats">
-      <div><div class="stat-n">Marie Schmidt</div><div class="stat-l">Patientin</div></div>
-      <div><div class="stat-n">94%</div><div class="stat-l">Compliance</div></div>
-      <div><div class="stat-n">8/14</div><div class="stat-l">Stufe</div></div>
-      <div><div class="stat-n">REGULAR</div><div class="stat-l">Phase</div></div>
-    </div>
-    <h2>Tragezeit · letzte 7 Tage</h2>
-    <table>
-      <tr><th>Tag</th><th>Tragezeit</th><th>Status</th></tr>
-      <tr><td>Montag</td><td>22h 00min</td><td class="ok">✓ Konform</td></tr>
-      <tr><td>Dienstag</td><td>23h 10min</td><td class="ok">✓ Konform</td></tr>
-      <tr><td>Mittwoch</td><td>17h 30min</td><td class="warn">⚠ Unter Ziel</td></tr>
-      <tr><td>Donnerstag</td><td>22h 00min</td><td class="ok">✓ Konform</td></tr>
-      <tr><td>Freitag</td><td>22h 15min</td><td class="ok">✓ Konform</td></tr>
-      <tr><td>Samstag</td><td>23h 00min</td><td class="ok">✓ Konform</td></tr>
-      <tr><td>Heute</td><td>21h 40min</td><td class="ok">✓ Konform</td></tr>
-    </table>
-    <h2>Klinische Notizen</h2>
-    <p>Patientin zeigt sehr gute Compliance. SOFT-Phase reibungslos abgeschlossen. REGULAR läuft planmässig. Beim nächsten Termin: Druckverteilung an Zahn 12 prüfen.</p>
-    <footer>VISIBAL Clinic v1.0 · nivellipso® · Swiss-Made · Bericht erstellt ${date}</footer>
-  </body></html>`);
+  w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>VISIBAL Patientenbericht</title><style>'
+    + 'body{font-family:Arial,sans-serif;max-width:680px;margin:40px auto;color:#111;font-size:14px;}'
+    + 'h1{color:#C00000;margin-bottom:4px;} .meta{color:#666;font-size:12px;margin-bottom:24px;}'
+    + '.stats{display:flex;gap:24px;margin-bottom:24px;padding:16px;background:#f7f7f7;border-radius:8px;flex-wrap:wrap;}'
+    + '.stat-n{font-size:26px;font-weight:700;color:#111;} .stat-l{font-size:11px;color:#666;}'
+    + 'table{width:100%;border-collapse:collapse;margin-bottom:20px;}'
+    + 'th{background:#C00000;color:white;padding:9px 12px;text-align:left;font-size:13px;}'
+    + 'td{padding:9px 12px;border-bottom:1px solid #eee;font-size:13px;}'
+    + '.ok{color:#2d8a4e;font-weight:700;} .warn{color:#b87300;font-weight:700;} .alert{color:#C00000;font-weight:700;}'
+    + 'h2{font-size:14px;color:#555;margin:20px 0 8px;text-transform:uppercase;letter-spacing:.5px;}'
+    + 'footer{margin-top:32px;font-size:10px;color:#aaa;text-align:center;border-top:1px solid #eee;padding-top:12px;}'
+    + '</style></head><body>'
+    + '<h1>VISIBAL — Compliance-Bericht</h1>'
+    + '<div class="meta">Erstellt: ' + date + ' &nbsp;·&nbsp; ' + pracName + ' &nbsp;·&nbsp; VISIBAL Clinic</div>'
+    + '<div class="stats">'
+    + '<div><div class="stat-n">' + p.name + '</div><div class="stat-l">Patient</div></div>'
+    + '<div><div class="stat-n">' + p.wear + '</div><div class="stat-l">Compliance</div></div>'
+    + '<div><div class="stat-n">' + p.stage + '</div><div class="stat-l">Stufe</div></div>'
+    + '<div><div class="stat-n">' + p.phase + '</div><div class="stat-l">Phase</div></div>'
+    + '</div>'
+    + '<h2>Tragezeit · letzte 7 Tage</h2>'
+    + '<table><tr><th>Tag</th><th>Tragezeit</th><th>Status</th></tr>' + rows + '</table>'
+    + '<h2>Klinische Notizen</h2><p>' + note + '</p>'
+    + '<footer>VISIBAL Clinic v1.0 · nivellipso® · Swiss-Made · Bericht erstellt ' + date + '</footer>'
+    + '</body></html>');
   w.document.close();
   w.print();
   _trackEvent('print_patient_report');
@@ -866,11 +950,11 @@ function renderHotTopics() {
 }
 
 // ── NOTES EDITOR ──────────────────────────────────────────
-const _DEFAULT_NOTE = 'Patientin zeigt sehr gute Compliance. SOFT-Phase reibungslos abgeschlossen. REGULAR läuft planmässig. Beim nächsten Termin: Druckverteilung an Zahn 12 prüfen.';
 function openNoteEditor() {
-  const stored = localStorage.getItem('visibal_notes') || _DEFAULT_NOTE;
+  const key = _currentPatient ? 'visibal_notes_' + _currentPatient.id : 'visibal_notes';
+  const def = _currentPatient ? _currentPatient.name + ' · Stufe ' + _currentPatient.stage + ' · ' + _currentPatient.phase + '.' : 'Klinische Notizen.';
   const ed = document.getElementById('notesEditor');
-  if (ed) ed.value = stored;
+  if (ed) ed.value = localStorage.getItem(key) || def;
   document.getElementById('notesEditorWrap').style.display = '';
   document.getElementById('addNoteBtn').style.display = 'none';
   if (ed) ed.focus();
@@ -878,11 +962,10 @@ function openNoteEditor() {
 function saveNote() {
   const text = (document.getElementById('notesEditor')?.value || '').trim();
   if (!text) return;
-  localStorage.setItem('visibal_notes', text);
-  const notesText = document.getElementById('notesText');
-  if (notesText) notesText.textContent = text;
-  const notesDate = document.getElementById('notesDate');
-  if (notesDate) notesDate.textContent = 'Letzte Anpassung · ' + new Date().toLocaleDateString('de-CH');
+  const key = _currentPatient ? 'visibal_notes_' + _currentPatient.id : 'visibal_notes';
+  localStorage.setItem(key, text);
+  const notesText = document.getElementById('notesText'); if (notesText) notesText.textContent = text;
+  const notesDate = document.getElementById('notesDate'); if (notesDate) notesDate.textContent = 'Letzte Anpassung · ' + new Date().toLocaleDateString('de-CH');
   document.getElementById('notesEditorWrap').style.display = 'none';
   document.getElementById('addNoteBtn').style.display = '';
   showToast('Notiz gespeichert ✓', 'ok');
@@ -938,15 +1021,13 @@ renderHotTopics();
 loadPractice();
 _initLiveBanner();
 _applyTheme();
+const _initLang = localStorage.getItem('visibal_lang') || 'de';
+_applyDocLang(_initLang);
+_updateLangChecks(_initLang);
 if (sessionStorage.getItem('notifs_seen')) {
-  const b = document.getElementById('notifBadge');
-  if (b) b.style.display = 'none';
+  const b = document.getElementById('notifBadge'); if (b) b.style.display = 'none';
 }
-
-// Register Service Worker
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js').catch(()=>{});
-}
+if ('serviceWorker' in navigator) { navigator.serviceWorker.register('service-worker.js').catch(()=>{}); }
 </script>
 
 <!-- PRACTICE EDIT MODAL -->
