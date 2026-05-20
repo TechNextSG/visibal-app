@@ -118,15 +118,15 @@
       <div class="quick-stats">
         <div class="stat-mini" style="border-top:3px solid var(--ok);">
           <div class="stat-mini-n" id="statOk">14<em style="color:var(--ok);">✓</em></div>
-          <div class="stat-mini-l">Konform</div>
+          <div class="stat-mini-l" data-i18n="stat_ok">Konform</div>
         </div>
         <div class="stat-mini" style="border-top:3px solid var(--warn);">
           <div class="stat-mini-n" id="statWarn">3<em style="color:var(--warn);">⚠</em></div>
-          <div class="stat-mini-l">Achtung</div>
+          <div class="stat-mini-l" data-i18n="stat_warn">Achtung</div>
         </div>
         <div class="stat-mini" style="border-top:3px solid var(--red);">
           <div class="stat-mini-n" id="statAlert">1<em>!</em></div>
-          <div class="stat-mini-l">Kritisch</div>
+          <div class="stat-mini-l" data-i18n="stat_alert">Kritisch</div>
         </div>
       </div>
 
@@ -144,13 +144,13 @@
       <div class="reminder-card" style="background:var(--alert-light);border-left-color:var(--red);">
         <div class="reminder-ico" style="background:white;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v2m0 4h.01M12 21a9 9 0 100-18 9 9 0 000 18z"/></svg></div>
         <div class="reminder-text">
-          <strong>1 Patient kritisch — Aktion erforderlich</strong>
-          T. Brauer · 12h Tragezeit über 4 Tage in Folge
+          <strong data-i18n="alert_crit_title">1 Patient kritisch — Aktion erforderlich</strong>
+          <span data-i18n="alert_crit_sub">T. Brauer · 12h Tragezeit über 4 Tage in Folge</span>
         </div>
       </div>
 
       <!-- Hot Topics -->
-      <div class="sec-label" style="margin-top:24px;">Hot Topics · diese Woche</div>
+      <div class="sec-label" style="margin-top:24px;" data-i18n="hot_topics">Hot Topics · diese Woche</div>
       <div class="card" style="padding:16px;" id="hotTopicsCard"></div>
 
       <!-- Search -->
@@ -178,7 +178,7 @@
       <div style="margin-bottom:16px;">
         <button onclick="switchDashView('overview')" style="background:none;border:none;color:var(--red);font-size:13px;font-weight:600;padding:0;display:flex;align-items:center;gap:4px;">
           <svg viewBox="0 0 12 18" fill="none" width="8" height="12"><path d="M9 1l-8 8 8 8" stroke="currentColor" stroke-width="2"/></svg>
-          Zurück
+          <span data-i18n="back">Zurück</span>
         </button>
       </div>
 
@@ -198,24 +198,24 @@
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:16px;">
         <button class="action-btn outline" id="detailSmsBtn" style="margin:0;padding:10px;font-size:11px;">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
-          <div>SMS</div>
+          <div data-i18n="act_sms">SMS</div>
         </button>
         <button class="action-btn outline" id="detailCallBtn" style="margin:0;padding:10px;font-size:11px;">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-          <div>Anrufen</div>
+          <div data-i18n="act_call">Anrufen</div>
         </button>
         <button class="action-btn outline" style="margin:0;padding:10px;font-size:11px;" onclick="showToast('Akte folgt in Vollversion')">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-          <div>Akte</div>
+          <div data-i18n="act_file">Akte</div>
         </button>
         <button class="action-btn outline" style="margin:0;padding:10px;font-size:11px;" onclick="printPatientReport()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
-          <div>Bericht</div>
+          <div data-i18n="act_report">Bericht</div>
         </button>
       </div>
 
       <!-- Treatment Progress -->
-      <div class="sec-label">Behandlungsfortschritt</div>
+      <div class="sec-label" data-i18n="sec_progress">Behandlungsfortschritt</div>
       <div class="progress-hero" style="margin-bottom:14px;">
         <div class="progress-phase-tag" id="detailProgressPhase">REGULAR PHASE</div>
         <div class="progress-step" id="detailProgressStep">Stufe 8/14</div>
@@ -229,7 +229,7 @@
       </div>
 
       <!-- 7 Day Compliance — Line Chart -->
-      <div class="sec-label">Tragezeit · diese Woche</div>
+      <div class="sec-label" data-i18n="sec_wear_week">Tragezeit · diese Woche</div>
       <div class="card">
         <svg id="detailChart" viewBox="0 0 280 98" style="width:100%;height:auto;display:block;overflow:visible;"></svg>
         <div id="detailChartFooter" style="display:flex;justify-content:space-between;font-size:11px;color:var(--grey);padding-top:8px;border-top:1px solid var(--border);">
@@ -239,7 +239,7 @@
       </div>
 
       <!-- Photo Timeline -->
-      <div class="sec-label">Foto-Verlauf</div>
+      <div class="sec-label" data-i18n="sec_photos">Foto-Verlauf</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:14px;">
         <div style="background:linear-gradient(135deg,#fceaea,#fff);border-radius:8px;aspect-ratio:1;display:flex;align-items:flex-end;padding:8px;font-size:9px;font-weight:700;color:white;background:linear-gradient(0deg,rgba(0,0,0,.6),transparent 50%),linear-gradient(135deg,#f8c8c8,#fceaea);">Stufe 1<br>14.03</div>
         <div style="border-radius:8px;aspect-ratio:1;display:flex;align-items:flex-end;padding:8px;font-size:9px;font-weight:700;color:white;background:linear-gradient(0deg,rgba(0,0,0,.6),transparent 50%),linear-gradient(135deg,#fcd0d0,#fdf0f0);">Stufe 5<br>12.04</div>
@@ -247,37 +247,37 @@
       </div>
 
       <!-- Activity Log -->
-      <div class="sec-label">Live-Aktivitäten</div>
+      <div class="sec-label" data-i18n="sec_live_activity">Live-Aktivitäten</div>
       <div class="card" style="padding:0 14px;">
         <div class="activity-item">
           <div class="activity-icon" style="background:#e8fff3;color:#2d8a4e;">⏱</div>
-          <div style="flex:1;"><div style="font-size:12px;font-weight:700;color:var(--text);">WEAR — Schiene eingesetzt</div><div style="font-size:10px;color:var(--grey);">Heute, 18:34 Uhr</div></div>
+          <div style="flex:1;"><div style="font-size:12px;font-weight:700;color:var(--text);" data-i18n="act_wear">WEAR — Schiene eingesetzt</div><div style="font-size:10px;color:var(--grey);" data-i18n="act_wear_time">Heute, 18:34 Uhr</div></div>
           <span style="font-size:9px;font-weight:700;color:#2d8a4e;background:#e8fff3;padding:2px 6px;border-radius:6px;">LIVE</span>
         </div>
         <div class="activity-item">
           <div class="activity-icon" style="background:var(--red-light);color:var(--red);">😕</div>
-          <div style="flex:1;"><div style="font-size:12px;font-weight:700;color:var(--text);">PAIN — Level 3 gemeldet</div><div style="font-size:10px;color:var(--grey);">Heute, 13:12 Uhr</div></div>
+          <div style="flex:1;"><div style="font-size:12px;font-weight:700;color:var(--text);" data-i18n="act_pain">PAIN — Level 3 gemeldet</div><div style="font-size:10px;color:var(--grey);" data-i18n="act_pain_time">Heute, 13:12 Uhr</div></div>
           <span style="font-size:9px;font-weight:700;color:var(--red);background:var(--red-light);padding:2px 6px;border-radius:6px;">PAIN</span>
         </div>
         <div class="activity-item">
           <div class="activity-icon" style="background:#fff8e8;color:#b87300;">📸</div>
-          <div style="flex:1;"><div style="font-size:12px;font-weight:700;color:var(--text);">PHOTO — 3 Fotos hochgeladen</div><div style="font-size:10px;color:var(--grey);">Gestern, 19:45 Uhr</div></div>
+          <div style="flex:1;"><div style="font-size:12px;font-weight:700;color:var(--text);" data-i18n="act_photo">PHOTO — 3 Fotos hochgeladen</div><div style="font-size:10px;color:var(--grey);" data-i18n="act_photo_time">Gestern, 19:45 Uhr</div></div>
           <span style="font-size:9px;font-weight:700;color:#b87300;background:#fff8e8;padding:2px 6px;border-radius:6px;">FOTO</span>
         </div>
         <div class="activity-item">
           <div class="activity-icon" style="background:#f0f0ff;color:#5050cc;">💬</div>
-          <div style="flex:1;"><div style="font-size:12px;font-weight:700;color:var(--text);">CHAT — Frage an Assistent</div><div style="font-size:10px;color:var(--grey);">Gestern, 12:08 Uhr</div></div>
+          <div style="flex:1;"><div style="font-size:12px;font-weight:700;color:var(--text);" data-i18n="act_chat">CHAT — Frage an Assistent</div><div style="font-size:10px;color:var(--grey);" data-i18n="act_chat_time">Gestern, 12:08 Uhr</div></div>
           <span style="font-size:9px;font-weight:700;color:#5050cc;background:#f0f0ff;padding:2px 6px;border-radius:6px;">CHAT</span>
         </div>
         <div class="activity-item">
           <div class="activity-icon" style="background:var(--bg);color:var(--grey);">📲</div>
-          <div style="flex:1;"><div style="font-size:12px;font-weight:700;color:var(--text);">APP — App geöffnet</div><div style="font-size:10px;color:var(--grey);">Gestern, 08:02 Uhr</div></div>
+          <div style="flex:1;"><div style="font-size:12px;font-weight:700;color:var(--text);" data-i18n="act_app">APP — App geöffnet</div><div style="font-size:10px;color:var(--grey);" data-i18n="act_app_time">Gestern, 08:02 Uhr</div></div>
           <span style="font-size:9px;font-weight:700;color:var(--grey);background:var(--bg);padding:2px 6px;border-radius:6px;">APP</span>
         </div>
       </div>
 
       <!-- Notes -->
-      <div class="sec-label" style="margin-top:20px;">Klinische Notizen</div>
+      <div class="sec-label" style="margin-top:20px;" data-i18n="sec_notes">Klinische Notizen</div>
       <div class="card" id="notesCard">
         <div style="font-size:12px;color:var(--grey);margin-bottom:6px;" id="notesDate">Letzte Anpassung · 12.04.2026</div>
         <div style="font-size:13px;color:var(--text);line-height:1.6;" id="notesText">Patientin zeigt sehr gute Compliance. SOFT-Phase reibungslos abgeschlossen. REGULAR läuft planmässig. Beim nächsten Termin: Druckverteilung an Zahn 12 prüfen.</div>
@@ -285,13 +285,13 @@
       <div id="notesEditorWrap" style="display:none;margin-bottom:10px;">
         <textarea id="notesEditor" style="width:100%;border:1px solid var(--border);border-radius:10px;padding:11px 12px;font-size:13px;font-family:inherit;outline:none;background:var(--bg);color:var(--text);resize:vertical;min-height:100px;box-sizing:border-box;line-height:1.6;" onfocus="this.style.borderColor='var(--red)'" onblur="this.style.borderColor='var(--border)'"></textarea>
         <div style="display:flex;gap:8px;margin-top:8px;">
-          <button class="action-btn" style="flex:1;margin:0;padding:11px;" onclick="saveNote()">Notiz speichern</button>
-          <button class="action-btn outline" style="flex:1;margin:0;padding:11px;" onclick="cancelNote()">Abbrechen</button>
+          <button class="action-btn" style="flex:1;margin:0;padding:11px;" onclick="saveNote()"><span data-i18n="note_save">Notiz speichern</span></button>
+          <button class="action-btn outline" style="flex:1;margin:0;padding:11px;" onclick="cancelNote()"><span data-i18n="note_cancel">Abbrechen</span></button>
         </div>
       </div>
       <button class="action-btn outline full-row" id="addNoteBtn" onclick="openNoteEditor()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-        Notiz bearbeiten / hinzufügen
+        <span data-i18n="note_edit_btn">Notiz bearbeiten / hinzufügen</span>
       </button>
     </div>
 
@@ -299,25 +299,25 @@
     <div class="view" id="view-analytics">
       <div class="greeting">
         <div class="greeting-time" id="analyticsGreetingTime">Statistik · Praxis Schmidt</div>
-        <div class="greeting-name">Compliance-Analyse</div>
+        <div class="greeting-name" data-i18n="analytics_name">Compliance-Analyse</div>
       </div>
 
-      <div class="sec-label">Gesamtcompliance · Mai 2026</div>
+      <div class="sec-label" data-i18n="sec_compliance_total">Gesamtcompliance · Mai 2026</div>
       <div class="card" style="margin-bottom:14px;">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;">
           <div>
             <div class="analytics-score">87%</div>
-            <div style="font-size:12px;color:var(--grey);margin-top:3px;">Ø über 18 Patienten</div>
+            <div style="font-size:12px;color:var(--grey);margin-top:3px;" data-i18n="analytics_avg">Ø über 18 Patienten</div>
           </div>
           <div style="font-size:11px;font-weight:600;color:var(--ok);background:var(--ok-light);padding:4px 10px;border-radius:10px;">↑ +3% ggü. April</div>
         </div>
         <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:6px;">
           <div style="height:100%;width:87%;background:var(--ok);border-radius:3px;"></div>
         </div>
-        <div style="font-size:10px;color:var(--grey-light);">Zielwert: ≥ 85% — erfüllt ✓</div>
+        <div style="font-size:10px;color:var(--grey-light);" data-i18n="analytics_target">Zielwert: ≥ 85% — erfüllt ✓</div>
       </div>
 
-      <div class="sec-label">Praxis-Tragezeit · diese Woche</div>
+      <div class="sec-label" data-i18n="sec_practice_wear">Praxis-Tragezeit · diese Woche</div>
       <div class="card" style="margin-bottom:14px;">
         <svg viewBox="0 0 280 98" style="width:100%;height:auto;display:block;overflow:visible;">
           <line x1="14" y1="15" x2="266" y2="15" stroke="#e8e8e8" stroke-width="1.5" stroke-dasharray="5,4"/>
@@ -352,51 +352,51 @@
         </div>
       </div>
 
-      <div class="sec-label">Status-Verteilung</div>
+      <div class="sec-label" data-i18n="sec_status_dist">Status-Verteilung</div>
       <div class="quick-stats" style="margin-bottom:14px;">
         <div class="stat-mini" style="border-top:3px solid var(--ok);">
           <div class="stat-mini-n"><em style="color:var(--ok);">14</em></div>
-          <div class="stat-mini-l">Konform</div>
+          <div class="stat-mini-l" data-i18n="stat_ok">Konform</div>
         </div>
         <div class="stat-mini" style="border-top:3px solid var(--warn);">
           <div class="stat-mini-n"><em style="color:var(--warn);">3</em></div>
-          <div class="stat-mini-l">Achtung</div>
+          <div class="stat-mini-l" data-i18n="stat_warn">Achtung</div>
         </div>
         <div class="stat-mini" style="border-top:3px solid var(--red);">
           <div class="stat-mini-n"><em style="color:var(--red);">1</em></div>
-          <div class="stat-mini-l">Kritisch</div>
+          <div class="stat-mini-l" data-i18n="stat_alert">Kritisch</div>
         </div>
       </div>
 
-      <div class="sec-label">Phasen-Verteilung</div>
+      <div class="sec-label" data-i18n="sec_phase_dist">Phasen-Verteilung</div>
       <div class="card" style="margin-bottom:14px;">
         <div class="phase-row">
-          <div class="phase-label">SOFT</div>
+          <div class="phase-label" data-i18n="phase_soft">SOFT</div>
           <div class="phase-bar-wrap"><div class="phase-bar-fill" style="width:28%;background:var(--warn-light);border:1px solid var(--warn);"></div></div>
           <div class="phase-count">5</div>
         </div>
         <div class="phase-row">
-          <div class="phase-label">REGULAR</div>
+          <div class="phase-label" data-i18n="phase_regular">REGULAR</div>
           <div class="phase-bar-wrap"><div class="phase-bar-fill" style="width:39%;background:var(--red);"></div></div>
           <div class="phase-count">7</div>
         </div>
         <div class="phase-row">
-          <div class="phase-label">INTENSE</div>
+          <div class="phase-label" data-i18n="phase_intense">INTENSE</div>
           <div class="phase-bar-wrap"><div class="phase-bar-fill" style="width:33%;background:var(--black);"></div></div>
           <div class="phase-count">6</div>
         </div>
       </div>
       <button class="action-btn outline full-row" onclick="exportCSV()" style="margin-bottom:8px;">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
-        Wochenstatistik als CSV exportieren
+        <span data-i18n="csv_export_btn">Wochenstatistik als CSV exportieren</span>
       </button>
     </div>
 
     <!-- VIEW: MESSAGES -->
     <div class="view" id="view-messages">
       <div class="greeting">
-        <div class="greeting-time">Nachrichten</div>
-        <div class="greeting-name">3 ungelesene Nachrichten</div>
+        <div class="greeting-time" data-i18n="msgs_time">Nachrichten</div>
+        <div class="greeting-name" data-i18n="msgs_name">3 ungelesene Nachrichten</div>
       </div>
 
       <div class="card" style="padding:0 16px;">
@@ -436,17 +436,17 @@
         </div>
       </div>
 
-      <div style="margin-top:8px;text-align:center;font-size:12px;color:var(--grey-light);padding:16px;">Keine weiteren Nachrichten</div>
+      <div style="margin-top:8px;text-align:center;font-size:12px;color:var(--grey-light);padding:16px;" data-i18n="msgs_none">Keine weiteren Nachrichten</div>
     </div>
 
     <!-- VIEW: SETTINGS -->
     <div class="view" id="view-settings">
       <div class="greeting">
-        <div class="greeting-time">Praxis-Einstellungen</div>
+        <div class="greeting-time" data-i18n="settings_time">Praxis-Einstellungen</div>
         <div class="greeting-name">Dr. med. Schmidt</div>
       </div>
 
-      <div class="sec-label">Praxis</div>
+      <div class="sec-label" data-i18n="sec_practice">Praxis</div>
       <div class="card" style="margin-bottom:14px;">
         <div style="display:flex;gap:14px;align-items:center;margin-bottom:16px;">
           <div class="settings-avatar">PS</div>
@@ -458,36 +458,36 @@
         </div>
         <button class="action-btn outline full-row" onclick="editPractice()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-          Praxisdaten bearbeiten
+          <span data-i18n="edit_practice_btn">Praxisdaten bearbeiten</span>
         </button>
       </div>
 
-      <div class="sec-label">Benachrichtigungen</div>
+      <div class="sec-label" data-i18n="sec_notifs">Benachrichtigungen</div>
       <div class="card" style="margin-bottom:14px;">
         <div class="settings-row">
           <div>
-            <div class="settings-row-label">Kritische Alerts</div>
-            <div class="settings-row-sub">Sofort bei Compliance unter 60%</div>
+            <div class="settings-row-label" data-i18n="notif_critical">Kritische Alerts</div>
+            <div class="settings-row-sub" data-i18n="notif_critical_sub">Sofort bei Compliance unter 60%</div>
           </div>
           <label class="switch"><input type="checkbox" checked><span class="switch-slider"></span></label>
         </div>
         <div class="settings-row">
           <div>
-            <div class="settings-row-label">Tages-Zusammenfassung</div>
-            <div class="settings-row-sub">Täglich um 18:00 Uhr</div>
+            <div class="settings-row-label" data-i18n="notif_summary">Tages-Zusammenfassung</div>
+            <div class="settings-row-sub" data-i18n="notif_summary_sub">Täglich um 18:00 Uhr</div>
           </div>
           <label class="switch"><input type="checkbox" checked><span class="switch-slider"></span></label>
         </div>
         <div class="settings-row">
           <div>
-            <div class="settings-row-label">Foto-Uploads</div>
-            <div class="settings-row-sub">Bei neuen Patienten-Fotos</div>
+            <div class="settings-row-label" data-i18n="notif_photos">Foto-Uploads</div>
+            <div class="settings-row-sub" data-i18n="notif_photos_sub">Bei neuen Patienten-Fotos</div>
           </div>
           <label class="switch"><input type="checkbox"><span class="switch-slider"></span></label>
         </div>
       </div>
 
-      <div class="sec-label" id="lblLang">Sprache · Language</div>
+      <div class="sec-label" id="lblLang" data-i18n="lbl_lang">Sprache · Language</div>
       <div class="card" style="margin-bottom:14px;">
         <div class="settings-row" onclick="setDocLang('de')" style="cursor:pointer;">
           <div><div class="settings-row-label">🇨🇭 Deutsch (Schweiz)</div></div>
@@ -515,36 +515,36 @@
         </div>
       </div>
 
-      <div class="sec-label" id="lblDisplay">Darstellung</div>
+      <div class="sec-label" id="lblDisplay" data-i18n="lbl_display">Darstellung</div>
       <div class="card" style="margin-bottom:14px;">
         <div class="settings-row">
           <div>
-            <div class="settings-row-label" id="lblDarkMode">Dunkles Design</div>
-            <div class="settings-row-sub" id="darkModeSubText">Aus</div>
+            <div class="settings-row-label" id="lblDarkMode" data-i18n="lbl_dark">Dunkles Design</div>
+            <div class="settings-row-sub" id="darkModeSubText" data-i18n="dark_off">Aus</div>
           </div>
           <label class="switch"><input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()"><span class="switch-slider"></span></label>
         </div>
       </div>
 
-      <div class="sec-label">App-Info</div>
+      <div class="sec-label" data-i18n="sec_appinfo">App-Info</div>
       <div class="card" style="margin-bottom:14px;">
         <div class="settings-row">
-          <div class="settings-row-label">Version</div>
+          <div class="settings-row-label" data-i18n="info_version">Version</div>
           <div style="font-size:12px;color:var(--grey);">VISIBAL Clinic 1.0</div>
         </div>
         <div class="settings-row">
-          <div class="settings-row-label">Hersteller</div>
+          <div class="settings-row-label" data-i18n="info_maker">Hersteller</div>
           <div style="font-size:12px;color:var(--grey);">nivellipso® · Swiss-Made</div>
         </div>
         <div class="settings-row">
-          <div class="settings-row-label">Support</div>
+          <div class="settings-row-label" data-i18n="info_support">Support</div>
           <div style="font-size:12px;color:var(--red);">support@nivellipso.ch</div>
         </div>
       </div>
 
       <button class="action-btn full-row" style="background:var(--bg);color:var(--red);border:1px solid var(--red);" onclick="logout()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
-        Abmelden
+        <span data-i18n="logout_btn">Abmelden</span>
       </button>
     </div>
 
@@ -591,7 +591,7 @@
 <div class="notif-overlay" id="notifOverlay" onclick="closeNotifs()">
   <div class="notif-panel" onclick="event.stopPropagation()">
     <div class="notif-head">
-      <div class="notif-head-title">🔔 Benachrichtigungen</div>
+      <div class="notif-head-title" data-i18n="notif_panel_title">🔔 Benachrichtigungen</div>
       <button class="notif-close-btn" onclick="closeNotifs()">×</button>
     </div>
     <div class="notif-item">
@@ -637,12 +637,198 @@ let _currentPatient = null;
 
 // ── TRANSLATIONS ──────────────────────────────────────────
 const DOC_T = {
-  de: { tab_overview:'Übersicht', tab_stats:'Statistik', tab_msgs:'Nachrichten', tab_practice:'Praxis', lbl_lang:'Sprache · Language', lbl_display:'Darstellung', lbl_dark:'Dunkles Design', search_ph:'Patient suchen...' },
-  en: { tab_overview:'Overview',  tab_stats:'Analytics',   tab_msgs:'Messages',    tab_practice:'Practice', lbl_lang:'Language',           lbl_display:'Display',       lbl_dark:'Dark Mode',      search_ph:'Search patient...' },
-  fr: { tab_overview:'Aperçu',    tab_stats:'Statistiques', tab_msgs:'Messages',    tab_practice:'Cabinet',  lbl_lang:'Langue',             lbl_display:'Affichage',     lbl_dark:'Mode sombre',    search_ph:'Rechercher un patient...' },
-  it: { tab_overview:'Panoramica',tab_stats:'Statistiche',  tab_msgs:'Messaggi',    tab_practice:'Studio',   lbl_lang:'Lingua',             lbl_display:'Aspetto',       lbl_dark:'Modalità scura', search_ph:'Cerca paziente...' },
-  ru: { tab_overview:'Обзор',     tab_stats:'Статистика',   tab_msgs:'Сообщения',   tab_practice:'Клиника',  lbl_lang:'Язык',               lbl_display:'Отображение',   lbl_dark:'Тёмный режим',   search_ph:'Поиск пациента...' },
-  es: { tab_overview:'Resumen',   tab_stats:'Estadísticas', tab_msgs:'Mensajes',    tab_practice:'Práctica', lbl_lang:'Idioma',             lbl_display:'Apariencia',    lbl_dark:'Modo oscuro',    search_ph:'Buscar paciente...' },
+  de: {
+    tab_overview:'Übersicht', tab_stats:'Statistik', tab_msgs:'Nachrichten', tab_practice:'Praxis',
+    lbl_lang:'Sprache · Language', lbl_display:'Darstellung', lbl_dark:'Dunkles Design', dark_on:'Ein', dark_off:'Aus',
+    search_ph:'Patient suchen...',
+    stat_ok:'Konform', stat_warn:'Achtung', stat_alert:'Kritisch',
+    alert_crit_title:'1 Patient kritisch — Aktion erforderlich', alert_crit_sub:'T. Brauer · 12h Tragezeit über 4 Tage in Folge',
+    hot_topics:'Hot Topics · diese Woche',
+    back:'Zurück',
+    act_sms:'SMS', act_call:'Anrufen', act_file:'Akte', act_report:'Bericht',
+    sec_progress:'Behandlungsfortschritt', sec_wear_week:'Tragezeit · diese Woche', sec_photos:'Foto-Verlauf', sec_live_activity:'Live-Aktivitäten', sec_notes:'Klinische Notizen',
+    act_wear:'WEAR — Schiene eingesetzt', act_wear_time:'Heute, 18:34 Uhr',
+    act_pain:'PAIN — Level 3 gemeldet', act_pain_time:'Heute, 13:12 Uhr',
+    act_photo:'PHOTO — 3 Fotos hochgeladen', act_photo_time:'Gestern, 19:45 Uhr',
+    act_chat:'CHAT — Frage an Assistent', act_chat_time:'Gestern, 12:08 Uhr',
+    act_app:'APP — App geöffnet', act_app_time:'Gestern, 08:02 Uhr',
+    note_save:'Notiz speichern', note_cancel:'Abbrechen', note_edit_btn:'Notiz bearbeiten / hinzufügen',
+    analytics_name:'Compliance-Analyse', sec_compliance_total:'Gesamtcompliance · Mai 2026',
+    analytics_avg:'Ø über 18 Patienten', analytics_target:'Zielwert: ≥ 85% — erfüllt ✓',
+    sec_practice_wear:'Praxis-Tragezeit · diese Woche', sec_status_dist:'Status-Verteilung', sec_phase_dist:'Phasen-Verteilung',
+    phase_soft:'SOFT', phase_regular:'REGULAR', phase_intense:'INTENSE',
+    csv_export_btn:'Wochenstatistik als CSV exportieren',
+    msgs_time:'Nachrichten', msgs_name:'3 ungelesene Nachrichten', msgs_none:'Keine weiteren Nachrichten',
+    settings_time:'Praxis-Einstellungen', sec_practice:'Praxis', edit_practice_btn:'Praxisdaten bearbeiten',
+    sec_notifs:'Benachrichtigungen',
+    notif_critical:'Kritische Alerts', notif_critical_sub:'Sofort bei Compliance unter 60%',
+    notif_summary:'Tages-Zusammenfassung', notif_summary_sub:'Täglich um 18:00 Uhr',
+    notif_photos:'Foto-Uploads', notif_photos_sub:'Bei neuen Patienten-Fotos',
+    sec_appinfo:'App-Info', info_version:'Version', info_maker:'Hersteller', info_support:'Support',
+    logout_btn:'Abmelden',
+    notif_panel_title:'🔔 Benachrichtigungen',
+    fp_all:'Alle', fp_alert:'! Kritisch', fp_warn:'⚠ Achtung', fp_ok:'✓ OK',
+  },
+  en: {
+    tab_overview:'Overview', tab_stats:'Analytics', tab_msgs:'Messages', tab_practice:'Practice',
+    lbl_lang:'Language', lbl_display:'Display', lbl_dark:'Dark Mode', dark_on:'On', dark_off:'Off',
+    search_ph:'Search patient...',
+    stat_ok:'Compliant', stat_warn:'Warning', stat_alert:'Critical',
+    alert_crit_title:'1 patient critical — action required', alert_crit_sub:'T. Brauer · 12h wear time for 4 consecutive days',
+    hot_topics:'Hot Topics · this week',
+    back:'Back',
+    act_sms:'SMS', act_call:'Call', act_file:'File', act_report:'Report',
+    sec_progress:'Treatment Progress', sec_wear_week:'Wear Time · this week', sec_photos:'Photo History', sec_live_activity:'Live Activity', sec_notes:'Clinical Notes',
+    act_wear:'WEAR — Aligner inserted', act_wear_time:'Today, 18:34',
+    act_pain:'PAIN — Level 3 reported', act_pain_time:'Today, 13:12',
+    act_photo:'PHOTO — 3 photos uploaded', act_photo_time:'Yesterday, 19:45',
+    act_chat:'CHAT — Question to assistant', act_chat_time:'Yesterday, 12:08',
+    act_app:'APP — App opened', act_app_time:'Yesterday, 08:02',
+    note_save:'Save Note', note_cancel:'Cancel', note_edit_btn:'Edit / Add Note',
+    analytics_name:'Compliance Analysis', sec_compliance_total:'Total Compliance · May 2026',
+    analytics_avg:'Ø across 18 patients', analytics_target:'Target: ≥ 85% — met ✓',
+    sec_practice_wear:'Practice Wear Time · this week', sec_status_dist:'Status Distribution', sec_phase_dist:'Phase Distribution',
+    phase_soft:'SOFT', phase_regular:'REGULAR', phase_intense:'INTENSE',
+    csv_export_btn:'Export weekly stats as CSV',
+    msgs_time:'Messages', msgs_name:'3 unread messages', msgs_none:'No more messages',
+    settings_time:'Practice Settings', sec_practice:'Practice', edit_practice_btn:'Edit practice details',
+    sec_notifs:'Notifications',
+    notif_critical:'Critical Alerts', notif_critical_sub:'Immediately when compliance below 60%',
+    notif_summary:'Daily Summary', notif_summary_sub:'Daily at 18:00',
+    notif_photos:'Photo Uploads', notif_photos_sub:'When new patient photos arrive',
+    sec_appinfo:'App Info', info_version:'Version', info_maker:'Manufacturer', info_support:'Support',
+    logout_btn:'Log out',
+    notif_panel_title:'🔔 Notifications',
+    fp_all:'All', fp_alert:'! Critical', fp_warn:'⚠ Warning', fp_ok:'✓ OK',
+  },
+  fr: {
+    tab_overview:'Aperçu', tab_stats:'Statistiques', tab_msgs:'Messages', tab_practice:'Cabinet',
+    lbl_lang:'Langue', lbl_display:'Affichage', lbl_dark:'Mode sombre', dark_on:'Activé', dark_off:'Désactivé',
+    search_ph:'Rechercher un patient...',
+    stat_ok:'Conforme', stat_warn:'Attention', stat_alert:'Critique',
+    alert_crit_title:'1 patient critique — action requise', alert_crit_sub:'T. Brauer · 12h de port sur 4 jours consécutifs',
+    hot_topics:'Sujets chauds · cette semaine',
+    back:'Retour',
+    act_sms:'SMS', act_call:'Appeler', act_file:'Dossier', act_report:'Rapport',
+    sec_progress:'Avancement du traitement', sec_wear_week:'Temps de port · cette semaine', sec_photos:'Historique photos', sec_live_activity:'Activité en direct', sec_notes:'Notes cliniques',
+    act_wear:'PORT — Aligneur inséré', act_wear_time:'Aujourd\'hui, 18h34',
+    act_pain:'DOULEUR — Niveau 3 signalé', act_pain_time:'Aujourd\'hui, 13h12',
+    act_photo:'PHOTO — 3 photos téléchargées', act_photo_time:'Hier, 19h45',
+    act_chat:'CHAT — Question à l\'assistant', act_chat_time:'Hier, 12h08',
+    act_app:'APP — Application ouverte', act_app_time:'Hier, 08h02',
+    note_save:'Enregistrer la note', note_cancel:'Annuler', note_edit_btn:'Modifier / Ajouter une note',
+    analytics_name:'Analyse de compliance', sec_compliance_total:'Compliance totale · mai 2026',
+    analytics_avg:'Ø sur 18 patients', analytics_target:'Objectif : ≥ 85% — atteint ✓',
+    sec_practice_wear:'Temps de port cabinet · cette semaine', sec_status_dist:'Répartition des statuts', sec_phase_dist:'Répartition des phases',
+    phase_soft:'SOFT', phase_regular:'REGULAR', phase_intense:'INTENSE',
+    csv_export_btn:'Exporter les stats hebdomadaires en CSV',
+    msgs_time:'Messages', msgs_name:'3 messages non lus', msgs_none:'Aucun autre message',
+    settings_time:'Paramètres du cabinet', sec_practice:'Cabinet', edit_practice_btn:'Modifier les données du cabinet',
+    sec_notifs:'Notifications',
+    notif_critical:'Alertes critiques', notif_critical_sub:'Immédiatement si compliance < 60%',
+    notif_summary:'Résumé quotidien', notif_summary_sub:'Tous les jours à 18h00',
+    notif_photos:'Photos téléchargées', notif_photos_sub:'À chaque nouvelle photo patient',
+    sec_appinfo:'Infos app', info_version:'Version', info_maker:'Fabricant', info_support:'Support',
+    logout_btn:'Se déconnecter',
+    notif_panel_title:'🔔 Notifications',
+    fp_all:'Tous', fp_alert:'! Critique', fp_warn:'⚠ Attention', fp_ok:'✓ OK',
+  },
+  it: {
+    tab_overview:'Panoramica', tab_stats:'Statistiche', tab_msgs:'Messaggi', tab_practice:'Studio',
+    lbl_lang:'Lingua', lbl_display:'Aspetto', lbl_dark:'Modalità scura', dark_on:'Attiva', dark_off:'Disattiva',
+    search_ph:'Cerca paziente...',
+    stat_ok:'Conforme', stat_warn:'Attenzione', stat_alert:'Critico',
+    alert_crit_title:'1 paziente critico — azione richiesta', alert_crit_sub:'T. Brauer · 12h di utilizzo per 4 giorni consecutivi',
+    hot_topics:'Hot Topics · questa settimana',
+    back:'Indietro',
+    act_sms:'SMS', act_call:'Chiama', act_file:'Cartella', act_report:'Rapporto',
+    sec_progress:'Avanzamento trattamento', sec_wear_week:'Tempo di utilizzo · questa settimana', sec_photos:'Storico foto', sec_live_activity:'Attività in tempo reale', sec_notes:'Note cliniche',
+    act_wear:'USO — Allineatore inserito', act_wear_time:'Oggi, 18:34',
+    act_pain:'DOLORE — Livello 3 segnalato', act_pain_time:'Oggi, 13:12',
+    act_photo:'FOTO — 3 foto caricate', act_photo_time:'Ieri, 19:45',
+    act_chat:'CHAT — Domanda all\'assistente', act_chat_time:'Ieri, 12:08',
+    act_app:'APP — App aperta', act_app_time:'Ieri, 08:02',
+    note_save:'Salva nota', note_cancel:'Annulla', note_edit_btn:'Modifica / Aggiungi nota',
+    analytics_name:'Analisi compliance', sec_compliance_total:'Compliance totale · maggio 2026',
+    analytics_avg:'Ø su 18 pazienti', analytics_target:'Obiettivo: ≥ 85% — raggiunto ✓',
+    sec_practice_wear:'Tempo utilizzo studio · questa settimana', sec_status_dist:'Distribuzione stati', sec_phase_dist:'Distribuzione fasi',
+    phase_soft:'SOFT', phase_regular:'REGULAR', phase_intense:'INTENSE',
+    csv_export_btn:'Esporta statistiche settimanali in CSV',
+    msgs_time:'Messaggi', msgs_name:'3 messaggi non letti', msgs_none:'Nessun altro messaggio',
+    settings_time:'Impostazioni studio', sec_practice:'Studio', edit_practice_btn:'Modifica dati studio',
+    sec_notifs:'Notifiche',
+    notif_critical:'Avvisi critici', notif_critical_sub:'Immediatamente se compliance < 60%',
+    notif_summary:'Riepilogo giornaliero', notif_summary_sub:'Ogni giorno alle 18:00',
+    notif_photos:'Upload foto', notif_photos_sub:'Quando arrivano nuove foto paziente',
+    sec_appinfo:'Info app', info_version:'Versione', info_maker:'Produttore', info_support:'Supporto',
+    logout_btn:'Disconnetti',
+    notif_panel_title:'🔔 Notifiche',
+    fp_all:'Tutti', fp_alert:'! Critico', fp_warn:'⚠ Attenzione', fp_ok:'✓ OK',
+  },
+  ru: {
+    tab_overview:'Обзор', tab_stats:'Статистика', tab_msgs:'Сообщения', tab_practice:'Клиника',
+    lbl_lang:'Язык', lbl_display:'Отображение', lbl_dark:'Тёмный режим', dark_on:'Вкл', dark_off:'Выкл',
+    search_ph:'Поиск пациента...',
+    stat_ok:'Соответствует', stat_warn:'Внимание', stat_alert:'Критично',
+    alert_crit_title:'1 пациент критически — требуется действие', alert_crit_sub:'Т. Брауэр · 12ч ношения 4 дня подряд',
+    hot_topics:'Актуальное · эта неделя',
+    back:'Назад',
+    act_sms:'SMS', act_call:'Звонок', act_file:'Картотека', act_report:'Отчёт',
+    sec_progress:'Прогресс лечения', sec_wear_week:'Время ношения · эта неделя', sec_photos:'История фото', sec_live_activity:'Активность', sec_notes:'Клинические заметки',
+    act_wear:'НОШЕНИЕ — Каппа надета', act_wear_time:'Сегодня, 18:34',
+    act_pain:'БОЛЬ — Уровень 3', act_pain_time:'Сегодня, 13:12',
+    act_photo:'ФОТО — 3 фото загружено', act_photo_time:'Вчера, 19:45',
+    act_chat:'ЧАТ — Вопрос ассистенту', act_chat_time:'Вчера, 12:08',
+    act_app:'ПРИЛОЖЕНИЕ — Открыто', act_app_time:'Вчера, 08:02',
+    note_save:'Сохранить заметку', note_cancel:'Отмена', note_edit_btn:'Редактировать / Добавить заметку',
+    analytics_name:'Анализ соответствия', sec_compliance_total:'Общее соответствие · май 2026',
+    analytics_avg:'Ø по 18 пациентам', analytics_target:'Цель: ≥ 85% — выполнено ✓',
+    sec_practice_wear:'Ношение в клинике · эта неделя', sec_status_dist:'Распределение по статусу', sec_phase_dist:'Распределение по фазам',
+    phase_soft:'SOFT', phase_regular:'REGULAR', phase_intense:'INTENSE',
+    csv_export_btn:'Экспорт статистики за неделю в CSV',
+    msgs_time:'Сообщения', msgs_name:'3 непрочитанных сообщения', msgs_none:'Больше сообщений нет',
+    settings_time:'Настройки клиники', sec_practice:'Клиника', edit_practice_btn:'Редактировать данные клиники',
+    sec_notifs:'Уведомления',
+    notif_critical:'Критические уведомления', notif_critical_sub:'Немедленно при соответствии < 60%',
+    notif_summary:'Ежедневный отчёт', notif_summary_sub:'Каждый день в 18:00',
+    notif_photos:'Загрузка фото', notif_photos_sub:'При поступлении новых фото пациента',
+    sec_appinfo:'О приложении', info_version:'Версия', info_maker:'Производитель', info_support:'Поддержка',
+    logout_btn:'Выйти',
+    notif_panel_title:'🔔 Уведомления',
+    fp_all:'Все', fp_alert:'! Критично', fp_warn:'⚠ Внимание', fp_ok:'✓ OK',
+  },
+  es: {
+    tab_overview:'Resumen', tab_stats:'Estadísticas', tab_msgs:'Mensajes', tab_practice:'Práctica',
+    lbl_lang:'Idioma', lbl_display:'Apariencia', lbl_dark:'Modo oscuro', dark_on:'Activado', dark_off:'Desactivado',
+    search_ph:'Buscar paciente...',
+    stat_ok:'Conforme', stat_warn:'Atención', stat_alert:'Crítico',
+    alert_crit_title:'1 paciente crítico — acción requerida', alert_crit_sub:'T. Brauer · 12h de uso durante 4 días consecutivos',
+    hot_topics:'Temas destacados · esta semana',
+    back:'Volver',
+    act_sms:'SMS', act_call:'Llamar', act_file:'Archivo', act_report:'Informe',
+    sec_progress:'Progreso del tratamiento', sec_wear_week:'Tiempo de uso · esta semana', sec_photos:'Historial de fotos', sec_live_activity:'Actividad en vivo', sec_notes:'Notas clínicas',
+    act_wear:'USO — Alineador insertado', act_wear_time:'Hoy, 18:34',
+    act_pain:'DOLOR — Nivel 3 reportado', act_pain_time:'Hoy, 13:12',
+    act_photo:'FOTO — 3 fotos subidas', act_photo_time:'Ayer, 19:45',
+    act_chat:'CHAT — Pregunta al asistente', act_chat_time:'Ayer, 12:08',
+    act_app:'APP — Aplicación abierta', act_app_time:'Ayer, 08:02',
+    note_save:'Guardar nota', note_cancel:'Cancelar', note_edit_btn:'Editar / Añadir nota',
+    analytics_name:'Análisis de cumplimiento', sec_compliance_total:'Cumplimiento total · mayo 2026',
+    analytics_avg:'Ø sobre 18 pacientes', analytics_target:'Objetivo: ≥ 85% — cumplido ✓',
+    sec_practice_wear:'Tiempo de uso práctica · esta semana', sec_status_dist:'Distribución de estados', sec_phase_dist:'Distribución de fases',
+    phase_soft:'SOFT', phase_regular:'REGULAR', phase_intense:'INTENSE',
+    csv_export_btn:'Exportar estadísticas semanales como CSV',
+    msgs_time:'Mensajes', msgs_name:'3 mensajes no leídos', msgs_none:'No hay más mensajes',
+    settings_time:'Configuración de práctica', sec_practice:'Práctica', edit_practice_btn:'Editar datos de la práctica',
+    sec_notifs:'Notificaciones',
+    notif_critical:'Alertas críticas', notif_critical_sub:'Inmediatamente si cumplimiento < 60%',
+    notif_summary:'Resumen diario', notif_summary_sub:'Cada día a las 18:00',
+    notif_photos:'Subidas de fotos', notif_photos_sub:'Al recibir nuevas fotos del paciente',
+    sec_appinfo:'Info de la app', info_version:'Versión', info_maker:'Fabricante', info_support:'Soporte',
+    logout_btn:'Cerrar sesión',
+    notif_panel_title:'🔔 Notificaciones',
+    fp_all:'Todos', fp_alert:'! Crítico', fp_warn:'⚠ Atención', fp_ok:'✓ OK',
+  },
 };
 
 function setDocLang(lang) {
@@ -659,29 +845,35 @@ function _updateLangChecks(lang) {
 }
 function _applyDocLang(lang) {
   const t = DOC_T[lang] || DOC_T.de;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (t[key] !== undefined) el.textContent = t[key];
+  });
   const tabs = document.querySelectorAll('.app-tab span');
   if (tabs[0]) tabs[0].textContent = t.tab_overview;
   if (tabs[1]) tabs[1].textContent = t.tab_stats;
   if (tabs[2]) tabs[2].textContent = t.tab_msgs;
   if (tabs[3]) tabs[3].textContent = t.tab_practice;
-  const lblLang = document.getElementById('lblLang'); if (lblLang) lblLang.textContent = t.lbl_lang;
-  const lblDisplay = document.getElementById('lblDisplay'); if (lblDisplay) lblDisplay.textContent = t.lbl_display;
-  const lblDark = document.getElementById('lblDarkMode'); if (lblDark) lblDark.textContent = t.lbl_dark;
-  const si = document.querySelector('.search-bar input'); if (si) si.placeholder = t.search_ph;
+  const si = document.querySelector('.search-bar input');
+  if (si) si.placeholder = t.search_ph;
+  const dm = document.getElementById('darkModeToggle');
+  const dmsub = document.getElementById('darkModeSubText');
+  if (dmsub && dm) dmsub.textContent = dm.checked ? t.dark_on : t.dark_off;
   document.documentElement.lang = lang;
 }
 
 // ── FILTER COUNTS ─────────────────────────────────────────
 function _updateFilterCounts() {
+  const t = DOC_T[localStorage.getItem('visibal_lang') || 'de'] || DOC_T.de;
   const tot = patients.length;
   const al = patients.filter(p => p.status === 'alert').length;
   const wa = patients.filter(p => p.status === 'warn').length;
   const ok = patients.filter(p => p.status === 'ok').length;
   const h = document.getElementById('patientCountHead'); if (h) h.textContent = tot + ' aktive Patienten';
-  const fpAll = document.getElementById('fpAll'); if (fpAll) fpAll.textContent = 'Alle · ' + tot;
-  const fpAlert = document.getElementById('fpAlert'); if (fpAlert) fpAlert.textContent = '! Kritisch · ' + al;
-  const fpWarn = document.getElementById('fpWarn'); if (fpWarn) fpWarn.textContent = '⚠ Achtung · ' + wa;
-  const fpOk = document.getElementById('fpOk'); if (fpOk) fpOk.textContent = '✓ OK · ' + ok;
+  const fpAll = document.getElementById('fpAll'); if (fpAll) fpAll.textContent = t.fp_all + ' · ' + tot;
+  const fpAlert = document.getElementById('fpAlert'); if (fpAlert) fpAlert.textContent = t.fp_alert + ' · ' + al;
+  const fpWarn = document.getElementById('fpWarn'); if (fpWarn) fpWarn.textContent = t.fp_warn + ' · ' + wa;
+  const fpOk = document.getElementById('fpOk'); if (fpOk) fpOk.textContent = t.fp_ok + ' · ' + ok;
   const sOk = document.getElementById('statOk'); if (sOk) sOk.innerHTML = ok + '<em style="color:var(--ok);">✓</em>';
   const sWarn = document.getElementById('statWarn'); if (sWarn) sWarn.innerHTML = wa + '<em style="color:var(--warn);">⚠</em>';
   const sAlert = document.getElementById('statAlert'); if (sAlert) sAlert.innerHTML = al + '<em>!</em>';
