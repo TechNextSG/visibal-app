@@ -1,0 +1,44 @@
+{
+  "name": "VISIBAL — nivellipso® Patient Companion",
+  "short_name": "VISIBAL",
+  "description": "Klinische Begleit-App für Aligner-Patienten.",
+  "start_url": "./index.html?continue=1",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FFFFFF",
+  "theme_color": "#C00000",
+  "lang": "de-CH",
+  "categories": ["medical", "health", "lifestyle"],
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "22h Tracking",
+      "url": "./patient.html?tab=tracking",
+      "description": "Tragezeit erfassen"
+    },
+    {
+      "name": "KI-Assistent",
+      "url": "./patient.html?tab=chat",
+      "description": "Frage stellen"
+    },
+    {
+      "name": "Foto aufnehmen",
+      "url": "./patient.html?tab=photos",
+      "description": "Behandlungsverlauf dokumentieren"
+    }
+  ]
+}

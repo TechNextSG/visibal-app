@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#C00000">
+<title>VISIBAL — Praxis Dashboard</title>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="app.css">
+<style>
+.dash-app { max-width: 720px; }
+@media(min-width:721px) { .dash-app { border-radius: 24px; } }
+/* ── TOAST ── */
+.toast-container{position:fixed;bottom:calc(72px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);z-index:3000;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;}
+.toast{background:rgba(26,26,26,.92);color:white;padding:10px 20px;border-radius:20px;font-size:13px;font-weight:500;white-space:nowrap;}
+.toast.ok{background:rgba(0,140,60,.92);}
+.toast.err{background:rgba(192,0,0,.92);}
+/* ── CONFIRM SHEET ── */
+.confirm-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:2100;display:none;align-items:flex-end;justify-content:center;}
+.confirm-overlay.show{display:flex;}
+.confirm-sheet{background:white;width:100%;max-width:720px;border-radius:20px 20px 0 0;padding:24px 20px max(24px,env(safe-area-inset-bottom));}
+.confirm-title{font-size:17px;font-weight:700;color:var(--text);text-align:center;margin-bottom:6px;}
+.confirm-sub{font-size:13px;color:var(--grey);text-align:center;margin-bottom:22px;}
+.confirm-btns{display:flex;flex-direction:column;gap:10px;}
+.confirm-btn{width:100%;padding:14px;border:none;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;}
+.confirm-btn.primary{background:var(--red);color:white;}
+.confirm-btn.secondary{background:var(--bg);color:var(--text);}
+/* ── NOTIFICATION PANEL ── */
+.notif-overlay{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:2100;display:none;flex-direction:column;align-items:center;}
+.notif-overlay.show{display:flex;}
+.notif-panel{background:white;width:100%;max-width:720px;border-radius:0 0 20px 20px;max-height:60vh;overflow-y:auto;transform:translateY(-100%);transition:transform .25s ease;}
+.notif-overlay.show .notif-panel{transform:translateY(0);}
+.notif-head{display:flex;justify-content:space-between;align-items:center;padding:16px 20px 14px;border-bottom:1px solid var(--border);}
+.notif-head-title{font-size:14px;font-weight:700;color:var(--text);}
+.notif-close-btn{background:none;border:none;font-size:22px;line-height:1;color:var(--grey);cursor:pointer;padding:0;}
+.notif-item{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;gap:12px;align-items:flex-start;}
+.notif-item:last-child{border-bottom:none;}
+.notif-dot{width:8px;height:8px;border-radius:50%;background:var(--red);flex-shrink:0;margin-top:5px;}
+.notif-body strong{display:block;font-size:13px;font-weight:600;color:var(--text);margin-bottom:2px;}
+.notif-body span{font-size:11px;color:var(--grey);}
+/* ── EMPTY STATE ── */
+.empty-state{padding:40px 20px;text-align:center;}
+.empty-state-ico{font-size:40px;margin-bottom:10px;}
+.empty-state-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.empty-state-sub{font-size:12px;color:var(--grey);}
+/* ── NOTIFICATION BADGE ── */
+.app-top-btn{position:relative;}
+.notif-badge{position:absolute;top:-3px;right:-3px;background:var(--red);color:white;font-size:9px;font-weight:700;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center;border:2px solid white;pointer-events:none;line-height:1;}
+/* ── ANALYTICS ── */
+.analytics-score{font-size:36px;font-weight:800;color:var(--black);line-height:1;}
+.phase-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.phase-row:last-child{margin-bottom:0;}
+.phase-label{width:64px;font-size:11px;font-weight:700;color:var(--grey);letter-spacing:.3px;}
+.phase-bar-wrap{flex:1;height:8px;background:var(--border);border-radius:4px;overflow:hidden;}
+.phase-bar-fill{height:100%;border-radius:4px;}
+.phase-count{width:24px;text-align:right;font-size:12px;font-weight:700;color:var(--text);}
+/* ── MESSAGES ── */
+.msg-thread{display:flex;gap:12px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s;}
+.msg-thread:last-child{border-bottom:none;}
+.msg-thread:active{background:var(--bg);}
+.msg-unread-dot{width:8px;height:8px;border-radius:50%;background:var(--red);flex-shrink:0;margin-top:6px;}
+.msg-thread-name{font-size:14px;font-weight:700;color:var(--black);}
+.msg-thread-time{font-size:10px;color:var(--grey-light);}
+.msg-thread-preview{font-size:12px;color:var(--grey);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* ── SETTINGS ── */
+.settings-avatar{width:56px;height:56px;background:var(--red);color:white;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;flex-shrink:0;}
+.settings-row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid var(--border);}
+.settings-row:last-child{border-bottom:none;}
+.settings-row-label{font-size:13px;font-weight:600;color:var(--text);}
+.settings-row-sub{font-size:11px;color:var(--grey);margin-top:1px;}
+/* ── FORM EDIT MODAL ── */
+.form-field{margin-bottom:12px;}
+.form-label{font-size:11px;font-weight:700;color:var(--grey);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;}
+.form-input{width:100%;border:1px solid var(--border);border-radius:10px;padding:10px 12px;font-size:14px;font-family:inherit;outline:none;background:var(--bg);color:var(--text);}
+.form-input:focus{border-color:var(--red);background:white;}
+</style>
+</head>
+<body>
+
+<div class="app dash-app">
+
+  <!-- TOP BAR -->
+  <header class="app-top">
+    <div class="app-top-brand">
+      <div class="app-top-logo">V</div>
+      <div class="app-top-name">VISIBAL <span style="font-weight:400;opacity:.7;font-size:11px;">Clinic</span></div>
+    </div>
+    <div class="app-top-actions">
+      <button class="app-top-btn" onclick="showNotifs()" id="notifBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+        <span class="notif-badge" id="notifBadge">3</span>
+      </button>
+      <button class="app-top-btn" onclick="logout()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="app-content">
+
+    <!-- VIEW: OVERVIEW -->
+    <div class="view active" id="view-overview">
+      <div class="greeting">
+        <div class="greeting-time">Dashboard · Praxis Schmidt</div>
+        <div class="greeting-name" id="patientCountHead">18 aktive Patienten</div>
+      </div>
+
+      <!-- Compliance Overview -->
+      <div class="quick-stats">
+        <div class="stat-mini" style="border-top:3px solid var(--ok);">
+          <div class="stat-mini-n" id="statOk">14<em style="color:var(--ok);">✓</em></div>
+          <div class="stat-mini-l">Konform</div>
+        </div>
+        <div class="stat-mini" style="border-top:3px solid var(--warn);">
+          <div class="stat-mini-n" id="statWarn">3<em style="color:var(--warn);">⚠</em></div>
+          <div class="stat-mini-l">Achtung</div>
+        </div>
+        <div class="stat-mini" style="border-top:3px solid var(--red);">
+          <div class="stat-mini-n" id="statAlert">1<em>!</em></div>
+          <div class="stat-mini-l">Kritisch</div>
+        </div>
+      </div>
+
+      <!-- Alert: Critical Patient -->
+      <div class="reminder-card" style="background:var(--alert-light);border-left-color:var(--red);">
+        <div class="reminder-ico" style="background:white;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v2m0 4h.01M12 21a9 9 0 100-18 9 9 0 000 18z"/></svg></div>
+        <div class="reminder-text">
+          <strong>1 Patient kritisch — Aktion erforderlich</strong>
+          T. Brauer · 12h Tragezeit über 4 Tage in Folge
+        </div>
+      </div>
+
+      <!-- Hot Topics -->
+      <div class="sec-label" style="margin-top:24px;">Hot Topics · diese Woche</div>
+      <div class="card" style="padding:16px;" id="hotTopicsCard"></div>
+
+      <!-- Search -->
+      <div class="search-bar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input type="text" placeholder="Patient suchen..." oninput="filterPatients(this.value)">
+      </div>
+
+      <!-- Filter Pills -->
+      <div class="filter-pills">
+        <button class="filter-pill active" id="fpAll" onclick="filterByStatus('all',this)">Alle · 18</button>
+        <button class="filter-pill" id="fpAlert" onclick="filterByStatus('alert',this)">! Kritisch · 1</button>
+        <button class="filter-pill" id="fpWarn" onclick="filterByStatus('warn',this)">⚠ Achtung · 3</button>
+        <button class="filter-pill" id="fpOk" onclick="filterByStatus('ok',this)">✓ OK · 14</button>
+      </div>
+
+      <!-- Patient List -->
+      <div class="patient-list" id="patientList">
+        <!-- Patient rows populated by JS -->
+      </div>
+    </div>
+
+    <!-- VIEW: PATIENT DETAIL -->
+    <div class="view" id="view-detail">
+      <div style="margin-bottom:16px;">
+        <button onclick="switchDashView('overview')" style="background:none;border:none;color:var(--red);font-size:13px;font-weight:600;padding:0;display:flex;align-items:center;gap:4px;">
+          <svg viewBox="0 0 12 18" fill="none" width="8" height="12"><path d="M9 1l-8 8 8 8" stroke="currentColor" stroke-width="2"/></svg>
+          Zurück
+        </button>
+      </div>
+
+      <div style="display:flex;gap:14px;align-items:center;margin-bottom:18px;">
+        <div class="patient-avatar" style="width:60px;height:60px;font-size:20px;background:var(--red-light);color:var(--red);">MS</div>
+        <div style="flex:1;">
+          <div style="font-size:18px;font-weight:700;color:var(--black);">Marie Schmidt</div>
+          <div style="font-size:12px;color:var(--grey);">Stufe 8 von 14 · REGULAR · Dual Arch</div>
+          <div style="margin-top:6px;display:flex;gap:6px;align-items:center;">
+            <span class="patient-status-pill pill-ok">✓ 22h</span>
+            <span style="font-size:11px;color:var(--grey);">Compliance: 94%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:16px;">
+        <button class="action-btn outline" style="margin:0;padding:10px;font-size:11px;" onclick="window.location.href='sms:+41520000000'">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+          <div>SMS</div>
+        </button>
+        <button class="action-btn outline" style="margin:0;padding:10px;font-size:11px;" onclick="window.location.href='tel:+41520000000'">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+          <div>Anrufen</div>
+        </button>
+        <button class="action-btn outline" style="margin:0;padding:10px;font-size:11px;" onclick="showToast('Akte folgt in Vollversion')">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          <div>Akte</div>
+        </button>
+        <button class="action-btn outline" style="margin:0;padding:10px;font-size:11px;" onclick="printPatientReport()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+          <div>Bericht</div>
+        </button>
+      </div>
+
+      <!-- Treatment Progress -->
+      <div class="sec-label">Behandlungsfortschritt</div>
+      <div class="progress-hero" style="margin-bottom:14px;">
+        <div class="progress-phase-tag">REGULAR PHASE</div>
+        <div class="progress-step">Stufe 8 von 14</div>
+        <div class="progress-substep">Three-Aligner · Tag 17 dieser Stufe · Start: 14.03.2026</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:57%;"></div></div>
+        <div class="progress-labels">
+          <span>SOFT ✓</span>
+          <span>57%</span>
+          <span>INTENSE</span>
+        </div>
+      </div>
+
+      <!-- 7 Day Compliance -->
+      <div class="sec-label">Tragezeit · letzte 7 Tage</div>
+      <div class="card">
+        <div style="display:flex;gap:6px;align-items:flex-end;height:80px;margin-bottom:10px;">
+          <div style="flex:1;text-align:center;"><div style="background:var(--red);height:88%;border-radius:4px 4px 0 0;margin-bottom:4px;"></div><div style="font-size:9px;color:var(--grey);">Mo<br>22h</div></div>
+          <div style="flex:1;text-align:center;"><div style="background:var(--red);height:96%;border-radius:4px 4px 0 0;margin-bottom:4px;"></div><div style="font-size:9px;color:var(--grey);">Di<br>23h</div></div>
+          <div style="flex:1;text-align:center;"><div style="background:var(--warn);height:70%;border-radius:4px 4px 0 0;margin-bottom:4px;"></div><div style="font-size:9px;color:var(--grey);">Mi<br>17h</div></div>
+          <div style="flex:1;text-align:center;"><div style="background:var(--red);height:90%;border-radius:4px 4px 0 0;margin-bottom:4px;"></div><div style="font-size:9px;color:var(--grey);">Do<br>22h</div></div>
+          <div style="flex:1;text-align:center;"><div style="background:var(--red);height:92%;border-radius:4px 4px 0 0;margin-bottom:4px;"></div><div style="font-size:9px;color:var(--grey);">Fr<br>22h</div></div>
+          <div style="flex:1;text-align:center;"><div style="background:var(--red);height:96%;border-radius:4px 4px 0 0;margin-bottom:4px;"></div><div style="font-size:9px;color:var(--grey);">Sa<br>23h</div></div>
+          <div style="flex:1;text-align:center;"><div style="background:var(--red);height:90%;border-radius:4px 4px 0 0;margin-bottom:4px;"></div><div style="font-size:9px;color:var(--grey);font-weight:700;">Heute<br>22h</div></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--grey);padding-top:8px;border-top:1px solid var(--border);">
+          <span>Ø 21h 28min</span>
+          <span style="color:var(--ok);font-weight:700;">94% Compliance</span>
+        </div>
+      </div>
+
+      <!-- Photo Timeline -->
+      <div class="sec-label">Foto-Verlauf</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:14px;">
+        <div style="background:linear-gradient(135deg,#fceaea,#fff);border-radius:8px;aspect-ratio:1;display:flex;align-items:flex-end;padding:8px;font-size:9px;font-weight:700;color:white;background:linear-gradient(0deg,rgba(0,0,0,.6),transparent 50%),linear-gradient(135deg,#f8c8c8,#fceaea);">Stufe 1<br>14.03</div>
+        <div style="border-radius:8px;aspect-ratio:1;display:flex;align-items:flex-end;padding:8px;font-size:9px;font-weight:700;color:white;background:linear-gradient(0deg,rgba(0,0,0,.6),transparent 50%),linear-gradient(135deg,#fcd0d0,#fdf0f0);">Stufe 5<br>12.04</div>
+        <div style="border-radius:8px;aspect-ratio:1;display:flex;align-items:flex-end;padding:8px;font-size:9px;font-weight:700;color:white;background:linear-gradient(0deg,rgba(0,0,0,.6),transparent 50%),linear-gradient(135deg,#fdd8d8,#fff5f5);border:2px solid var(--red);">Stufe 8<br>Aktuell</div>
+      </div>
+
+      <!-- Notes -->
+      <div class="sec-label">Klinische Notizen</div>
+      <div class="card">
+        <div style="font-size:12px;color:var(--grey);margin-bottom:6px;">Letzte Anpassung · 12.04.2026</div>
+        <div style="font-size:13px;color:var(--text);line-height:1.6;">Patientin zeigt sehr gute Compliance. SOFT-Phase reibungslos abgeschlossen. REGULAR läuft planmässig. Beim nächsten Termin: Druckverteilung an Zahn 12 prüfen.</div>
+      </div>
+      <button class="action-btn outline full-row" onclick="showToast('Notiz-Editor öffnet sich (Demo)')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+        Neue Notiz hinzufügen
+      </button>
+    </div>
+
+    <!-- VIEW: ANALYTICS -->
+    <div class="view" id="view-analytics">
+      <div class="greeting">
+        <div class="greeting-time">Statistik · Praxis Schmidt</div>
+        <div class="greeting-name">Compliance-Analyse</div>
+      </div>
+
+      <div class="sec-label">Gesamtcompliance · Mai 2026</div>
+      <div class="card" style="margin-bottom:14px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;">
+          <div>
+            <div class="analytics-score">87%</div>
+            <div style="font-size:12px;color:var(--grey);margin-top:3px;">Ø über 18 Patienten</div>
+          </div>
+          <div style="font-size:11px;font-weight:600;color:var(--ok);background:var(--ok-light);padding:4px 10px;border-radius:10px;">↑ +3% ggü. April</div>
+        </div>
+        <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:6px;">
+          <div style="height:100%;width:87%;background:var(--ok);border-radius:3px;"></div>
+        </div>
+        <div style="font-size:10px;color:var(--grey-light);">Zielwert: ≥ 85% — erfüllt ✓</div>
+      </div>
+
+      <div class="sec-label">Praxis-Tragezeit · letzte 7 Tage</div>
+      <div class="card" style="margin-bottom:14px;">
+        <div style="display:flex;gap:6px;align-items:flex-end;height:80px;margin-bottom:10px;">
+          <div style="flex:1;text-align:center;"><div style="background:var(--red);height:86%;border-radius:4px 4px 0 0;margin-bottom:4px;"></div><div style="font-size:9px;color:var(--grey);">Mo<br>Ø 21h</div></div>
+          <div style="flex:1;text-align:center;"><div style="background:var(--red);height:95%;border-radius:4px 4px 0 0;margin-bottom:4px;"></div><div style="font-size:9px;color:var(--grey);">Di<br>Ø 22h</div></div>
+          <div style="flex:1;text-align:center;"><div style="background:var(--warn);height:72%;border-radius:4px 4px 0 0;margin-bottom:4px;"></div><div style="font-size:9px;color:var(--grey);">Mi<br>Ø 17h</div></div>
+          <div style="flex:1;text-align:center;"><div style="background:var(--red);height:91%;border-radius:4px 4px 0 0;margin-bottom:4px;"></div><div style="font-size:9px;color:var(--grey);">Do<br>Ø 22h</div></div>
+          <div style="flex:1;text-align:center;"><div style="background:var(--red);height:88%;border-radius:4px 4px 0 0;margin-bottom:4px;"></div><div style="font-size:9px;color:var(--grey);">Fr<br>Ø 21h</div></div>
+          <div style="flex:1;text-align:center;"><div style="background:var(--red);height:95%;border-radius:4px 4px 0 0;margin-bottom:4px;"></div><div style="font-size:9px;color:var(--grey);">Sa<br>Ø 22h</div></div>
+          <div style="flex:1;text-align:center;"><div style="background:var(--red);height:91%;border-radius:4px 4px 0 0;margin-bottom:4px;"></div><div style="font-size:9px;color:var(--grey);font-weight:700;">Heute<br>Ø 22h</div></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--grey);padding-top:8px;border-top:1px solid var(--border);">
+          <span>Praxis-Ø 21h 12min / Tag</span>
+          <span style="color:var(--ok);font-weight:700;">87% Compliance</span>
+        </div>
+      </div>
+
+      <div class="sec-label">Status-Verteilung</div>
+      <div class="quick-stats" style="margin-bottom:14px;">
+        <div class="stat-mini" style="border-top:3px solid var(--ok);">
+          <div class="stat-mini-n"><em style="color:var(--ok);">14</em></div>
+          <div class="stat-mini-l">Konform</div>
+        </div>
+        <div class="stat-mini" style="border-top:3px solid var(--warn);">
+          <div class="stat-mini-n"><em style="color:var(--warn);">3</em></div>
+          <div class="stat-mini-l">Achtung</div>
+        </div>
+        <div class="stat-mini" style="border-top:3px solid var(--red);">
+          <div class="stat-mini-n"><em style="color:var(--red);">1</em></div>
+          <div class="stat-mini-l">Kritisch</div>
+        </div>
+      </div>
+
+      <div class="sec-label">Phasen-Verteilung</div>
+      <div class="card">
+        <div class="phase-row">
+          <div class="phase-label">SOFT</div>
+          <div class="phase-bar-wrap"><div class="phase-bar-fill" style="width:28%;background:var(--warn-light);border:1px solid var(--warn);"></div></div>
+          <div class="phase-count">5</div>
+        </div>
+        <div class="phase-row">
+          <div class="phase-label">REGULAR</div>
+          <div class="phase-bar-wrap"><div class="phase-bar-fill" style="width:39%;background:var(--red);"></div></div>
+          <div class="phase-count">7</div>
+        </div>
+        <div class="phase-row">
+          <div class="phase-label">INTENSE</div>
+          <div class="phase-bar-wrap"><div class="phase-bar-fill" style="width:33%;background:var(--black);"></div></div>
+          <div class="phase-count">6</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW: MESSAGES -->
+    <div class="view" id="view-messages">
+      <div class="greeting">
+        <div class="greeting-time">Nachrichten</div>
+        <div class="greeting-name">3 ungelesene Nachrichten</div>
+      </div>
+
+      <div class="card" style="padding:0 16px;">
+        <div class="msg-thread" onclick="showToast('Chat mit T. Brauer öffnet sich (Demo)')">
+          <div class="msg-unread-dot"></div>
+          <div style="width:40px;height:40px;border-radius:50%;background:var(--alert-light);color:var(--red);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;">TB</div>
+          <div style="flex:1;min-width:0;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;">
+              <div class="msg-thread-name">Tobias Brauer</div>
+              <div class="msg-thread-time">Heute, 08:14</div>
+            </div>
+            <div style="font-size:11px;color:var(--red);font-weight:600;margin-bottom:1px;">! Tragezeit unter 60% — 4 Tage</div>
+            <div class="msg-thread-preview">Ich habe Schmerzen beim Tragen...</div>
+          </div>
+        </div>
+        <div class="msg-thread" onclick="showToast('Chat mit K. Weber öffnet sich (Demo)')">
+          <div class="msg-unread-dot"></div>
+          <div style="width:40px;height:40px;border-radius:50%;background:var(--red-light);color:var(--red);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;">KW</div>
+          <div style="flex:1;min-width:0;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;">
+              <div class="msg-thread-name">Klara Weber</div>
+              <div class="msg-thread-time">Heute, 09:32</div>
+            </div>
+            <div class="msg-thread-preview">Kann ich die Schiene auch nachts abnehmem?</div>
+          </div>
+        </div>
+        <div class="msg-thread" onclick="showToast('Fotos von M. Schmidt öffnen sich (Demo)')">
+          <div class="msg-unread-dot"></div>
+          <div style="width:40px;height:40px;border-radius:50%;background:var(--red-light);color:var(--red);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;">MS</div>
+          <div style="flex:1;min-width:0;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px;">
+              <div class="msg-thread-name">Marie Schmidt</div>
+              <div class="msg-thread-time">Gestern, 19:45</div>
+            </div>
+            <div class="msg-thread-preview">📷 Foto-Upload: Stufe 8 · Prüfung ausstehend</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:8px;text-align:center;font-size:12px;color:var(--grey-light);padding:16px;">Keine weiteren Nachrichten</div>
+    </div>
+
+    <!-- VIEW: SETTINGS -->
+    <div class="view" id="view-settings">
+      <div class="greeting">
+        <div class="greeting-time">Praxis-Einstellungen</div>
+        <div class="greeting-name">Dr. med. Schmidt</div>
+      </div>
+
+      <div class="sec-label">Praxis</div>
+      <div class="card" style="margin-bottom:14px;">
+        <div style="display:flex;gap:14px;align-items:center;margin-bottom:16px;">
+          <div class="settings-avatar">PS</div>
+          <div>
+            <div style="font-size:16px;font-weight:700;color:var(--black);" id="practiceName">Dr. med. P. Schmidt</div>
+            <div style="font-size:12px;color:var(--grey);margin-top:2px;" id="practiceSpec">Zahnarzt & Kieferchirurg</div>
+            <div style="font-size:11px;color:var(--grey-light);margin-top:2px;" id="practiceAddr">Bahnhofstrasse 12 · 8001 Zürich</div>
+          </div>
+        </div>
+        <button class="action-btn outline full-row" onclick="editPractice()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+          Praxisdaten bearbeiten
+        </button>
+      </div>
+
+      <div class="sec-label">Benachrichtigungen</div>
+      <div class="card" style="margin-bottom:14px;">
+        <div class="settings-row">
+          <div>
+            <div class="settings-row-label">Kritische Alerts</div>
+            <div class="settings-row-sub">Sofort bei Compliance unter 60%</div>
+          </div>
+          <label class="switch"><input type="checkbox" checked><span class="switch-slider"></span></label>
+        </div>
+        <div class="settings-row">
+          <div>
+            <div class="settings-row-label">Tages-Zusammenfassung</div>
+            <div class="settings-row-sub">Täglich um 18:00 Uhr</div>
+          </div>
+          <label class="switch"><input type="checkbox" checked><span class="switch-slider"></span></label>
+        </div>
+        <div class="settings-row">
+          <div>
+            <div class="settings-row-label">Foto-Uploads</div>
+            <div class="settings-row-sub">Bei neuen Patienten-Fotos</div>
+          </div>
+          <label class="switch"><input type="checkbox"><span class="switch-slider"></span></label>
+        </div>
+      </div>
+
+      <div class="sec-label">Darstellung</div>
+      <div class="card" style="margin-bottom:14px;">
+        <div class="settings-row">
+          <div>
+            <div class="settings-row-label">Dunkles Design</div>
+            <div class="settings-row-sub" id="darkModeSubText">Aus</div>
+          </div>
+          <label class="switch"><input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()"><span class="switch-slider"></span></label>
+        </div>
+      </div>
+
+      <div class="sec-label">App-Info</div>
+      <div class="card" style="margin-bottom:14px;">
+        <div class="settings-row">
+          <div class="settings-row-label">Version</div>
+          <div style="font-size:12px;color:var(--grey);">VISIBAL Clinic 1.0</div>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-label">Hersteller</div>
+          <div style="font-size:12px;color:var(--grey);">nivellipso® · Swiss-Made</div>
+        </div>
+        <div class="settings-row">
+          <div class="settings-row-label">Support</div>
+          <div style="font-size:12px;color:var(--red);">support@nivellipso.ch</div>
+        </div>
+      </div>
+
+      <button class="action-btn full-row" style="background:var(--bg);color:var(--red);border:1px solid var(--red);" onclick="logout()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+        Abmelden
+      </button>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM TABS -->
+  <nav class="app-tabs">
+    <button class="app-tab active" onclick="switchDashView('overview',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3"/></svg>
+      <span>Übersicht</span>
+    </button>
+    <button class="app-tab" onclick="switchDashView('analytics',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2"/></svg>
+      <span>Statistik</span>
+    </button>
+    <button class="app-tab" onclick="switchDashView('messages',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+      <span>Nachrichten</span>
+      <div class="app-tab-dot"></div>
+    </button>
+    <button class="app-tab" onclick="switchDashView('settings',this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      <span>Praxis</span>
+    </button>
+  </nav>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- CONFIRM MODAL -->
+<div class="confirm-overlay" id="confirmModal">
+  <div class="confirm-sheet">
+    <div class="confirm-title" id="confirmTitle"></div>
+    <div class="confirm-sub" id="confirmSub"></div>
+    <div class="confirm-btns">
+      <button class="confirm-btn primary" id="confirmYesBtn" onclick="doConfirm()"></button>
+      <button class="confirm-btn secondary" id="confirmNoBtn" onclick="closeConfirm()">Abbrechen</button>
+    </div>
+  </div>
+</div>
+
+<!-- NOTIFICATION PANEL -->
+<div class="notif-overlay" id="notifOverlay" onclick="closeNotifs()">
+  <div class="notif-panel" onclick="event.stopPropagation()">
+    <div class="notif-head">
+      <div class="notif-head-title">🔔 Benachrichtigungen</div>
+      <button class="notif-close-btn" onclick="closeNotifs()">×</button>
+    </div>
+    <div class="notif-item">
+      <div class="notif-dot"></div>
+      <div class="notif-body"><strong>T. Brauer: Tragezeit unter 60%</strong><span>4 Tage in Folge — Aktion erforderlich</span></div>
+    </div>
+    <div class="notif-item">
+      <div class="notif-dot"></div>
+      <div class="notif-body"><strong>M. Schmidt: Foto-Upload eingegangen</strong><span>Zur Prüfung bereit</span></div>
+    </div>
+    <div class="notif-item">
+      <div class="notif-dot"></div>
+      <div class="notif-body"><strong>K. Weber: Frage im Chat</strong><span>Wartet auf Antwort</span></div>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+if (localStorage.getItem('visibal_role') !== 'doctor') { window.location.replace('index.html'); }
+// Demo Patient Data
+const patients = [
+  { id: 1, name: 'Marie Schmidt', stage: '8/14', phase: 'REGULAR', status: 'ok', wear: '94%', avatar: 'MS' },
+  { id: 2, name: 'Tobias Brauer', stage: '12/14', phase: 'INTENSE', status: 'alert', wear: '54%', avatar: 'TB' },
+  { id: 3, name: 'Klara Weber', stage: '4/8', phase: 'SOFT', status: 'warn', wear: '74%', avatar: 'KW' },
+  { id: 4, name: 'Lukas Frey', stage: '7/14', phase: 'REGULAR', status: 'ok', wear: '91%', avatar: 'LF' },
+  { id: 5, name: 'Sofia Müller', stage: '3/8', phase: 'SOFT', status: 'ok', wear: '89%', avatar: 'SM' },
+  { id: 6, name: 'Anna Krause', stage: '14/14', phase: 'INTENSE', status: 'ok', wear: '98%', avatar: 'AK' },
+  { id: 7, name: 'Daniel Häfeli', stage: '6/14', phase: 'REGULAR', status: 'warn', wear: '78%', avatar: 'DH' },
+  { id: 8, name: 'Eva Bachmann', stage: '8/14', phase: 'REGULAR', status: 'ok', wear: '93%', avatar: 'EB' },
+  { id: 9, name: 'Felix Wagner', stage: '5/8', phase: 'REGULAR', status: 'ok', wear: '95%', avatar: 'FW' },
+  { id: 10, name: 'Greta Hofmann', stage: '10/14', phase: 'INTENSE', status: 'ok', wear: '92%', avatar: 'GH' },
+  { id: 11, name: 'Hans Imhof', stage: '2/8', phase: 'SOFT', status: 'warn', wear: '72%', avatar: 'HI' },
+  { id: 12, name: 'Isabella Jung', stage: '11/14', phase: 'INTENSE', status: 'ok', wear: '96%', avatar: 'IJ' },
+  { id: 13, name: 'Jonas Meier', stage: '3/14', phase: 'SOFT', status: 'ok', wear: '88%', avatar: 'JM' },
+  { id: 14, name: 'Laura Schäfer', stage: '7/8', phase: 'INTENSE', status: 'ok', wear: '97%', avatar: 'LS' },
+  { id: 15, name: 'Marco Brunner', stage: '11/14', phase: 'INTENSE', status: 'ok', wear: '90%', avatar: 'MB' },
+  { id: 16, name: 'Nina Vogel', stage: '5/14', phase: 'REGULAR', status: 'ok', wear: '91%', avatar: 'NV' },
+  { id: 17, name: 'Oliver Suter', stage: '8/14', phase: 'REGULAR', status: 'ok', wear: '93%', avatar: 'OS' },
+  { id: 18, name: 'Petra Lang', stage: '2/8', phase: 'SOFT', status: 'ok', wear: '85%', avatar: 'PL' },
+];
+
+function _updateFilterCounts() {
+  const tot = patients.length;
+  const al = patients.filter(p => p.status === 'alert').length;
+  const wa = patients.filter(p => p.status === 'warn').length;
+  const ok = patients.filter(p => p.status === 'ok').length;
+  const h = document.getElementById('patientCountHead');
+  if (h) h.textContent = `${tot} aktive Patienten`;
+  const fpAll = document.getElementById('fpAll'); if (fpAll) fpAll.textContent = `Alle · ${tot}`;
+  const fpAlert = document.getElementById('fpAlert'); if (fpAlert) fpAlert.textContent = `! Kritisch · ${al}`;
+  const fpWarn = document.getElementById('fpWarn'); if (fpWarn) fpWarn.textContent = `⚠ Achtung · ${wa}`;
+  const fpOk = document.getElementById('fpOk'); if (fpOk) fpOk.textContent = `✓ OK · ${ok}`;
+  const sOk = document.getElementById('statOk'); if (sOk) sOk.innerHTML = `${ok}<em style="color:var(--ok);">✓</em>`;
+  const sWarn = document.getElementById('statWarn'); if (sWarn) sWarn.innerHTML = `${wa}<em style="color:var(--warn);">⚠</em>`;
+  const sAlert = document.getElementById('statAlert'); if (sAlert) sAlert.innerHTML = `${al}<em>!</em>`;
+}
+
+function renderPatients(filter='all') {
+  const list = document.getElementById('patientList');
+  const filtered = filter === 'all' ? patients : patients.filter(p => p.status === filter);
+  if (!filtered.length) {
+    list.innerHTML = '<div class="empty-state"><div class="empty-state-ico">👤</div><div class="empty-state-title">Keine Patienten</div><div class="empty-state-sub">Kein Patient entspricht dem Filter.</div></div>';
+    return;
+  }
+  list.innerHTML = filtered.map(p => `
+    <div class="patient-row" onclick="showPatient(${p.id})">
+      <div class="patient-avatar">${p.avatar}</div>
+      <div class="patient-info">
+        <div class="patient-name">${p.name}</div>
+        <div class="patient-meta">Stufe ${p.stage} · ${p.phase} · ${p.wear}</div>
+      </div>
+      <span class="patient-status-pill pill-${p.status}">${p.status === 'ok' ? '✓ OK' : p.status === 'warn' ? '⚠ ' + p.wear : '! Kritisch'}</span>
+    </div>
+  `).join('');
+}
+
+function filterPatients(query) {
+  const list = document.getElementById('patientList');
+  const filtered = patients.filter(p => p.name.toLowerCase().includes(query.toLowerCase()));
+  if (!filtered.length) {
+    list.innerHTML = `<div class="empty-state"><div class="empty-state-ico">🔍</div><div class="empty-state-title">Kein Ergebnis</div><div class="empty-state-sub">Kein Patient gefunden für „${query}".</div></div>`;
+    return;
+  }
+  list.innerHTML = filtered.map(p => `
+    <div class="patient-row" onclick="showPatient(${p.id})">
+      <div class="patient-avatar">${p.avatar}</div>
+      <div class="patient-info">
+        <div class="patient-name">${p.name}</div>
+        <div class="patient-meta">Stufe ${p.stage} · ${p.phase} · ${p.wear}</div>
+      </div>
+      <span class="patient-status-pill pill-${p.status}">${p.status === 'ok' ? '✓ OK' : p.status === 'warn' ? '⚠' : '!'}</span>
+    </div>
+  `).join('');
+}
+
+function filterByStatus(status, btn) {
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  renderPatients(status);
+}
+
+function showPatient(id) {
+  switchDashView('detail');
+}
+
+function switchDashView(view, btn) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  const target = document.getElementById('view-' + view);
+  if (target) {
+    target.classList.add('active');
+  } else {
+    document.getElementById('view-overview').classList.add('active');
+    showToast(`„${view}" folgt in der Vollversion.`);
+  }
+  document.querySelectorAll('.app-tab').forEach(t => t.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function logout() {
+  showConfirm('Abmelden?', 'Sie werden von VISIBAL Clinic abgemeldet.', 'Abmelden', 'Abbrechen', () => {
+    localStorage.removeItem('visibal_role');
+    window.location.replace('index.html');
+  });
+}
+
+function showNotifs() { openNotifs(); }
+
+// ── TOAST ─────────────────────────────────────────────────
+function showToast(msg, type, duration) {
+  if (!duration) duration = 2500;
+  const c = document.getElementById('toastContainer');
+  const t = document.createElement('div');
+  t.className = 'toast' + (type ? ' ' + type : '');
+  t.textContent = msg;
+  c.appendChild(t);
+  setTimeout(() => {
+    t.style.transition = 'opacity .2s';
+    t.style.opacity = '0';
+    setTimeout(() => t.remove(), 200);
+  }, duration);
+}
+
+// ── CONFIRM MODAL ─────────────────────────────────────────
+let _confirmCb = null;
+function showConfirm(title, sub, yesLabel, noLabel, cb) {
+  document.getElementById('confirmTitle').textContent = title;
+  document.getElementById('confirmSub').textContent = sub || '';
+  document.getElementById('confirmYesBtn').textContent = yesLabel;
+  document.getElementById('confirmNoBtn').textContent = noLabel;
+  _confirmCb = cb;
+  document.getElementById('confirmModal').classList.add('show');
+}
+function doConfirm() { closeConfirm(); if (_confirmCb) _confirmCb(); }
+function closeConfirm() { document.getElementById('confirmModal').classList.remove('show'); _confirmCb = null; }
+
+// ── NOTIFICATION PANEL ────────────────────────────────────
+function openNotifs() {
+  document.getElementById('notifOverlay').classList.add('show');
+  const badge = document.getElementById('notifBadge');
+  if (badge) badge.style.display = 'none';
+  sessionStorage.setItem('notifs_seen', '1');
+}
+function closeNotifs() { document.getElementById('notifOverlay').classList.remove('show'); }
+
+// ── PRACTICE PROFILE EDITOR ───────────────────────────────
+function loadPractice() {
+  const p = JSON.parse(localStorage.getItem('visibal_practice') || '{}');
+  const n = document.getElementById('practiceName'); if (n) n.textContent = p.name || 'Dr. med. P. Schmidt';
+  const s = document.getElementById('practiceSpec'); if (s) s.textContent = p.spec || 'Zahnarzt & Kieferchirurg';
+  const a = document.getElementById('practiceAddr'); if (a) a.textContent = (p.addr || 'Bahnhofstrasse 12') + ' · ' + (p.city || '8001 Zürich');
+}
+function editPractice() {
+  const p = JSON.parse(localStorage.getItem('visibal_practice') || '{}');
+  document.getElementById('editPracticeName').value  = p.name  || 'Dr. med. P. Schmidt';
+  document.getElementById('editPracticeSpec').value  = p.spec  || 'Zahnarzt & Kieferchirurg';
+  document.getElementById('editPracticeAddr').value  = p.addr  || 'Bahnhofstrasse 12';
+  document.getElementById('editPracticeCity').value  = p.city  || '8001 Zürich';
+  document.getElementById('editPracticePhone').value = p.phone || '+41 44 000 00 00';
+  document.getElementById('practiceEditModal').classList.add('show');
+}
+function savePractice() {
+  const p = {
+    name:  document.getElementById('editPracticeName').value.trim(),
+    spec:  document.getElementById('editPracticeSpec').value.trim(),
+    addr:  document.getElementById('editPracticeAddr').value.trim(),
+    city:  document.getElementById('editPracticeCity').value.trim(),
+    phone: document.getElementById('editPracticePhone').value.trim(),
+  };
+  localStorage.setItem('visibal_practice', JSON.stringify(p));
+  loadPractice();
+  document.getElementById('practiceEditModal').classList.remove('show');
+  showToast('Praxisdaten gespeichert', 'ok');
+  _trackEvent('save_practice');
+}
+
+// ── PRINT PATIENT REPORT ──────────────────────────────────
+function printPatientReport() {
+  const date = new Date().toLocaleDateString('de-CH');
+  const w = window.open('', '_blank');
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>VISIBAL Patientenbericht</title><style>
+    body{font-family:Arial,sans-serif;max-width:680px;margin:40px auto;color:#111;font-size:14px;}
+    h1{color:#C00000;margin-bottom:4px;} .meta{color:#666;font-size:12px;margin-bottom:24px;}
+    .stats{display:flex;gap:24px;margin-bottom:24px;padding:16px;background:#f7f7f7;border-radius:8px;flex-wrap:wrap;}
+    .stat-n{font-size:26px;font-weight:700;color:#111;} .stat-l{font-size:11px;color:#666;}
+    table{width:100%;border-collapse:collapse;margin-bottom:20px;}
+    th{background:#C00000;color:white;padding:9px 12px;text-align:left;font-size:13px;}
+    td{padding:9px 12px;border-bottom:1px solid #eee;font-size:13px;}
+    .ok{color:#2d8a4e;font-weight:700;} .warn{color:#b87300;font-weight:700;} .alert{color:#C00000;font-weight:700;}
+    h2{font-size:14px;color:#555;margin:20px 0 8px;text-transform:uppercase;letter-spacing:.5px;}
+    footer{margin-top:32px;font-size:10px;color:#aaa;text-align:center;border-top:1px solid #eee;padding-top:12px;}
+  </style></head><body>
+    <h1>VISIBAL — Compliance-Bericht</h1>
+    <div class="meta">Erstellt: ${date} &nbsp;·&nbsp; Praxis Dr. Schmidt &nbsp;·&nbsp; VISIBAL Clinic</div>
+    <div class="stats">
+      <div><div class="stat-n">Marie Schmidt</div><div class="stat-l">Patientin</div></div>
+      <div><div class="stat-n">94%</div><div class="stat-l">Compliance</div></div>
+      <div><div class="stat-n">8/14</div><div class="stat-l">Stufe</div></div>
+      <div><div class="stat-n">REGULAR</div><div class="stat-l">Phase</div></div>
+    </div>
+    <h2>Tragezeit · letzte 7 Tage</h2>
+    <table>
+      <tr><th>Tag</th><th>Tragezeit</th><th>Status</th></tr>
+      <tr><td>Montag</td><td>22h 00min</td><td class="ok">✓ Konform</td></tr>
+      <tr><td>Dienstag</td><td>23h 10min</td><td class="ok">✓ Konform</td></tr>
+      <tr><td>Mittwoch</td><td>17h 30min</td><td class="warn">⚠ Unter Ziel</td></tr>
+      <tr><td>Donnerstag</td><td>22h 00min</td><td class="ok">✓ Konform</td></tr>
+      <tr><td>Freitag</td><td>22h 15min</td><td class="ok">✓ Konform</td></tr>
+      <tr><td>Samstag</td><td>23h 00min</td><td class="ok">✓ Konform</td></tr>
+      <tr><td>Heute</td><td>21h 40min</td><td class="ok">✓ Konform</td></tr>
+    </table>
+    <h2>Klinische Notizen</h2>
+    <p>Patientin zeigt sehr gute Compliance. SOFT-Phase reibungslos abgeschlossen. REGULAR läuft planmässig. Beim nächsten Termin: Druckverteilung an Zahn 12 prüfen.</p>
+    <footer>VISIBAL Clinic v1.0 · nivellipso® · Swiss-Made · Bericht erstellt ${date}</footer>
+  </body></html>`);
+  w.document.close();
+  w.print();
+  _trackEvent('print_patient_report');
+}
+
+// ── HOT TOPICS ────────────────────────────────────────────
+function renderHotTopics() {
+  const card = document.getElementById('hotTopicsCard');
+  if (!card) return;
+  const demo = [
+    { q: 'Schiene drückt — normal?', n: 13 },
+    { q: 'Was darf ich essen / trinken?', n: 9 },
+    { q: 'Wann nächster Stufenwechsel?', n: 7 },
+    { q: 'Schiene reinigen & Pflege', n: 6 },
+    { q: 'Schmerzen lindern', n: 4 },
+    { q: 'Kann ich Sport treiben?', n: 3 }
+  ];
+  try {
+    const stored = JSON.parse(localStorage.getItem('visibal_chat_topics') || '{}');
+    Object.entries(stored).forEach(([q, n]) => {
+      const ex = demo.find(t => t.q.toLowerCase().includes(q.toLowerCase().slice(0, 12)));
+      if (ex) ex.n += n; else if (demo.length < 8) demo.push({ q: q.slice(0, 40), n });
+    });
+    demo.sort((a, b) => b.n - a.n);
+  } catch(e) {}
+  const max = demo[0]?.n || 1;
+  card.innerHTML = demo.slice(0, 6).map((t, i) => `
+    <div style="margin-bottom:${i < 5 ? '12' : '0'}px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+        <div style="font-size:12px;font-weight:600;color:var(--text);flex:1;margin-right:8px;">${t.q}</div>
+        <div style="font-size:11px;font-weight:700;color:var(--grey);white-space:nowrap;">${t.n}×</div>
+      </div>
+      <div style="height:5px;background:var(--border);border-radius:3px;overflow:hidden;">
+        <div style="height:100%;width:${Math.round(t.n / max * 100)}%;background:var(--red);border-radius:3px;"></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Init
+renderPatients();
+_updateFilterCounts();
+renderHotTopics();
+loadPractice();
+_applyTheme();
+if (sessionStorage.getItem('notifs_seen')) {
+  const b = document.getElementById('notifBadge');
+  if (b) b.style.display = 'none';
+}
+
+// Register Service Worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js').catch(()=>{});
+}
+</script>
+
+<!-- PRACTICE EDIT MODAL -->
+<div class="confirm-overlay" id="practiceEditModal">
+  <div class="confirm-sheet">
+    <div class="confirm-title">Praxisdaten bearbeiten</div>
+    <div style="margin:14px 0;">
+      <div class="form-field"><div class="form-label">Name</div><input class="form-input" id="editPracticeName" placeholder="Dr. med. P. Schmidt"></div>
+      <div class="form-field"><div class="form-label">Spezialisierung</div><input class="form-input" id="editPracticeSpec" placeholder="Zahnarzt & Kieferchirurg"></div>
+      <div class="form-field"><div class="form-label">Adresse</div><input class="form-input" id="editPracticeAddr" placeholder="Bahnhofstrasse 12"></div>
+      <div class="form-field"><div class="form-label">Stadt / PLZ</div><input class="form-input" id="editPracticeCity" placeholder="8001 Zürich"></div>
+      <div class="form-field"><div class="form-label">Telefon</div><input class="form-input" id="editPracticePhone" type="tel" placeholder="+41 44 000 00 00"></div>
+    </div>
+    <div class="confirm-btns">
+      <button class="confirm-btn primary" onclick="savePractice()">Speichern</button>
+      <button class="confirm-btn secondary" onclick="document.getElementById('practiceEditModal').classList.remove('show')">Abbrechen</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>
