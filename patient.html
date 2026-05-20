@@ -342,11 +342,14 @@
           <div class="photo-action-label" data-i18n="lateral">Von der Seite</div>
           <div class="photo-action-sub" data-i18n="lateral_sub">Kopf zur Seite</div>
         </button>
+        <button class="photo-action-btn" onclick="takePhoto('occlusal')" style="grid-column:1/-1;flex-direction:row;justify-content:flex-start;gap:14px;text-align:left;padding:16px 20px;">
+          <div class="photo-action-ico" style="flex-shrink:0;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><circle cx="12" cy="13" r="3"/></svg></div>
+          <div>
+            <div class="photo-action-label" data-i18n="occlusal">Von oben (Mund auf)</div>
+            <div class="photo-action-sub" data-i18n="occlusal_sub">Mund weit öffnen</div>
+          </div>
+        </button>
       </div>
-      <button class="action-btn outline full-row" onclick="takePhoto('occlusal')" style="margin-bottom:24px;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><circle cx="12" cy="13" r="3"/></svg>
-        <span data-i18n="occlusal">Von oben (Mund auf)</span>
-      </button>
 
       <!-- Timeline -->
       <div class="sec-label" data-i18n="timeline">Dein Weg bisher</div>
@@ -605,7 +608,7 @@ const VISIBAL_T = {
     new_photo:'Neue Aufnahme', photos_rule:'Drei Fotos. Drei Klicks.',
     frontal:'Von vorne', frontal_sub:'Lächel rein.',
     lateral:'Von der Seite', lateral_sub:'Kopf zur Seite',
-    occlusal:'Von oben (Mund auf)', timeline:'Dein Weg bisher',
+    occlusal:'Von oben (Mund auf)', occlusal_sub:'Mund weit öffnen', timeline:'Dein Weg bisher',
     start_photo:'Startaufnahme', current_label:'Aktuell',
     last_photo:'Letzte Aufnahme: 24 Tage', photo_recommend:'Wir empfehlen alle 2 Wochen neue Fotos',
     profile_title:'Profil', my_practice:'Meine Praxis',
@@ -679,7 +682,7 @@ const VISIBAL_T = {
     new_photo:'New Photo', photos_rule:'Three photos. Three taps.',
     frontal:'Front view', frontal_sub:'Show your smile.',
     lateral:'Side view', lateral_sub:'Tilt head sideways',
-    occlusal:'From above (mouth open)', timeline:'Your journey so far',
+    occlusal:'From above (mouth open)', occlusal_sub:'Open wide', timeline:'Your journey so far',
     start_photo:'Start photo', current_label:'Current',
     last_photo:'Last photo: 24 days ago', photo_recommend:'We recommend new photos every 2 weeks',
     profile_title:'Profile', my_practice:'My Practice',
@@ -753,7 +756,7 @@ const VISIBAL_T = {
     new_photo:'Nouvelle photo', photos_rule:'Trois photos. Trois clics.',
     frontal:'De face', frontal_sub:'Souriez, montrez vos dents.',
     lateral:'De côté', lateral_sub:'Inclinez la tête',
-    occlusal:'Du dessus (bouche ouverte)', timeline:'Votre parcours',
+    occlusal:'Du dessus (bouche ouverte)', occlusal_sub:'Ouvrez grand', timeline:'Votre parcours',
     start_photo:'Photo de départ', current_label:'Actuel',
     last_photo:'Dernière photo: 24 jours', photo_recommend:'Nous recommandons de nouvelles photos toutes les 2 semaines',
     profile_title:'Profil', my_practice:'Mon cabinet',
@@ -827,7 +830,7 @@ const VISIBAL_T = {
     new_photo:'Nuova foto', photos_rule:'Tre foto. Tre clic.',
     frontal:'Di fronte', frontal_sub:'Mostra il sorriso.',
     lateral:'Di lato', lateral_sub:'Inclina la testa',
-    occlusal:'Dall\'alto (bocca aperta)', timeline:'Il tuo percorso',
+    occlusal:'Dall\'alto (bocca aperta)', occlusal_sub:'Apri bene la bocca', timeline:'Il tuo percorso',
     start_photo:'Foto iniziale', current_label:'Attuale',
     last_photo:'Ultima foto: 24 giorni', photo_recommend:'Consigliamo nuove foto ogni 2 settimane',
     profile_title:'Profilo', my_practice:'Il mio studio',
@@ -901,7 +904,7 @@ const VISIBAL_T = {
     new_photo:'Новое фото', photos_rule:'Три фото. Три нажатия.',
     frontal:'Спереди', frontal_sub:'Улыбнись.',
     lateral:'Сбоку', lateral_sub:'Наклони голову',
-    occlusal:'Сверху (рот открыт)', timeline:'Твой путь',
+    occlusal:'Сверху (рот открыт)', occlusal_sub:'Открой рот шире', timeline:'Твой путь',
     start_photo:'Начальное фото', current_label:'Текущий',
     last_photo:'Последнее фото: 24 дня', photo_recommend:'Рекомендуем новые фото каждые 2 недели',
     profile_title:'Профиль', my_practice:'Моя клиника',
@@ -975,7 +978,7 @@ const VISIBAL_T = {
     new_photo:'Nueva foto', photos_rule:'Tres fotos. Tres clics.',
     frontal:'De frente', frontal_sub:'Muestra tu sonrisa.',
     lateral:'De lado', lateral_sub:'Inclina la cabeza',
-    occlusal:'Desde arriba (boca abierta)', timeline:'Tu camino',
+    occlusal:'Desde arriba (boca abierta)', occlusal_sub:'Abre bien la boca', timeline:'Tu camino',
     start_photo:'Foto inicial', current_label:'Actual',
     last_photo:'Última foto: 24 días', photo_recommend:'Recomendamos nuevas fotos cada 2 semanas',
     profile_title:'Perfil', my_practice:'Mi clínica',
