@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#C00000">
+<title>VISIBAL — Hilfe & FAQ</title>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="app.css">
+<style>
+.page-header {
+  background: var(--red);
+  padding: max(14px, env(safe-area-inset-top)) 20px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  color: white;
+}
+.back-btn {
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,.15);
+  border: none; border-radius: 50%;
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.back-btn:active { background: rgba(255,255,255,.3); transform: scale(.95); }
+.page-title { font-size: 16px; font-weight: 700; flex: 1; }
+.scroll-area { flex: 1; overflow-y: auto; padding: 0 0 max(24px, env(safe-area-inset-bottom)); }
+
+.faq-section-header {
+  padding: 20px 16px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--grey);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.faq-item {
+  background: white;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+.faq-item:first-of-type { border-top: 1px solid var(--border); }
+.faq-q {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  cursor: pointer;
+  transition: background .12s;
+}
+.faq-q:active { background: var(--bg); }
+.faq-q-icon {
+  width: 32px; height: 32px;
+  border-radius: 10px;
+  background: var(--red-light);
+  color: var(--red);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+.faq-q-text {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+}
+.faq-chevron {
+  color: var(--grey-light);
+  transition: transform .2s;
+  flex-shrink: 0;
+}
+.faq-item.open .faq-chevron { transform: rotate(90deg); }
+.faq-a {
+  display: none;
+  padding: 0 16px 16px 60px;
+  font-size: 13px;
+  color: var(--grey);
+  line-height: 1.6;
+}
+.faq-item.open .faq-a { display: block; }
+.faq-a strong { color: var(--text); }
+.faq-a ul { padding-left: 16px; margin-top: 6px; }
+.faq-a ul li { margin-bottom: 4px; }
+
+.contact-card {
+  margin: 16px;
+  background: var(--red-light);
+  border: 1px solid rgba(192,0,0,.15);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.contact-card-icon {
+  width: 40px; height: 40px;
+  background: var(--red);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.contact-card-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+.contact-card-sub { font-size: 12px; color: var(--grey); line-height: 1.5; }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="page-header">
+    <button class="back-btn" onclick="history.back()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <div class="page-title" id="pageTitle">Hilfe & FAQ</div>
+  </div>
+
+  <div class="scroll-area">
+
+    <!-- SECTION: Tragezeit -->
+    <div class="faq-section-header" id="sec1">Tragezeit & Aligner</div>
+
+    <div class="faq-item" onclick="toggle(this)">
+      <button class="faq-q">
+        <div class="faq-q-icon">⏱</div>
+        <div class="faq-q-text" data-i18n-faq="q_wear_time">Wie lange muss ich den Aligner täglich tragen?</div>
+        <svg class="faq-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="currentColor" stroke-width="2"/></svg>
+      </button>
+      <div class="faq-a" data-i18n-faq="a_wear_time">
+        <strong>Mindestens 22 Stunden pro Tag.</strong> Der Aligner darf nur zum Essen, Trinken (ausser Wasser) und Zähneputzen herausgenommen werden. Die App trackt deine Tragezeit automatisch.
+      </div>
+    </div>
+
+    <div class="faq-item" onclick="toggle(this)">
+      <button class="faq-q">
+        <div class="faq-q-icon">🔄</div>
+        <div class="faq-q-text" data-i18n-faq="q_change">Wann wechsle ich zum nächsten Aligner?</div>
+        <svg class="faq-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="currentColor" stroke-width="2"/></svg>
+      </button>
+      <div class="faq-a" data-i18n-faq="a_change">
+        Den Wechsel bestimmt deine Praxis — wechsle den Aligner <strong>nur nach Absprache</strong>. Typisch ist alle 1–2 Wochen, je nach Behandlungsplan. Du bekommst eine Benachrichtigung.
+      </div>
+    </div>
+
+    <div class="faq-item" onclick="toggle(this)">
+      <button class="faq-q">
+        <div class="faq-q-icon">😴</div>
+        <div class="faq-q-text" data-i18n-faq="q_sleep">Muss ich den Aligner nachts tragen?</div>
+        <svg class="faq-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="currentColor" stroke-width="2"/></svg>
+      </button>
+      <div class="faq-a" data-i18n-faq="a_sleep">
+        Ja. Gerade nachts (6–8 Stunden) ist das Tragen besonders effektiv. Entferne den Aligner <strong>nicht</strong> während du schläfst.
+      </div>
+    </div>
+
+    <div class="faq-item" onclick="toggle(this)">
+      <button class="faq-q">
+        <div class="faq-q-icon">🍕</div>
+        <div class="faq-q-text" data-i18n-faq="q_food">Was darf ich mit dem Aligner essen oder trinken?</div>
+        <svg class="faq-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="currentColor" stroke-width="2"/></svg>
+      </button>
+      <div class="faq-a" data-i18n-faq="a_food">
+        Nimm den Aligner zum Essen und Trinken (ausser klarem Wasser) heraus. Heisse Getränke können den Kunststoff verformen — auch Kaffee und Tee nur ohne Aligner geniessen.
+      </div>
+    </div>
+
+    <!-- SECTION: Schmerzen & Probleme -->
+    <div class="faq-section-header" id="sec2">Schmerzen & Probleme</div>
+
+    <div class="faq-item" onclick="toggle(this)">
+      <button class="faq-q">
+        <div class="faq-q-icon">😣</div>
+        <div class="faq-q-text" data-i18n-faq="q_pain">Der Aligner drückt oder schmerzt — was tun?</div>
+        <svg class="faq-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="currentColor" stroke-width="2"/></svg>
+      </button>
+      <div class="faq-a" data-i18n-faq="a_pain">
+        Ein leichter Druck in den ersten 2–3 Tagen nach einem Wechsel ist normal. <strong>Melde starke Schmerzen sofort über die App</strong> — deine Praxis sieht das und reagiert. Nicht auf eigene Faust Schmerzmittel einnehmen, ohne Rücksprache.
+      </div>
+    </div>
+
+    <div class="faq-item" onclick="toggle(this)">
+      <button class="faq-q">
+        <div class="faq-q-icon">🦷</div>
+        <div class="faq-q-text" data-i18n-faq="q_lisp">Ich lispele seit dem Aligner — ist das normal?</div>
+        <svg class="faq-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="currentColor" stroke-width="2"/></svg>
+      </button>
+      <div class="faq-a" data-i18n-faq="a_lisp">
+        Ja, das ist normal und geht nach wenigen Tagen vorbei. Die Zunge braucht etwas Zeit, sich an den Aligner zu gewöhnen. Viel Sprechen hilft beim Eingewöhnen.
+      </div>
+    </div>
+
+    <div class="faq-item" onclick="toggle(this)">
+      <button class="faq-q">
+        <div class="faq-q-icon">💔</div>
+        <div class="faq-q-text" data-i18n-faq="q_broken">Was, wenn mein Aligner kaputt geht oder ich ihn verliere?</div>
+        <svg class="faq-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="currentColor" stroke-width="2"/></svg>
+      </button>
+      <div class="faq-a" data-i18n-faq="a_broken">
+        <strong>Kontaktiere sofort deine Praxis.</strong> Wechsle in der Zwischenzeit zum vorherigen Aligner zurück, um den Fortschritt zu halten. Kaufe keinen Ersatz ohne Rücksprache.
+      </div>
+    </div>
+
+    <!-- SECTION: Fotos & App -->
+    <div class="faq-section-header" id="sec3">Fotos & App</div>
+
+    <div class="faq-item" onclick="toggle(this)">
+      <button class="faq-q">
+        <div class="faq-q-icon">📸</div>
+        <div class="faq-q-text" data-i18n-faq="q_photos">Wie oft soll ich Fotos machen?</div>
+        <svg class="faq-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="currentColor" stroke-width="2"/></svg>
+      </button>
+      <div class="faq-a" data-i18n-faq="a_photos">
+        <strong>Alle 2 Wochen</strong>, immer bei gutem Licht. Du brauchst 3 Aufnahmen:
+        <ul>
+          <li>Von vorne (Frontalansicht)</li>
+          <li>Von der Seite (Profilansicht)</li>
+          <li>Von oben (Okklusalansicht, Mund auf)</li>
+        </ul>
+        Die App erinnert dich automatisch daran.
+      </div>
+    </div>
+
+    <div class="faq-item" onclick="toggle(this)">
+      <button class="faq-q">
+        <div class="faq-q-icon">🔔</div>
+        <div class="faq-q-text" data-i18n-faq="q_notif">Ich erhalte keine Benachrichtigungen — was tun?</div>
+        <svg class="faq-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="currentColor" stroke-width="2"/></svg>
+      </button>
+      <div class="faq-a" data-i18n-faq="a_notif">
+        Gehe in den App-Einstellungen auf <strong>Benachrichtigungen</strong> und stelle sicher, dass sie aktiviert sind. Auf iOS: Einstellungen → VISIBAL → Benachrichtigungen erlauben.
+      </div>
+    </div>
+
+    <div class="faq-item" onclick="toggle(this)">
+      <button class="faq-q">
+        <div class="faq-q-icon">📴</div>
+        <div class="faq-q-text" data-i18n-faq="q_offline">Funktioniert die App offline?</div>
+        <svg class="faq-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="currentColor" stroke-width="2"/></svg>
+      </button>
+      <div class="faq-a" data-i18n-faq="a_offline">
+        Ja — Tragezeit-Tracking, Schmerzmeldung und Fotos funktionieren auch ohne Internet. Der Chat und die Synchronisation mit der Praxis benötigen eine Verbindung.
+      </div>
+    </div>
+
+    <div class="faq-item" onclick="toggle(this)">
+      <button class="faq-q">
+        <div class="faq-q-icon">📱</div>
+        <div class="faq-q-text" data-i18n-faq="q_install">Wie installiere ich die App auf dem Homescreen?</div>
+        <svg class="faq-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="currentColor" stroke-width="2"/></svg>
+      </button>
+      <div class="faq-a" data-i18n-faq="a_install">
+        <strong>iPhone:</strong> Safari → Teilen-Symbol → „Zum Home-Bildschirm" wählen.<br>
+        <strong>Android:</strong> Chrome → Menü (⋮) → „App installieren" oder „Zum Startbildschirm hinzufügen".
+      </div>
+    </div>
+
+    <!-- SECTION: Datenschutz & Konto -->
+    <div class="faq-section-header" id="sec4">Datenschutz & Konto</div>
+
+    <div class="faq-item" onclick="toggle(this)">
+      <button class="faq-q">
+        <div class="faq-q-icon">🔒</div>
+        <div class="faq-q-text" data-i18n-faq="q_data">Wer sieht meine Daten?</div>
+        <svg class="faq-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="currentColor" stroke-width="2"/></svg>
+      </button>
+      <div class="faq-a" data-i18n-faq="a_data">
+        Nur deine behandelnde Praxis hat Zugang zu deinen Behandlungsdaten. VISIBAL verkauft keine Daten weiter und gibt sie nicht an Dritte weiter. Weitere Infos findest du in der <a href="privacy.html" style="color:var(--red);font-weight:600;">Datenschutzerklärung</a>.
+      </div>
+    </div>
+
+    <div class="faq-item" onclick="toggle(this)">
+      <button class="faq-q">
+        <div class="faq-q-icon">🗑️</div>
+        <div class="faq-q-text" data-i18n-faq="q_delete">Kann ich meine Daten löschen?</div>
+        <svg class="faq-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="currentColor" stroke-width="2"/></svg>
+      </button>
+      <div class="faq-a" data-i18n-faq="a_delete">
+        Ja. Du hast nach DSGVO Art. 17 das Recht auf Löschung. Kontaktiere dafür deine Praxis oder schreibe an <strong>datenschutz@nivellipso.ch</strong>. Lokale App-Daten kannst du über Profil → Demo zurücksetzen löschen.
+      </div>
+    </div>
+
+    <!-- Contact card -->
+    <div class="contact-card">
+      <div class="contact-card-icon">👩‍⚕️</div>
+      <div>
+        <div class="contact-card-title" id="contactTitle">Noch eine Frage?</div>
+        <div class="contact-card-sub" id="contactSub">Schreib uns direkt über den Chat oder kontaktiere deine Praxis. Wir melden uns innerhalb eines Werktages.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function toggle(el) {
+  el.classList.toggle('open');
+}
+
+// Minimal i18n for this page
+const LANG = localStorage.getItem('visibal_lang') || 'de';
+document.documentElement.lang = LANG;
+
+const T = {
+  de: {
+    title: 'Hilfe & FAQ',
+    sec1: 'Tragezeit & Aligner',
+    sec2: 'Schmerzen & Probleme',
+    sec3: 'Fotos & App',
+    sec4: 'Datenschutz & Konto',
+    contactTitle: 'Noch eine Frage?',
+    contactSub: 'Schreib uns direkt über den Chat oder kontaktiere deine Praxis. Wir melden uns innerhalb eines Werktages.',
+  },
+  en: {
+    title: 'Help & FAQ',
+    sec1: 'Wear time & Aligners',
+    sec2: 'Pain & Issues',
+    sec3: 'Photos & App',
+    sec4: 'Privacy & Account',
+    contactTitle: 'Still have a question?',
+    contactSub: 'Message us via chat or contact your practice. We'll respond within one business day.',
+  },
+  fr: {
+    title: 'Aide & FAQ',
+    sec1: 'Temps de port & Aligneurs',
+    sec2: 'Douleurs & Problèmes',
+    sec3: 'Photos & Application',
+    sec4: 'Confidentialité & Compte',
+    contactTitle: 'Une autre question?',
+    contactSub: 'Écrivez-nous via le chat ou contactez votre cabinet. Nous répondons dans un jour ouvrable.',
+  },
+  it: {
+    title: 'Aiuto & FAQ',
+    sec1: 'Tempo di utilizzo & Allineatori',
+    sec2: 'Dolore & Problemi',
+    sec3: 'Foto & App',
+    sec4: 'Privacy & Account',
+    contactTitle: 'Hai ancora domande?',
+    contactSub: 'Scrivici tramite chat o contatta il tuo studio. Risponderemo entro un giorno lavorativo.',
+  },
+  ru: {
+    title: 'Помощь & FAQ',
+    sec1: 'Время ношения и элайнеры',
+    sec2: 'Боль и проблемы',
+    sec3: 'Фото и приложение',
+    sec4: 'Конфиденциальность и аккаунт',
+    contactTitle: 'Ещё вопросы?',
+    contactSub: 'Напишите нам в чат или свяжитесь с вашей клиникой. Ответим в течение одного рабочего дня.',
+  },
+  es: {
+    title: 'Ayuda & FAQ',
+    sec1: 'Tiempo de uso y alineadores',
+    sec2: 'Dolor y problemas',
+    sec3: 'Fotos y app',
+    sec4: 'Privacidad y cuenta',
+    contactTitle: '¿Tienes otra pregunta?',
+    contactSub: 'Escríbenos por el chat o contacta con tu clínica. Respondemos en un día hábil.',
+  },
+};
+
+const t = T[LANG] || T.de;
+document.getElementById('pageTitle').textContent = t.title;
+document.title = 'VISIBAL — ' + t.title;
+document.getElementById('sec1').textContent = t.sec1;
+document.getElementById('sec2').textContent = t.sec2;
+document.getElementById('sec3').textContent = t.sec3;
+document.getElementById('sec4').textContent = t.sec4;
+document.getElementById('contactTitle').textContent = t.contactTitle;
+document.getElementById('contactSub').textContent = t.contactSub;
+</script>
+</body>
+</html>

@@ -1,9 +1,11 @@
-const CACHE = 'visibal-v6';
+const CACHE = 'visibal-v7';
 const ASSETS = [
   './',
   './index.html',
   './patient.html',
   './doctor.html',
+  './help.html',
+  './privacy.html',
   './app.css',
   './app.js',
   './manifest.json',

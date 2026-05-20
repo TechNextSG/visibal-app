@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#C00000">
+<title>VISIBAL — Datenschutz</title>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="app.css">
+<style>
+.page-header {
+  background: var(--red);
+  padding: max(14px, env(safe-area-inset-top)) 20px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  color: white;
+}
+.back-btn {
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,.15);
+  border: none; border-radius: 50%;
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.back-btn:active { background: rgba(255,255,255,.3); transform: scale(.95); }
+.page-title { font-size: 16px; font-weight: 700; flex: 1; }
+.scroll-area { flex: 1; overflow-y: auto; padding: 0 0 max(24px, env(safe-area-inset-bottom)); }
+
+.priv-hero {
+  background: linear-gradient(135deg, #fff8f8, #fffcfc);
+  border-bottom: 1px solid var(--border);
+  padding: 24px 16px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+.priv-hero-icon {
+  width: 48px; height: 48px;
+  background: var(--red);
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+.priv-hero-title { font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+.priv-hero-sub { font-size: 12px; color: var(--grey); line-height: 1.5; }
+
+.priv-badges {
+  display: flex;
+  gap: 8px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--border);
+}
+.priv-badges::-webkit-scrollbar { display: none; }
+.priv-badge {
+  flex-shrink: 0;
+  background: var(--ok-light);
+  color: var(--ok);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.priv-section {
+  padding: 20px 16px 0;
+}
+.priv-section-title {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.priv-section-title span { font-size: 16px; }
+.priv-body {
+  font-size: 13px;
+  color: var(--grey);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.priv-body strong { color: var(--text); }
+.priv-body a { color: var(--red); font-weight: 600; text-decoration: none; }
+
+.priv-list {
+  list-style: none;
+  margin: 0 0 16px;
+}
+.priv-list li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--grey);
+  line-height: 1.4;
+}
+.priv-list li:last-child { border-bottom: none; }
+.priv-list li .ico { flex-shrink: 0; font-size: 15px; margin-top: 1px; }
+
+.rights-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.rights-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+}
+.rights-card-ico { font-size: 20px; margin-bottom: 6px; }
+.rights-card-title { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+.rights-card-sub { font-size: 11px; color: var(--grey); line-height: 1.4; }
+
+.contact-block {
+  margin: 16px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+}
+.contact-block-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+.contact-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--grey);
+}
+.contact-row:last-child { border-bottom: none; }
+.contact-row strong { color: var(--text); display: block; font-size: 11px; margin-bottom: 1px; }
+
+.priv-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0 16px;
+}
+
+.update-note {
+  padding: 12px 16px;
+  font-size: 11px;
+  color: var(--grey-light);
+  text-align: center;
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="page-header">
+    <button class="back-btn" onclick="history.back()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <div class="page-title" id="pageTitle">Datenschutz</div>
+  </div>
+
+  <div class="scroll-area">
+
+    <div class="priv-hero">
+      <div class="priv-hero-icon">🔒</div>
+      <div>
+        <div class="priv-hero-title" id="heroTitle">Deine Daten, dein Schutz</div>
+        <div class="priv-hero-sub" id="heroSub">VISIBAL verarbeitet deine Daten DSGVO-konform. Hier findest du alle Infos transparent und verständlich.</div>
+      </div>
+    </div>
+
+    <div class="priv-badges">
+      <div class="priv-badge">✓ DSGVO-konform</div>
+      <div class="priv-badge">✓ Server in der EU</div>
+      <div class="priv-badge">✓ Keine Werbung</div>
+      <div class="priv-badge">✓ Keine Weitergabe</div>
+      <div class="priv-badge">✓ TLS-verschlüsselt</div>
+    </div>
+
+    <!-- 1. Verantwortlicher -->
+    <div class="priv-section">
+      <div class="priv-section-title"><span>🏢</span> <span id="s1title">Verantwortlicher</span></div>
+      <div class="priv-body" id="s1body">
+        Verantwortlich für die Datenverarbeitung in dieser App ist die behandelnde Praxis, die das VISIBAL-System einsetzt (<strong>Auftragsverarbeitung gemäss DSGVO Art. 28</strong>). Technischer Betreiber ist <strong>nivellipso GmbH</strong>, Zürich, Schweiz.
+      </div>
+    </div>
+
+    <div class="priv-divider"></div>
+
+    <!-- 2. Was wir speichern -->
+    <div class="priv-section">
+      <div class="priv-section-title"><span>📋</span> <span id="s2title">Welche Daten werden verarbeitet?</span></div>
+      <ul class="priv-list" id="s2list">
+        <li><span class="ico">⏱</span><span>Tragezeit-Aufzeichnungen (Start/Stopp, Tagessummen)</span></li>
+        <li><span class="ico">😣</span><span>Schmerzangaben (Bereich, Intensität, Zeitstempel)</span></li>
+        <li><span class="ico">📸</span><span>Behandlungsfotos (frontal, lateral, okklusal)</span></li>
+        <li><span class="ico">👤</span><span>Profilangaben (Name, Alignerstufe, Behandlungsplan)</span></li>
+        <li><span class="ico">📊</span><span>Anonymisierte Nutzungsstatistiken (Seitenaufrufe, kein Tracking)</span></li>
+      </ul>
+      <div class="priv-body" id="s2note">
+        <strong>Nicht erhoben:</strong> Standort, Kontakte, Mikrofon, Kamera (ausser bei bewusstem Foto-Upload), Gesundheitsdaten ausserhalb der Behandlung.
+      </div>
+    </div>
+
+    <div class="priv-divider"></div>
+
+    <!-- 3. Speicherort -->
+    <div class="priv-section">
+      <div class="priv-section-title"><span>🌍</span> <span id="s3title">Wo werden Daten gespeichert?</span></div>
+      <div class="priv-body" id="s3body">
+        Alle Daten werden auf Servern in der <strong>EU (Frankfurt, Deutschland)</strong> gespeichert — kein Transfer in Drittländer. Lokale App-Daten (Timer, Logs) bleiben auf deinem Gerät und werden nicht automatisch synchronisiert.
+      </div>
+    </div>
+
+    <div class="priv-divider"></div>
+
+    <!-- 4. Wer hat Zugang -->
+    <div class="priv-section">
+      <div class="priv-section-title"><span>👩‍⚕️</span> <span id="s4title">Wer hat Zugang zu meinen Daten?</span></div>
+      <ul class="priv-list" id="s4list">
+        <li><span class="ico">✅</span><span><strong>Deine Praxis:</strong> Vollzugang zu Tragezeit, Fotos, Schmerzberichten</span></li>
+        <li><span class="ico">✅</span><span><strong>nivellipso GmbH (Technischer Betreiber):</strong> Nur Systemzugang für Support, keine inhaltliche Einsicht</span></li>
+        <li><span class="ico">❌</span><span><strong>Andere Praxen:</strong> Kein Zugang</span></li>
+        <li><span class="ico">❌</span><span><strong>Werbepartner/Dritte:</strong> Kein Zugang, keine Weitergabe</span></li>
+        <li><span class="ico">❌</span><span><strong>KI-Training:</strong> Deine Daten werden nicht für KI-Training verwendet</span></li>
+      </ul>
+    </div>
+
+    <div class="priv-divider"></div>
+
+    <!-- 5. Rechtsgrundlage -->
+    <div class="priv-section">
+      <div class="priv-section-title"><span>⚖️</span> <span id="s5title">Rechtsgrundlage</span></div>
+      <div class="priv-body" id="s5body">
+        Die Verarbeitung erfolgt auf Basis von:
+        <ul style="padding-left:16px;margin-top:6px;">
+          <li style="margin-bottom:4px;"><strong>Art. 6 Abs. 1 lit. b DSGVO</strong> — Vertragserfüllung (Behandlung)</li>
+          <li style="margin-bottom:4px;"><strong>Art. 6 Abs. 1 lit. a DSGVO</strong> — Einwilligung (bei der Erstanmeldung erteilt)</li>
+          <li><strong>Art. 9 Abs. 2 lit. a DSGVO</strong> — Ausdrückliche Einwilligung für Gesundheitsdaten</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="priv-divider"></div>
+
+    <!-- 6. Deine Rechte -->
+    <div class="priv-section">
+      <div class="priv-section-title"><span>🛡️</span> <span id="s6title">Deine Rechte (DSGVO Art. 15–21)</span></div>
+      <div class="rights-grid" id="rightsGrid">
+        <div class="rights-card">
+          <div class="rights-card-ico">📄</div>
+          <div class="rights-card-title">Auskunft (Art. 15)</div>
+          <div class="rights-card-sub">Welche Daten über dich gespeichert sind</div>
+        </div>
+        <div class="rights-card">
+          <div class="rights-card-ico">✏️</div>
+          <div class="rights-card-title">Berichtigung (Art. 16)</div>
+          <div class="rights-card-sub">Falsche Daten korrigieren lassen</div>
+        </div>
+        <div class="rights-card">
+          <div class="rights-card-ico">🗑️</div>
+          <div class="rights-card-title">Löschung (Art. 17)</div>
+          <div class="rights-card-sub">Recht auf Vergessen</div>
+        </div>
+        <div class="rights-card">
+          <div class="rights-card-ico">📤</div>
+          <div class="rights-card-title">Portabilität (Art. 20)</div>
+          <div class="rights-card-sub">Daten als JSON exportieren</div>
+        </div>
+        <div class="rights-card">
+          <div class="rights-card-ico">⏸️</div>
+          <div class="rights-card-title">Einschränkung (Art. 18)</div>
+          <div class="rights-card-sub">Verarbeitung einschränken</div>
+        </div>
+        <div class="rights-card">
+          <div class="rights-card-ico">🚫</div>
+          <div class="rights-card-title">Widerspruch (Art. 21)</div>
+          <div class="rights-card-sub">Verarbeitung widersprechen</div>
+        </div>
+      </div>
+      <div class="priv-body" id="s6note">
+        Zur Ausübung deiner Rechte kontaktiere <a href="mailto:datenschutz@nivellipso.ch">datenschutz@nivellipso.ch</a>. Du hast ausserdem das Recht, Beschwerde bei der zuständigen Datenschutzbehörde einzureichen (Schweiz: EDÖB; EU: zuständige Landesdatenschutzbehörde).
+      </div>
+    </div>
+
+    <div class="priv-divider"></div>
+
+    <!-- 7. Cookies & Tracking -->
+    <div class="priv-section">
+      <div class="priv-section-title"><span>🍪</span> <span id="s7title">Cookies & Tracking</span></div>
+      <div class="priv-body" id="s7body">
+        VISIBAL verwendet <strong>keine Third-Party-Cookies</strong> und kein Cross-Site-Tracking. Der localStorage des Browsers speichert ausschliesslich Behandlungsdaten auf deinem Gerät — diese werden nicht an Analysetools übermittelt.
+      </div>
+    </div>
+
+    <div class="priv-divider"></div>
+
+    <!-- 8. Datensicherheit -->
+    <div class="priv-section">
+      <div class="priv-section-title"><span>🔐</span> <span id="s8title">Datensicherheit</span></div>
+      <ul class="priv-list" id="s8list">
+        <li><span class="ico">🔒</span><span>TLS 1.3-Verschlüsselung für alle Datenübertragungen</span></li>
+        <li><span class="ico">🔑</span><span>Zugangsdaten werden nicht in der App gespeichert</span></li>
+        <li><span class="ico">🛡️</span><span>Regelmässige Sicherheitsaudits des Systems</span></li>
+        <li><span class="ico">📵</span><span>Keine Übertragung sensibler Daten in URL-Parametern</span></li>
+      </ul>
+    </div>
+
+    <!-- Contact block -->
+    <div class="contact-block">
+      <div class="contact-block-title" id="contactTitle">Datenschutz-Kontakt</div>
+      <div class="contact-row">
+        <span>📧</span>
+        <div><strong id="ct1">E-Mail Datenschutz</strong><a href="mailto:datenschutz@nivellipso.ch" style="color:var(--red);font-size:12px;">datenschutz@nivellipso.ch</a></div>
+      </div>
+      <div class="contact-row">
+        <span>🏢</span>
+        <div><strong id="ct2">Technischer Betreiber</strong><span style="font-size:12px;">nivellipso GmbH, Zürich, Schweiz</span></div>
+      </div>
+      <div class="contact-row">
+        <span>🌐</span>
+        <div><strong id="ct3">Aufsichtsbehörde (CH)</strong><span style="font-size:12px;">EDÖB — Eidgenössischer Datenschutz- und Öffentlichkeitsbeauftragter</span></div>
+      </div>
+    </div>
+
+    <div class="update-note" id="updateNote">Stand: Mai 2026 · Version 1.0</div>
+
+  </div>
+</div>
+
+<script>
+const LANG = localStorage.getItem('visibal_lang') || 'de';
+document.documentElement.lang = LANG;
+
+const T = {
+  de: { title: 'Datenschutz', heroTitle: 'Deine Daten, dein Schutz', heroSub: 'VISIBAL verarbeitet deine Daten DSGVO-konform. Hier findest du alle Infos transparent und verständlich.', update: 'Stand: Mai 2026 · Version 1.0' },
+  en: { title: 'Privacy', heroTitle: 'Your data, your control', heroSub: 'VISIBAL processes your data in full compliance with GDPR. Find all information here, transparent and easy to understand.', update: 'Last updated: May 2026 · Version 1.0' },
+  fr: { title: 'Confidentialité', heroTitle: 'Vos données, votre protection', heroSub: 'VISIBAL traite vos données conformément au RGPD. Retrouvez ici toutes les informations de façon transparente.', update: 'Mise à jour: mai 2026 · Version 1.0' },
+  it: { title: 'Privacy', heroTitle: 'I tuoi dati, la tua protezione', heroSub: 'VISIBAL elabora i tuoi dati in conformità al GDPR. Trovi tutte le informazioni qui in modo trasparente.', update: 'Aggiornato: maggio 2026 · Versione 1.0' },
+  ru: { title: 'Конфиденциальность', heroTitle: 'Ваши данные под защитой', heroSub: 'VISIBAL обрабатывает данные в соответствии с GDPR. Вся информация здесь — прозрачно и понятно.', update: 'Обновлено: май 2026 · Версия 1.0' },
+  es: { title: 'Privacidad', heroTitle: 'Tus datos, tu protección', heroSub: 'VISIBAL trata tus datos conforme al RGPD. Encuentra aquí toda la información de forma transparente.', update: 'Actualizado: mayo 2026 · Versión 1.0' },
+};
+
+const t = T[LANG] || T.de;
+document.getElementById('pageTitle').textContent = t.title;
+document.title = 'VISIBAL — ' + t.title;
+document.getElementById('heroTitle').textContent = t.heroTitle;
+document.getElementById('heroSub').textContent = t.heroSub;
+document.getElementById('updateNote').textContent = t.update;
+</script>
+</body>
+</html>
