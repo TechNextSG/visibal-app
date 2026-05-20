@@ -617,10 +617,10 @@ function switchDashView(view, btn) {
 }
 
 function logout() {
-  showConfirm('Abmelden?', 'Sie werden von VISIBAL Clinic abgemeldet.', 'Abmelden', 'Abbrechen', () => {
+  if (window.confirm('Abmelden?')) {
     localStorage.removeItem('visibal_role');
     window.location.replace('index.html');
-  });
+  }
 }
 
 function showNotifs() { openNotifs(); }

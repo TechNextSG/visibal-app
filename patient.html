@@ -1107,19 +1107,12 @@ function switchView(view, btn) {
 }
 
 function logout() {
-  const lang = getAppLang();
-  const t = {
-    de:['Abmelden?','Sie werden von VISIBAL abgemeldet.','Abmelden','Abbrechen'],
-    en:['Log out?','You will be signed out of VISIBAL.','Log out','Cancel'],
-    fr:['Déconnecter?','Vous serez déconnecté de VISIBAL.','Déconnecter','Annuler'],
-    it:['Disconnettersi?','Verrai disconnesso da VISIBAL.','Disconnetti','Annulla'],
-    ru:['Выйти?','Вы выйдете из VISIBAL.','Выйти','Отмена'],
-    es:['¿Cerrar sesión?','Se cerrará su sesión de VISIBAL.','Cerrar sesión','Cancelar']
-  }[lang] || ['Log out?','','Log out','Cancel'];
-  showConfirm(t[0], t[1], t[2], t[3], () => {
+  const T = VISIBAL_T[getAppLang()] || VISIBAL_T.de;
+  const msg = { de:'Abmelden?', en:'Log out?', fr:'Déconnecter?', it:'Disconnettersi?', ru:'Выйти?', es:'¿Cerrar sesión?' }[getAppLang()] || 'Log out?';
+  if (window.confirm(msg)) {
     localStorage.removeItem('visibal_role');
     window.location.replace('index.html');
-  });
+  }
 }
 
 function logWear() {
