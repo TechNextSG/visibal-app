@@ -1,4 +1,4 @@
-const CACHE = 'visibal-v12';
+const CACHE = 'visibal-v13';
 const ASSETS = [
   './',
   './index.html',

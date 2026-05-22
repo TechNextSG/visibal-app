@@ -359,6 +359,7 @@ document.title = 'VISIBAL — ' + t.title;
 document.getElementById('heroTitle').textContent = t.heroTitle;
 document.getElementById('heroSub').textContent = t.heroSub;
 document.getElementById('updateNote').textContent = t.update;
+(function(){var h=document.querySelector('.page-header'),s=document.querySelector('.scroll-area'),p=0;if(!h||!s)return;s.addEventListener('scroll',function(){var y=s.scrollTop;h.classList.toggle('hdr-hide',y>p&&y>50);p=y;},{passive:true});})();
 </script>
 </body>
 </html>

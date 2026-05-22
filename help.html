@@ -377,6 +377,7 @@ document.getElementById('sec3').textContent = t.sec3;
 document.getElementById('sec4').textContent = t.sec4;
 document.getElementById('contactTitle').textContent = t.contactTitle;
 document.getElementById('contactSub').textContent = t.contactSub;
+(function(){var h=document.querySelector('.page-header'),s=document.querySelector('.scroll-area'),p=0;if(!h||!s)return;s.addEventListener('scroll',function(){var y=s.scrollTop;h.classList.toggle('hdr-hide',y>p&&y>50);p=y;},{passive:true});})();
 </script>
 </body>
 </html>

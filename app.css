@@ -84,7 +84,10 @@ button { font-family: inherit; cursor: pointer; }
   top: 0;
   z-index: 10;
   padding-top: max(14px, env(safe-area-inset-top));
+  transition: transform 0.28s ease;
 }
+.page-header { transition: transform 0.28s ease; }
+.hdr-hide { transform: translateY(-100%); }
 .app-top-brand { display: flex; align-items: center; gap: 8px; }
 .app-top-logo { width: 28px; height: 28px; background: white; color: var(--red); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; }
 .app-top-name { font-size: 15px; font-weight: 700; letter-spacing: -.2px; }

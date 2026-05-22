@@ -1727,6 +1727,8 @@ if (!localStorage.getItem('visibal_onboarded')) {
     <span class="onboard-dot" id="odot-4"></span>
   </div>
 </div>
-
+<script>
+(function(){var h=document.querySelector('.app-top'),s=document.querySelector('.app-content'),p=0;if(!h||!s)return;s.addEventListener('scroll',function(){var y=s.scrollTop;h.classList.toggle('hdr-hide',y>p&&y>50);p=y;},{passive:true});})();
+</script>
 </body>
 </html>
