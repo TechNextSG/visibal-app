@@ -359,7 +359,7 @@ document.title = 'VISIBAL — ' + t.title;
 document.getElementById('heroTitle').textContent = t.heroTitle;
 document.getElementById('heroSub').textContent = t.heroSub;
 document.getElementById('updateNote').textContent = t.update;
-(function(){var h=document.querySelector('.page-header'),s=document.querySelector('.scroll-area'),p=0;if(!h||!s)return;s.addEventListener('scroll',function(){var y=s.scrollTop;h.classList.toggle('hdr-hide',y>p&&y>50);p=y;},{passive:true});})();
+(function(){var h=document.querySelector('.page-header'),s=document.querySelector('.scroll-area'),lastY=0;if(!h||!s)return;s.addEventListener('scroll',function(){var y=s.scrollTop;if(y<=0){h.classList.remove('hdr-hide');lastY=0;return;}if(y<lastY-8){h.classList.remove('hdr-hide');}else if(y>lastY+5&&y>50){h.classList.add('hdr-hide');}lastY=y;},{passive:true});})();
 </script>
 </body>
 </html>
